@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RÉNOVA — Chaque avenir mérite une chance</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0B1026;
+      color: #F5F5FA;
+    }
+    header {
+      padding: 22px;
+      text-align: center;
+      border-bottom: 1px solid #6C3B91;
+    }
+    header h1 {
+      color: #D4AF37;
+      letter-spacing: 4px;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+    }
+    button {
+      background: #6C3B91;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #8955B5; }
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 25px;
+    }
+    section {
+      background: #171D3A;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 14px;
+    }
+    h2 { color: #D4AF37; }
+    input, textarea {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 7px;
+      border: 1px solid #6C3B91;
+      background: #0B1026;
+      color: white;
+    }
+    .hidden { display: none; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #E9DDF5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>RÉNOVA</h1>
+    <p>Chaque avenir mérite une chance de commencer.</p>
+  </header>
+
+  <nav>
+    <button onclick="showPage('accueil')">Accueil</button>
+    <button onclick="showPage('decouverte')">Découverte</button>
+    <button onclick="showPage('idees')">Laboratoire d'idées</button>
+    <button onclick="showPage('projets')">Mes projets</button>
+  </nav>
+
+  <main>
+    <section id="accueil">
+      <h2>Tu as plus de possibilités que tu ne l'imagines.</h2>
+      <p>Découvre tes capacités, développe tes idées et commence à construire tes projets, même avec peu de moyens.</p>
+      <button onclick="showPage('decouverte')">Découvrir mes capacités</button>
+      <button onclick="showPage('idees')">Développer une idée</button>
+    </section>
+
+    <section id="decouverte" class="hidden">
+      <h2>Laboratoire de découverte</h2>
+      <p>Relève un petit défi pour exercer ta créativité.</p>
+      <button onclick="challenge()">Obtenir un défi</button>
+      <p id="defi"></p>
+    </section>
+
+    <section id="idees" class="hidden">
+      <h2>Laboratoire d'idées</h2>
+      <p>Donne vie à une idée en commençant par la décrire.</p>
+      <input id="titre" placeholder="Nom de ton idée">
+      <textarea id="description" placeholder="Décris ton idée..."></textarea>
+      <button onclick="saveIdea()">Enregistrer mon idée</button>
+      <p id="message"></p>
+    </section>
+
+    <section id="projets" class="hidden">
+      <h2>Mes projets</h2>
+      <p>Retrouve ici les idées enregistrées sur cet appareil.</p>
+      <div id="liste"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>RÉNOVA © 2026 — Les idées peuvent devenir des projets.</p>
+  </footer>
+
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('main section').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(id).classList.remove('hidden');
+      window.scrollTo(0, 0);
+      if (id === 'projets') showIdeas();
+    }
+
+    const challenges = [
+      "Imagine trois façons de réutiliser une bouteille vide.",
+      "Invente une solution à un problème de ton quartier.",
+      "Imagine un projet utile que tu pourrais commencer sans argent.",
+      "Crée une idée originale avec trois objets autour de toi.",
+      "Trouve une manière d'aider un jeune à apprendre quelque chose."
+    ];
+
+    function challenge() {
+      const index = Math.floor(Math.random() * challenges.length);
+      document.getElementById('defi').textContent = challenges[index];
+    }
+
+    function saveIdea() {
+      const title = document.getElementById('titre').value.trim();
+      const description = document.getElementById('description').value.trim();
+
+      if (!title || !description) {
+        document.getElementById('message').textContent =
+          "Remplis le titre et la description avant d'enregistrer.";
+        return;
+      }
+
+      const ideas = JSON.parse(localStorage.getItem('renovaIdeas') || '[]');
+      ideas.push({ title, description });
+      localStorage.setItem('renovaIdeas', JSON.stringify(ideas));
+
+      document.getElementById('message').textContent = "Ton idée est enregistrée sur cet appareil !";
+      document.getElementById('titre').value = '';
+      document.getElementById('description').value = '';
+    }
+
+    function showIdeas() {
+      const ideas = JSON.parse(localStorage.getItem('renovaIdeas') || '[]');
+      const list = document.getElementById('liste');
+      list.replaceChildren();
+
+      if (!ideas.length) {
+        list.textContent = "Tu n'as pas encore enregistré d'idée.";
+        return;
+      }
+
+      ideas.forEach(idea => {
+        const card = document.createElement('article');
+        const title = document.createElement('h3');
+        const description = document.createElement('p');
+        title.textContent = idea.title;
+        description.textContent = idea.description;
+        card.append(title, description);
+        list.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
