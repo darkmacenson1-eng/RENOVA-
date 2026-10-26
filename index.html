@@ -418,375 +418,1026 @@
     }
   </style>
 </section>
-<!-- ============================= -->
-<!-- RÉNOVA QUIZ — SCRIPT -->
-<!-- ============================= -->
-
 <script>
-(() => {
-  "use strict";
-
-  const root = document.getElementById("renova-quiz");
-
-  if (!root || root.dataset.initialized) return;
-  root.dataset.initialized = "true";
-
-  const $ = id => document.getElementById(id);
-
-  const questions = [
-    {
-      id: "L1",
-      mode: "logique",
-      level: "Expert",
-      category: "Logique",
-      question:
-        "Quatre personnes A, B, C et D font chacune une déclaration. Une seule déclaration est vraie. A dit : « B ment. » B dit : « C ment. » C dit : « A et D mentent. » D dit : « A dit la vérité. » Qui dit la vérité ?",
-      options: [
-        "A uniquement",
-        "B uniquement",
-        "C uniquement",
-        "D uniquement"
-      ],
-      answer: 2,
-      hint:
-        "Teste successivement chaque possibilité. Si C dit vrai, alors A et D mentent : vérifie ensuite B.",
-      explanation:
-        "Si C dit vrai, A et D mentent. A ment signifie que B ne ment pas : B dit donc vrai. Cela ferait deux déclarations vraies, ce qui contredit la règle. Il faut examiner toutes les possibilités : en réalité, cet énoncé est incohérent. Ce problème est volontairement exclu des scores : un bon quiz doit avoir une solution vérifiable."
-    },
-    {
-      id: "L2",
-      mode: "logique",
-      level: "Génie",
-      category: "Logique",
-      question:
-        "Une suite commence ainsi : 2, 6, 12, 20, 30, 42, □. Quelle valeur suit la règle n(n + 1), pour n = 1, 2, 3… ?",
-      options: ["54", "56", "58", "60"],
-      answer: 1,
-      hint:
-        "Compare chaque terme au produit de deux entiers consécutifs.",
-      explanation:
-        "Les termes sont n(n + 1) : 1×2, 2×3, 3×4, etc. Le terme suivant est 7×8 = 56."
-    },
-    {
-      id: "M1",
-      mode: "maths",
-      level: "Maître",
-      category: "Mathématiques",
-      question:
-        "Un nombre x vérifie 2x + 3y = 19 et x − y = 2. Quelle est la valeur de x ?",
-      options: ["5", "6", "7", "8"],
-      answer: 2,
-      hint:
-        "Exprime x en fonction de y à partir de la deuxième équation.",
-      explanation:
-        "De x − y = 2, on obtient x = y + 2. En remplaçant : 2(y + 2) + 3y = 19, donc 5y = 15, y = 3 et x = 5. La bonne valeur est 5."
-    },
-    {
-      id: "M2",
-      mode: "maths",
-      level: "Génie",
-      category: "Mathématiques",
-      question:
-        "Un rectangle a un périmètre de 34 cm. Sa longueur mesure 3 cm de plus que le double de sa largeur. Quelle est son aire ?",
-      options: ["52 cm²", "60 cm²", "63 cm²", "70 cm²"],
-      answer: 2,
-      hint:
-        "Si la largeur vaut l, la longueur vaut 2l + 3. Utilise le périmètre.",
-      explanation:
-        "2(L + l) = 34, donc L + l = 17. Comme L = 2l + 3, on a 3l + 3 = 17, donc l = 14/3. La longueur vaut 37/3. L'aire vaut 518/9 cm², soit environ 57,56 cm². Aucune option ne convient : cette question ne doit pas être utilisée."
-    },
-    {
-      id: "E1",
-      mode: "enquete",
-      level: "Maître",
-      category: "Enquête",
-      question:
-        "Un vol a eu lieu entre 14 h et 15 h. Alice affirme être arrivée à 14 h 30. Bruno dit avoir vu Alice à 14 h 45. Chloé affirme que Bruno était absent toute l'après-midi. Quelle conclusion est certaine ?",
-      options: [
-        "Alice est coupable",
-        "Bruno est coupable",
-        "Chloé ment nécessairement",
-        "Les indices ne suffisent pas"
-      ],
-      answer: 3,
-      hint:
-        "Distingue les contradictions apparentes des preuves établissant la culpabilité.",
-      explanation:
-        "Ces témoignages ne prouvent ni qui a commis le vol ni si une personne ment. Il manque des preuves indépendantes."
-    },
-    {
-      id: "S1",
-      mode: "strategie",
-      level: "Expert",
-      category: "Stratégie",
-      question:
-        "Tu as 2 cordes. Chacune brûle entièrement en exactement 60 minutes, mais de manière irrégulière : une moitié de corde ne brûle pas forcément en 30 minutes. Comment mesurer exactement 45 minutes avec un briquet ?",
-      options: [
-        "Allumer une corde à une extrémité et attendre 45 minutes",
-        "Allumer la première aux deux extrémités et la seconde à une extrémité ; quand la première s'éteint, allumer l'autre extrémité de la seconde",
-        "Allumer les deux cordes à une seule extrémité et attendre",
-        "Couper les deux cordes en deux moitiés égales"
-      ],
-      answer: 1,
-      hint:
-        "Une corde allumée aux deux extrémités se consume en 30 minutes.",
-      explanation:
-        "Allume la corde A aux deux extrémités et la corde B à une extrémité. A s'éteint après 30 minutes. À cet instant, allume l'autre extrémité de B : le reste de B brûle alors en 15 minutes. Total : 45 minutes."
-    },
-    {
-      id: "C1",
-      mode: "sciences",
-      level: "Génie",
-      category: "Sciences",
-      question:
-        "Dans le vide, loin de toute résistance de l'air, une boule de métal et une plume sont lâchées simultanément de la même hauteur. Que se passe-t-il ?",
-      options: [
-        "La boule arrive la première",
-        "La plume arrive la première",
-        "Elles arrivent en même temps",
-        "Cela dépend de leur couleur"
-      ],
-      answer: 2,
-      hint:
-        "Pense à ce que change la résistance de l'air dans une chute.",
-      explanation:
-        "Dans le vide, les deux objets subissent la même accélération gravitationnelle. L'effet de la résistance de l'air est absent."
-    },
-    {
-      id: "L3",
-      mode: "logique",
-      level: "Maître",
-      category: "Logique",
-      question:
-        "Tous les Neris sont des Vals. Aucun Val n'est un Torem. Quelle affirmation est nécessairement vraie ?",
-      options: [
-        "Certains Neris sont des Torems",
-        "Aucun Neri n'est un Torem",
-        "Tous les Torems sont des Neris",
-        "Aucun Val n'est un Neri"
-      ],
-      answer: 1,
-      hint:
-        "Si chaque Neri appartient au groupe des Vals, que permet la deuxième phrase ?",
-      explanation:
-        "Les Neris sont inclus dans les Vals. Puisqu'aucun Val n'est un Torem, aucun Neri ne peut être un Torem."
-    },
-    {
-      id: "C2",
-      mode: "sciences",
-      level: "Expert",
-      category: "Sciences",
-      question:
-        "Une planète conserve la même masse, mais son rayon diminue de moitié. En supposant une sphère et la loi de gravitation de Newton, comment varie la gravité à sa surface ?",
-      options: [
-        "Elle est divisée par deux",
-        "Elle reste identique",
-        "Elle est multipliée par quatre",
-        "Elle est multipliée par huit"
-      ],
-      answer: 2,
-      hint:
-        "La gravité de surface dépend de la masse et du carré de la distance au centre.",
-      explanation:
-        "g = GM/R². Si le rayon devient R/2 sans changement de masse, la gravité devient GM/(R/2)² = 4GM/R² : elle est multipliée par quatre."
-    },
-    {
-      id: "E2",
-      mode: "enquete",
-      level: "Légende",
-      category: "Enquête",
-      question:
-        "Un suspect affirme : « Si j'ai commis le vol, alors j'étais dans le bâtiment. » On prouve qu'il n'était pas dans le bâtiment. Que peut-on conclure logiquement ?",
-      options: [
-        "Il a nécessairement commis le vol",
-        "Il n'a pas commis le vol",
-        "Il est nécessairement innocent de tout autre délit",
-        "On ne peut rien conclure sur cette implication"
-      ],
-      answer: 1,
-      hint:
-        "Une implication « si P, alors Q » est fausse uniquement dans un cas précis.",
-      explanation:
-        "Si P implique Q et que Q est faux, alors P doit être faux. Il n'a donc pas commis ce vol, si l'implication et la preuve sont fiables."
-    }
-  ];
-
-  // Retire les deux problèmes dont les réponses proposées
-  // ne permettent pas une correction fiable.
-  const validQuestions = questions.filter(
-    q => q.id !== "L1" && q.id !== "M2"
-  );
-
-  let current = [];
-  let index = 0;
-  let score = 0;
-  let locked = false;
-
-  const menu = $("rq-menu");
-  const game = $("rq-game");
-  const result = $("rq-result");
-
-  function shuffle(items) {
-    const copy = [...items];
-
-    for (let i = copy.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-
-    return copy;
-  }
-
-  function start(mode) {
-    const pool = mode === "mix"
-      ? validQuestions
-      : validQuestions.filter(q => q.mode === mode);
-
-    if (!pool.length) return;
-
-    current = shuffle(pool);
-    index = 0;
-    score = 0;
-    locked = false;
-
-    menu.hidden = true;
-    result.hidden = true;
-    game.hidden = false;
-
-    renderQuestion();
-  }
-
-  function renderQuestion() {
-    locked = false;
-
-    const q = current[index];
-
-    $("rq-category").textContent = q.category;
-    $("rq-progress").textContent =
-      `Question ${index + 1}/${current.length}`;
-    $("rq-level").textContent = q.level;
-
-    $("rq-bar").style.width =
-      `${(index / current.length) * 100}%`;
-
-    $("rq-question").textContent = q.question;
-    $("rq-feedback").textContent = "";
-    $("rq-hint-text").textContent = q.hint;
-    $("rq-hint-text").hidden = true;
-    $("rq-hint").hidden = false;
-    $("rq-next").hidden = true;
-
-    const options = $("rq-options");
-    options.replaceChildren();
-
-    q.options.forEach((label, i) => {
-      const button = document.createElement("button");
-      button.className = "rq-option";
-      button.textContent =
-        `${String.fromCharCode(65 + i)}. ${label}`;
-
-      button.addEventListener("click", () => choose(i, button));
-
-      options.appendChild(button);
-    });
-  }
-
-  function choose(choice, button) {
-    if (locked) return;
-    locked = true;
-
-    const q = current[index];
-    const buttons = [...$("rq-options").children];
-
-    buttons.forEach((b, i) => {
-      b.disabled = true;
-
-      if (i === q.answer) {
-        b.classList.add("rq-correct");
-      }
-    });
-
-    if (choice === q.answer) {
-      score++;
-      $("rq-feedback").textContent =
-        "✅ Bien raisonné ! " + q.explanation;
-    } else {
-      button.classList.add("rq-wrong");
-      $("rq-feedback").textContent =
-        "❌ Pas cette fois. " + q.explanation;
-    }
-
-    $("rq-hint").hidden = true;
-    $("rq-next").hidden = false;
-
-    $("rq-next").textContent =
-      index + 1 === current.length
-        ? "Voir mon résultat →"
-        : "Question suivante →";
-  }
-
-  function finish() {
-    game.hidden = true;
-    result.hidden = false;
-
-    const percent = Math.round(
-      (score / current.length) * 100
-    );
-
-    $("rq-final-score").textContent =
-      `${score}/${current.length} — ${percent}%`;
-
-    let message;
-
-    if (percent === 100) {
-      message =
-        "Performance parfaite ! Tu as résolu tous les défis de cette série.";
-    } else if (percent >= 70) {
-      message =
-        "Très bon résultat. Continue à développer ton raisonnement.";
-    } else if (percent >= 40) {
-      message =
-        "Tu progresses. Analyse les explications et retente un autre défi.";
-    } else {
-      message =
-        "Le défi était exigeant. Recommence et prends le temps d'analyser chaque indice.";
-    }
-
-    $("rq-final-message").textContent = message;
-    $("rq-bar").style.width = "100%";
-  }
-
-  root.querySelectorAll(".rq-mode").forEach(button => {
-    button.addEventListener("click", () => {
-      start(button.dataset.mode);
-    });
-  });
-
-  $("rq-hint").addEventListener("click", () => {
-    $("rq-hint-text").hidden = false;
-  });
-
-  $("rq-next").addEventListener("click", () => {
-    index++;
-
-    if (index >= current.length) {
-      finish();
-    } else {
-      renderQuestion();
-    }
-  });
-
-  $("rq-stop").addEventListener("click", () => {
-    game.hidden = true;
-    result.hidden = true;
-    menu.hidden = false;
-  });
-
-  $("rq-restart").addEventListener("click", () => {
-    result.hidden = true;
-    menu.hidden = false;
-  });
-})();
-</script>  
+/* RÉNOVA QUIZ ” Banque de questions
+   7 categories — 50 questions = 350 questions.
+   Le quiz mixte pioche dans les autres categories sans recopier les questions.
+   Format source : [question, reponse].
+*/
+window.RENOVA_QUIZ_BANK = {
+  "maths": [
+    [
+      "Combien font 7 + 8 ?",
+      "15"
+    ],
+    [
+      "Combien font 12 âˆ’ 5 ?",
+      "7"
+    ],
+    [
+      "Combien font 6 Ã— 4 ?",
+      "24"
+    ],
+    [
+      "Combien font 36 Ã· 6 ?",
+      "6"
+    ],
+    [
+      "Quel est le double de 9 ?",
+      "18"
+    ],
+    [
+      "Quel est le triple de 7 ?",
+      "21"
+    ],
+    [
+      "Quelle est la moitiÃ© de 50 ?",
+      "25"
+    ],
+    [
+      "Combien font 9 Ã— 9 ?",
+      "81"
+    ],
+    [
+      "Combien font 100 âˆ’ 37 ?",
+      "63"
+    ],
+    [
+      "Combien font 15 + 28 ?",
+      "43"
+    ],
+    [
+      "Combien font 8 Ã— 7 ?",
+      "56"
+    ],
+    [
+      "Combien font 72 Ã· 8 ?",
+      "9"
+    ],
+    [
+      "Quel est le carrÃ© de 5 ?",
+      "25"
+    ],
+    [
+      "Quel est le cube de 3 ?",
+      "27"
+    ],
+    [
+      "Combien font 3/4 de 20 ?",
+      "15"
+    ],
+    [
+      "Combien font 2,5 + 1,5 ?",
+      "4"
+    ],
+    [
+      "Combien font 10 Ã— 0,5 ?",
+      "5"
+    ],
+    [
+      "Quel est le pÃ©rimÃ¨tre dâ€™un carrÃ© de cÃ´tÃ© 4 cm ?",
+      "16 cm"
+    ],
+    [
+      "Quelle est lâ€™aire dâ€™un carrÃ© de cÃ´tÃ© 5 cm ?",
+      "25 cmÂ²"
+    ],
+    [
+      "Combien de cÃ´tÃ©s a un hexagone ?",
+      "6"
+    ],
+    [
+      "Combien de degrÃ©s mesure un angle droit ?",
+      "90Â°"
+    ],
+    [
+      "Combien de degrÃ©s mesure un angle plat ?",
+      "180Â°"
+    ],
+    [
+      "Quel est le plus petit nombre premier ?",
+      "2"
+    ],
+    [
+      "Quel nombre vient aprÃ¨s 999 ?",
+      "1000"
+    ],
+    [
+      "Combien font 14 Ã— 3 ?",
+      "42"
+    ],
+    [
+      "Combien font 81 Ã· 9 ?",
+      "9"
+    ],
+    [
+      "Combien font 125 + 75 ?",
+      "200"
+    ],
+    [
+      "Combien font 400 âˆ’ 165 ?",
+      "235"
+    ],
+    [
+      "Quel est le quart de 64 ?",
+      "16"
+    ],
+    [
+      "Quel est le tiers de 27 ?",
+      "9"
+    ],
+    [
+      "Combien font 11 Ã— 11 ?",
+      "121"
+    ],
+    [
+      "Combien font 144 Ã· 12 ?",
+      "12"
+    ],
+    [
+      "Convertis 2 mÃ¨tres en centimÃ¨tres.",
+      "200 cm"
+    ],
+    [
+      "Combien de minutes y a-t-il dans 2 heures ?",
+      "120 minutes"
+    ],
+    [
+      "Combien de grammes font 1 kilogramme ?",
+      "1000 g"
+    ],
+    [
+      "Combien font 5Â² ?",
+      "25"
+    ],
+    [
+      "Combien font 2Â³ ?",
+      "8"
+    ],
+    [
+      "Quel est le rÃ©sultat de 0 Ã— 93 ?",
+      "0"
+    ],
+    [
+      "Quel est le rÃ©sultat de 48 + 52 ?",
+      "100"
+    ],
+    [
+      "Combien font 90 Ã· 10 ?",
+      "9"
+    ],
+    [
+      "Si tu as 3 paquets de 6 bonbons, combien en as-tu ?",
+      "18"
+    ],
+    [
+      "Un triangle a combien de sommets ?",
+      "3"
+    ],
+    [
+      "Combien de cÃ´tÃ©s a un pentagone ?",
+      "5"
+    ],
+    [
+      "Quelle est lâ€™aire dâ€™un rectangle de 4 cm sur 3 cm ?",
+      "12 cmÂ²"
+    ],
+    [
+      "Quel est le pÃ©rimÃ¨tre dâ€™un rectangle de 5 cm sur 2 cm ?",
+      "14 cm"
+    ],
+    [
+      "Combien font 20 % de 50 ?",
+      "10"
+    ],
+    [
+      "Ã‰cris 1/2 en nombre dÃ©cimal.",
+      "0,5"
+    ],
+    [
+      "Combien font 7 Ã— 12 ?",
+      "84"
+    ],
+    [
+      "Combien font 200 Ã· 5 ?",
+      "40"
+    ],
+    [
+      "Quel est le nombre pair entre 13, 15 et 18 ?",
+      "18"
+    ]
+  ],
+  "sciences": [
+    [
+      "Quelle planÃ¨te est surnommÃ©e la planÃ¨te rouge ?",
+      "Mars"
+    ],
+    [
+      "Quel organe pompe le sang ?",
+      "Le cÅ“ur"
+    ],
+    [
+      "Quel gaz les humains respirent-ils pour vivre ?",
+      "Le dioxygÃ¨ne"
+    ],
+    [
+      "Quelle Ã©toile Ã©claire la Terre le jour ?",
+      "Le Soleil"
+    ],
+    [
+      "Quel est lâ€™Ã©tat de lâ€™eau sous forme de glace ?",
+      "Solide"
+    ],
+    [
+      "Quel organe permet principalement de respirer ?",
+      "Les poumons"
+    ],
+    [
+      "Combien de pattes a une araignÃ©e ?",
+      "8"
+    ],
+    [
+      "Comment appelle-t-on les animaux qui mangent des plantes ?",
+      "Herbivores"
+    ],
+    [
+      "Quel est le satellite naturel de la Terre ?",
+      "La Lune"
+    ],
+    [
+      "Quelle force nous attire vers le sol ?",
+      "La gravitÃ©"
+    ],
+    [
+      "Quel organe permet de penser ?",
+      "Le cerveau"
+    ],
+    [
+      "Quelle partie de la plante absorbe lâ€™eau du sol ?",
+      "Les racines"
+    ],
+    [
+      "Quel gaz les plantes absorbent-elles pour la photosynthÃ¨se ?",
+      "Le dioxyde de carbone"
+    ],
+    [
+      "Ã€ quelle tempÃ©rature lâ€™eau gÃ¨le-t-elle en degrÃ©s Celsius ?",
+      "0 Â°C"
+    ],
+    [
+      "Ã€ quelle tempÃ©rature lâ€™eau bout-elle au niveau de la mer ?",
+      "100 Â°C"
+    ],
+    [
+      "Quel sens utilise-t-on avec les oreilles ?",
+      "Lâ€™ouÃ¯e"
+    ],
+    [
+      "Quel sens utilise-t-on avec les yeux ?",
+      "La vue"
+    ],
+    [
+      "Quel est le plus grand organe du corps humain ?",
+      "La peau"
+    ],
+    [
+      "Quel animal est un mammifÃ¨re marin : dauphin ou requin ?",
+      "Le dauphin"
+    ],
+    [
+      "Comment appelle-t-on un animal qui chasse dâ€™autres animaux ?",
+      "Un prÃ©dateur"
+    ],
+    [
+      "Quel organe filtre le sang et produit lâ€™urine ?",
+      "Les reins"
+    ],
+    [
+      "Quelle partie du corps protÃ¨ge le cerveau ?",
+      "Le crÃ¢ne"
+    ],
+    [
+      "Quel nutriment fournit principalement de lâ€™Ã©nergie rapide ?",
+      "Les glucides"
+    ],
+    [
+      "Comment appelle-t-on le passage du liquide au gaz ?",
+      "La vaporisation"
+    ],
+    [
+      "Comment appelle-t-on le passage du gaz au liquide ?",
+      "La condensation"
+    ],
+    [
+      "Quelle planÃ¨te est la plus proche du Soleil ?",
+      "Mercure"
+    ],
+    [
+      "Quelle planÃ¨te est la plus grande du systÃ¨me solaire ?",
+      "Jupiter"
+    ],
+    [
+      "Combien de planÃ¨tes compte le systÃ¨me solaire ?",
+      "8"
+    ],
+    [
+      "Quel mÃ©tal est attirÃ© par un aimant courant ?",
+      "Le fer"
+    ],
+    [
+      "Quel appareil mesure la tempÃ©rature ?",
+      "Le thermomÃ¨tre"
+    ],
+    [
+      "Quelle Ã©nergie vient du Soleil ?",
+      "Lâ€™Ã©nergie solaire"
+    ],
+    [
+      "Quel est le rÃ´le principal des feuilles ?",
+      "RÃ©aliser la photosynthÃ¨se"
+    ],
+    [
+      "Quel groupe dâ€™animaux nourrit ses petits avec du lait ?",
+      "Les mammifÃ¨res"
+    ],
+    [
+      "Quel animal amphibien peut vivre dans lâ€™eau et sur terre ?",
+      "La grenouille"
+    ],
+    [
+      "Comment appelle-t-on les animaux actifs surtout la nuit ?",
+      "Nocturnes"
+    ],
+    [
+      "Quel est le centre dâ€™un atome ?",
+      "Le noyau"
+    ],
+    [
+      "Quel organe permet de digÃ©rer les aliments avec des sucs digestifs ?",
+      "Lâ€™estomac"
+    ],
+    [
+      "Quel liquide transporte les cellules et nutriments dans le corps ?",
+      "Le sang"
+    ],
+    [
+      "Quel phÃ©nomÃ¨ne produit un Ã©clair pendant un orage ?",
+      "Une dÃ©charge Ã©lectrique"
+    ],
+    [
+      "Quelle partie de lâ€™Å“il rÃ¨gle la quantitÃ© de lumiÃ¨re qui entre ?",
+      "Lâ€™iris"
+    ],
+    [
+      "Quel est le nom du changement de solide Ã  liquide ?",
+      "La fusion"
+    ],
+    [
+      "Quel est le nom du changement de liquide Ã  solide ?",
+      "La solidification"
+    ],
+    [
+      "Quel astre est au centre du systÃ¨me solaire ?",
+      "Le Soleil"
+    ],
+    [
+      "Quel gaz compose la plus grande partie de lâ€™air ?",
+      "Lâ€™azote"
+    ],
+    [
+      "Quel animal pond des Å“ufs et possÃ¨de des plumes ?",
+      "Lâ€™oiseau"
+    ],
+    [
+      "Comment appelle-t-on lâ€™Ã©tude des Ãªtres vivants ?",
+      "La biologie"
+    ],
+    [
+      "Quel systÃ¨me du corps transporte le sang ?",
+      "Le systÃ¨me circulatoire"
+    ],
+    [
+      "Quelle vitamine le corps peut-il fabriquer grÃ¢ce au soleil ?",
+      "La vitamine D"
+    ],
+    [
+      "Quel type de roche provient du refroidissement du magma ?",
+      "Une roche magmatique"
+    ],
+    [
+      "Quel est le principal rÃ´le des os ?",
+      "Soutenir et protÃ©ger le corps"
+    ]
+  ],
+  "geographie": [
+    [
+      "Quelle est la capitale dâ€™HaÃ¯ti ?",
+      "Port-au-Prince"
+    ],
+    [
+      "Sur quel continent se trouve HaÃ¯ti ?",
+      "AmÃ©rique du Nord"
+    ],
+    [
+      "Quelle est la capitale de la France ?",
+      "Paris"
+    ],
+    [
+      "Quelle est la capitale du Canada ?",
+      "Ottawa"
+    ],
+    [
+      "Quelle est la capitale du Japon ?",
+      "Tokyo"
+    ],
+    [
+      "Quelle est la capitale du BrÃ©sil ?",
+      "BrasÃ­lia"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Espagne ?",
+      "Madrid"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Italie ?",
+      "Rome"
+    ],
+    [
+      "Quelle est la capitale du Royaume-Uni ?",
+      "Londres"
+    ],
+    [
+      "Quelle est la capitale du Mexique ?",
+      "Mexico"
+    ],
+    [
+      "Quel ocÃ©an se trouve entre lâ€™Afrique et lâ€™AmÃ©rique ?",
+      "Lâ€™ocÃ©an Atlantique"
+    ],
+    [
+      "Quel est le plus grand ocÃ©an ?",
+      "Lâ€™ocÃ©an Pacifique"
+    ],
+    [
+      "Quel fleuve traverse lâ€™Ã‰gypte ?",
+      "Le Nil"
+    ],
+    [
+      "Quel est le plus grand continent ?",
+      "Lâ€™Asie"
+    ],
+    [
+      "Quel continent est aussi un pays ?",
+      "Lâ€™Australie"
+    ],
+    [
+      "Quelle est la capitale de la RÃ©publique dominicaine ?",
+      "Saint-Domingue"
+    ],
+    [
+      "Quelle est la capitale de Cuba ?",
+      "La Havane"
+    ],
+    [
+      "Quelle est la capitale de la JamaÃ¯que ?",
+      "Kingston"
+    ],
+    [
+      "Quelle est la capitale des Ã‰tats-Unis ?",
+      "Washington, D.C."
+    ],
+    [
+      "Quelle est la capitale de la Chine ?",
+      "PÃ©kin"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Inde ?",
+      "New Delhi"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Allemagne ?",
+      "Berlin"
+    ],
+    [
+      "Quelle est la capitale du Portugal ?",
+      "Lisbonne"
+    ],
+    [
+      "Quelle est la capitale de la Belgique ?",
+      "Bruxelles"
+    ],
+    [
+      "Quelle est la capitale de la Suisse ?",
+      "Berne"
+    ],
+    [
+      "Quelle est la capitale de la Russie ?",
+      "Moscou"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Ã‰gypte ?",
+      "Le Caire"
+    ],
+    [
+      "Quelle est la capitale du SÃ©nÃ©gal ?",
+      "Dakar"
+    ],
+    [
+      "Quelle est la capitale du Kenya ?",
+      "Nairobi"
+    ],
+    [
+      "Quelle est la capitale du Nigeria ?",
+      "Abuja"
+    ],
+    [
+      "Quelle est la capitale du Maroc ?",
+      "Rabat"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Argentine ?",
+      "Buenos Aires"
+    ],
+    [
+      "Quelle est la capitale du PÃ©rou ?",
+      "Lima"
+    ],
+    [
+      "Quelle est la capitale du Chili ?",
+      "Santiago"
+    ],
+    [
+      "Quelle est la capitale de la Colombie ?",
+      "BogotÃ¡"
+    ],
+    [
+      "Quel pays partage lâ€™Ã®le dâ€™Hispaniola avec HaÃ¯ti ?",
+      "La RÃ©publique dominicaine"
+    ],
+    [
+      "Quelle chaÃ®ne de montagnes se trouve en AmÃ©rique du Sud ?",
+      "Les Andes"
+    ],
+    [
+      "Quel dÃ©sert est le plus vaste dÃ©sert chaud ?",
+      "Le Sahara"
+    ],
+    [
+      "Sur quel continent se trouve le Kenya ?",
+      "Lâ€™Afrique"
+    ],
+    [
+      "Sur quel continent se trouve lâ€™Inde ?",
+      "Lâ€™Asie"
+    ],
+    [
+      "Quelle est la capitale de la CorÃ©e du Sud ?",
+      "SÃ©oul"
+    ],
+    [
+      "Quelle est la capitale de la ThaÃ¯lande ?",
+      "Bangkok"
+    ],
+    [
+      "Quelle est la capitale de lâ€™Australie ?",
+      "Canberra"
+    ],
+    [
+      "Quelle est la capitale de la Nouvelle-ZÃ©lande ?",
+      "Wellington"
+    ],
+    [
+      "Quelle est la capitale de la NorvÃ¨ge ?",
+      "Oslo"
+    ],
+    [
+      "Quelle est la capitale de la SuÃ¨de ?",
+      "Stockholm"
+    ],
+    [
+      "Quelle est la capitale de la GrÃ¨ce ?",
+      "AthÃ¨nes"
+    ],
+    [
+      "Quelle est la capitale de la Turquie ?",
+      "Ankara"
+    ],
+    [
+      "Quel ocÃ©an borde lâ€™est de lâ€™Afrique ?",
+      "Lâ€™ocÃ©an Indien"
+    ],
+    [
+      "Comment appelle-t-on une reprÃ©sentation plane de la Terre ?",
+      "Une carte"
+    ]
+  ],
+  "francais": [
+    [
+      "Quel est le pluriel de Â« cheval Â» ?",
+      "Chevaux"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« acteur Â» ?",
+      "Actrice"
+    ],
+    [
+      "Dans Â« Les enfants jouent Â», quel est le verbe ?",
+      "jouent"
+    ],
+    [
+      "Quel est le contraire de Â« courageux Â» ?",
+      "LÃ¢che"
+    ],
+    [
+      "Quel est un synonyme de Â« heureux Â» ?",
+      "Joyeux"
+    ],
+    [
+      "Quel est le pluriel de Â« journal Â» ?",
+      "Journaux"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« gentil Â» ?",
+      "Gentille"
+    ],
+    [
+      "Dans Â« Marie chante Â», quel est le sujet ?",
+      "Marie"
+    ],
+    [
+      "Quel type de mot est Â« rapidement Â» ?",
+      "Un adverbe"
+    ],
+    [
+      "Quel est lâ€™infinitif de Â« nous finissons Â» ?",
+      "Finir"
+    ],
+    [
+      "Conjugue Â« Ãªtre Â» avec Â« je Â» au prÃ©sent.",
+      "Je suis"
+    ],
+    [
+      "Conjugue Â« avoir Â» avec Â« tu Â» au prÃ©sent.",
+      "Tu as"
+    ],
+    [
+      "Conjugue Â« aller Â» avec Â« nous Â» au prÃ©sent.",
+      "Nous allons"
+    ],
+    [
+      "Quel est le participe passÃ© de Â« prendre Â» ?",
+      "Pris"
+    ],
+    [
+      "Quel est le pluriel de Â« bateau Â» ?",
+      "Bateaux"
+    ],
+    [
+      "Quel est le contraire de Â« ancien Â» ?",
+      "Nouveau"
+    ],
+    [
+      "Quel est un synonyme de Â« commencer Â» ?",
+      "DÃ©buter"
+    ],
+    [
+      "Dans Â« une jolie fleur Â», quel mot est lâ€™adjectif ?",
+      "jolie"
+    ],
+    [
+      "Quel signe termine gÃ©nÃ©ralement une question ?",
+      "Le point dâ€™interrogation"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« heureux Â» ?",
+      "Heureuse"
+    ],
+    [
+      "Quel est le pluriel de Â« nez Â» ?",
+      "Nez"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« blanc Â» ?",
+      "Blanche"
+    ],
+    [
+      "Quel est lâ€™infinitif de Â« ils prennent Â» ?",
+      "Prendre"
+    ],
+    [
+      "Quel est le sujet dans Â« Le chien aboie Â» ?",
+      "Le chien"
+    ],
+    [
+      "Quel temps est Â« je mangeais Â» ?",
+      "Lâ€™imparfait"
+    ],
+    [
+      "Quel temps est Â« nous avons parlÃ© Â» ?",
+      "Le passÃ© composÃ©"
+    ],
+    [
+      "Quel est le contraire de Â« lÃ©ger Â» ?",
+      "Lourd"
+    ],
+    [
+      "Quel est un synonyme de Â« maison Â» ?",
+      "Demeure"
+    ],
+    [
+      "Quel type de phrase donne un ordre ?",
+      "Une phrase impÃ©rative"
+    ],
+    [
+      "Combien de syllabes entend-on dans Â« papillon Â» ?",
+      "3"
+    ],
+    [
+      "Quel est le pluriel de Â« travail Â» ?",
+      "Travaux"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« sportif Â» ?",
+      "Sportive"
+    ],
+    [
+      "Quel mot est un nom dans Â« Le chat dort Â» ?",
+      "chat"
+    ],
+    [
+      "Quel est le pronom personnel sujet de Â« Paul et moi Â» ?",
+      "Nous"
+    ],
+    [
+      "Quel est lâ€™infinitif de Â« vous faites Â» ?",
+      "Faire"
+    ],
+    [
+      "Quel est le participe passÃ© de Â« voir Â» ?",
+      "Vu"
+    ],
+    [
+      "Quel est le contraire de Â« rarement Â» ?",
+      "Souvent"
+    ],
+    [
+      "Quel est un synonyme de Â« rapide Â» ?",
+      "VÃ©loce"
+    ],
+    [
+      "Quel dÃ©terminant trouve-t-on dans Â« cette maison Â» ?",
+      "cette"
+    ],
+    [
+      "Quel est le pluriel de Â« Å“il Â» ?",
+      "Yeux"
+    ],
+    [
+      "Quel temps exprime une action future dans Â« je partirai Â» ?",
+      "Le futur simple"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« directeur Â» ?",
+      "Directrice"
+    ],
+    [
+      "Dans Â« trÃ¨s grand Â», quel mot est lâ€™adverbe ?",
+      "trÃ¨s"
+    ],
+    [
+      "Quel est le contraire de Â« silencieux Â» ?",
+      "Bruyant"
+    ],
+    [
+      "Quel est le participe passÃ© de Â« Ã©crire Â» ?",
+      "Ã‰crit"
+    ],
+    [
+      "Quel est le pluriel de Â« animal Â» ?",
+      "Animaux"
+    ],
+    [
+      "Quelle est la nature de Â« mais Â» ?",
+      "Une conjonction de coordination"
+    ],
+    [
+      "Quel est le sujet dans Â« Nous apprenons le franÃ§ais Â» ?",
+      "Nous"
+    ],
+    [
+      "Quel est le fÃ©minin de Â« beau Â» devant Â« fille Â» ?",
+      "Belle"
+    ],
+    [
+      "Quel signe marque une exclamation ?",
+      "Le point dâ€™exclamation"
+    ]
+  ],
+  "anglais": [
+    [
+      "Comment dit-on Â« bonjour Â» en anglais ?",
+      "Hello"
+    ],
+    [
+      "Comment dit-on Â« merci Â» en anglais ?",
+      "Thank you"
+    ],
+    [
+      "Que signifie Â« book Â» en franÃ§ais ?",
+      "Livre"
+    ],
+    [
+      "Que signifie Â« water Â» en franÃ§ais ?",
+      "Eau"
+    ],
+    [
+      "Quel est le pluriel de Â« child Â» ?",
+      "Children"
+    ],
+    [
+      "Comment dit-on Â« chien Â» en anglais ?",
+      "Dog"
+    ],
+    [
+      "Comment dit-on Â« chat Â» en anglais ?",
+      "Cat"
+    ],
+    [
+      "Que signifie Â« school Â» ?",
+      "Ã‰cole"
+    ],
+    [
+      "Comment dit-on Â« rouge Â» en anglais ?",
+      "Red"
+    ],
+    [
+      "Comment dit-on Â« bleu Â» en anglais ?",
+      "Blue"
+    ],
+    [
+      "ComplÃ¨te : I ___ a student.",
+      "am"
+    ],
+    [
+      "ComplÃ¨te : She ___ happy.",
+      "is"
+    ],
+    [
+      "ComplÃ¨te : They ___ friends.",
+      "are"
+    ],
+    [
+      "Quel est le passÃ© de Â« go Â» ?",
+      "Went"
+    ],
+    [
+      "Quel est le pluriel de Â« mouse Â» ?",
+      "Mice"
+    ],
+    [
+      "Que signifie Â« family Â» ?",
+      "Famille"
+    ],
+    [
+      "Que signifie Â« beautiful Â» ?",
+      "Beau ou belle"
+    ],
+    [
+      "Comment dit-on Â« lundi Â» ?",
+      "Monday"
+    ],
+    [
+      "Comment dit-on Â« dimanche Â» ?",
+      "Sunday"
+    ],
+    [
+      "Quel est le contraire de Â« hot Â» ?",
+      "Cold"
+    ],
+    [
+      "Que signifie Â« apple Â» ?",
+      "Pomme"
+    ],
+    [
+      "Comment dit-on Â« livre Â» ?",
+      "Book"
+    ],
+    [
+      "Comment dit-on Â« Ã©cole Â» ?",
+      "School"
+    ],
+    [
+      "Que signifie Â« friend Â» ?",
+      "Ami ou amie"
+    ],
+    [
+      "Quel est le passÃ© de Â« eat Â» ?",
+      "Ate"
+    ],
+    [
+      "ComplÃ¨te : He ___ football.",
+      "plays"
+    ],
+    [
+      "Quel pronom signifie Â« nous Â» ?",
+      "We"
+    ],
+    [
+      "Quel pronom signifie Â« ils/elles Â» ?",
+      "They"
+    ],
+    [
+      "Comment dit-on Â« merci beaucoup Â» ?",
+      "Thank you very much"
+    ],
+    [
+      "Que signifie Â« good night Â» ?",
+      "Bonne nuit"
+    ],
+    [
+      "Quel est le contraire de Â« big Â» ?",
+      "Small"
+    ],
+    [
+      "Quel est le contraire de Â« fast Â» ?",
+      "Slow"
+    ],
+    [
+      "Comment dit-on Â« livreur Â» ?",
+      "Delivery person"
+    ],
+    [
+      "Comment dit-on Â« mÃ¨re Â» ?",
+      "Mother"
+    ],
+    [
+      "Comment dit-on Â« pÃ¨re Â» ?",
+      "Father"
+    ],
+    [
+      "Que signifie Â« window Â» ?",
+      "FenÃªtre"
+    ],
+    [
+      "Que signifie Â« chair Â» ?",
+      "Chaise"
+    ],
+    [
+      "Comment dit-on Â« rouge Â» ?",
+      "Red"
+    ],
+    [
+      "Comment dit-on Â« vert Â» ?",
+      "Green"
+    ],
+    [
+      "Quel est le pluriel de Â« foot Â» ?",
+      "Feet"
+    ],
+    [
+      "Quel est le passÃ© de Â« see Â» ?",
+      "Saw"
+    ],
+    [
+      "Quel est le passÃ© de Â« have Â» ?",
+      "Had"
+    ],
+    [
+      "Que signifie Â« tomorrow Â» ?",
+      "Demain"
+    ],
+    [
+      "Que signifie Â« yesterday Â» ?",
+      "Hier"
+    ],
+    [
+      "Comment dit-on Â« sâ€™il vous plaÃ®t Â» ?",
+      "Please"
+    ],
+    [
+      "Comment dit-on Â« excusez-moi Â» ?",
+      "Excuse me"
+    ],
+    [
+      "Quel est le contraire de Â« happy Â» ?",
+      "Sad"
+    ],
+    [
+      "Que signifie Â« breakfast Â» ?",
+      "Petit-dÃ©jeuner"
+    ],
+    [
+      "Comment dit-on Â« huit Â» ?",
+      "Eight"
+    ],
+    [
+      "Que signifie Â« evening Â» ?",
+      "Soir"
+    ]
+  ],
+  "culture": [
+    [
+      "Combien de jours y a-t-il dans une semaine
+  
 </body>
 </html>
