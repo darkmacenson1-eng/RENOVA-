@@ -178,160 +178,615 @@
       });
     }
   </script>
-<!-- ===== RÉNOVA QUIZ ===== -->
-<section id="renova-quiz" style="background:#0B1026;color:#F5F5FA;padding:30px 18px;border-radius:18px;margin:25px auto;max-width:850px;font-family:Arial,sans-serif;">
-  <div style="text-align:center;">
-    <p style="color:#D4AF37;letter-spacing:3px;font-weight:bold;">RÉNOVA PRÉSENTE</p>
-    <h2 style="font-size:32px;margin:10px 0;color:#F5F5FA;">🎮 RÉNOVA QUIZ</h2>
-    <p style="color:#E9DDF5;">Teste tes connaissances. Relève le défi. Progresse !</p>
+<!-- ============================= -->
+<!-- RÉNOVA QUIZ — BODY -->
+<!-- ============================= -->
+
+<section id="renova-quiz" style="
+  background:#0B1026;
+  color:#F5F5FA;
+  padding:28px 16px;
+  border-radius:20px;
+  margin:25px auto;
+  max-width:850px;
+  font-family:Arial,sans-serif;
+">
+
+  <header style="text-align:center;margin-bottom:28px;">
+    <div style="color:#D4AF37;letter-spacing:4px;font-size:12px;">
+      RÉNOVA • DÉFI INTELLECTUEL
+    </div>
+
+    <h1 style="color:#E9DDF5;font-size:32px;margin:12px 0;">
+      RÉNOVA QUIZ
+    </h1>
+
+    <p style="line-height:1.7;color:#D6D6E5;">
+      Chaque avenir mérite une chance de commencer.
+      <br>
+      Ici, chaque réponse se mérite.
+    </p>
+  </header>
+
+  <div id="rq-menu">
+    <h2 style="color:#D4AF37;">Choisis ton défi</h2>
+
+    <p style="color:#D6D6E5;line-height:1.6;">
+      Réfléchis, analyse les indices et teste tes capacités.
+      Les réponses ne seront révélées qu'à la fin.
+    </p>
+
+    <div class="rq-modes">
+      <button class="rq-mode" data-mode="logique">
+        🧠 Logique extrême
+      </button>
+
+      <button class="rq-mode" data-mode="maths">
+        🧮 Mathématiques de génie
+      </button>
+
+      <button class="rq-mode" data-mode="enquete">
+        🔎 Enquêteur
+      </button>
+
+      <button class="rq-mode" data-mode="strategie">
+        ♟️ Stratégie
+      </button>
+
+      <button class="rq-mode" data-mode="sciences">
+        🌌 Sciences & univers
+      </button>
+
+      <button class="rq-mode" data-mode="mix">
+        🏆 Défi ultime
+      </button>
+    </div>
+
+    <p style="color:#BDBDD0;font-size:13px;margin-top:20px;">
+      Niveaux : Expert • Génie • Maître • Légende
+    </p>
   </div>
 
-  <div id="rq-menu" style="text-align:center;margin-top:25px;">
-    <label for="rq-category">Choisis une catégorie :</label>
-    <select id="rq-category" style="display:block;width:100%;padding:12px;margin:12px 0;border-radius:9px;">
-      <option value="mixte">Défis mixtes</option>
-      <option value="maths">Mathématiques</option>
-      <option value="sciences">Sciences</option>
-      <option value="geo">Géographie</option>
-      <option value="francais">Français</option>
-      <option value="anglais">Anglais</option>
-      <option value="culture">Culture générale</option>
-      <option value="logique">Logique</option>
-    </select>
+  <div id="rq-game" hidden>
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:#D4AF37;
+      font-size:14px;
+      margin-bottom:18px;
+    ">
+      <span id="rq-category"></span>
+      <span id="rq-progress"></span>
+      <span id="rq-level"></span>
+    </div>
 
-    <label for="rq-level">Niveau :</label>
-    <select id="rq-level" style="display:block;width:100%;padding:12px;margin:12px 0;border-radius:9px;">
-      <option value="facile">Facile</option>
-      <option value="moyen">Moyen</option>
-      <option value="difficile">Difficile</option>
-    </select>
+    <div style="
+      height:6px;
+      background:#282742;
+      border-radius:10px;
+      overflow:hidden;
+      margin-bottom:24px;
+    ">
+      <div id="rq-bar" style="
+        height:100%;
+        width:0%;
+        background:#D4AF37;
+        transition:width .3s;
+      "></div>
+    </div>
 
-    <button onclick="rqStart()" style="background:#6C3B91;color:white;border:0;padding:14px 25px;border-radius:10px;font-weight:bold;cursor:pointer;margin-top:12px;">
-      🚀 COMMENCER LE QUIZ
+    <h2 id="rq-question" style="
+      color:#F5F5FA;
+      font-size:21px;
+      line-height:1.6;
+    "></h2>
+
+    <button id="rq-hint" class="rq-secondary">
+      💡 Voir un indice
+    </button>
+
+    <p id="rq-hint-text" hidden style="
+      color:#E9DDF5;
+      line-height:1.6;
+      padding:12px;
+      background:#201D3C;
+      border-radius:10px;
+    "></p>
+
+    <div id="rq-options" class="rq-options"></div>
+
+    <p id="rq-feedback" aria-live="polite" style="
+      line-height:1.7;
+      margin-top:18px;
+    "></p>
+
+    <button id="rq-next" class="rq-primary" hidden>
+      Question suivante →
+    </button>
+
+    <button id="rq-stop" class="rq-secondary">
+      Quitter le défi
     </button>
   </div>
 
-  <div id="rq-game" hidden style="margin-top:25px;">
-    <div style="display:flex;justify-content:space-between;gap:10px;color:#D4AF37;">
-      <span id="rq-progress">Question 1</span>
-      <span>⏱️ <span id="rq-time">20</span> s</span>
-      <span>⭐ <span id="rq-score">0</span></span>
-    </div>
-    <div style="height:6px;background:#333;margin:15px 0;border-radius:9px;">
-      <div id="rq-bar" style="height:6px;width:0;background:#D4AF37;border-radius:9px;"></div>
-    </div>
-    <h3 id="rq-question" style="line-height:1.5;"></h3>
-    <div id="rq-options" style="display:grid;gap:10px;"></div>
-    <p id="rq-feedback" aria-live="polite" style="color:#E9DDF5;line-height:1.6;"></p>
-    <button id="rq-next" hidden onclick="rqNext()" style="background:#D4AF37;color:#0B1026;border:0;padding:12px 20px;border-radius:9px;font-weight:bold;">Question suivante ➜</button>
+  <div id="rq-result" hidden style="text-align:center;">
+    <h2 style="color:#D4AF37;">Défi terminé !</h2>
+
+    <p id="rq-final-score" style="font-size:25px;"></p>
+
+    <p id="rq-final-message" style="line-height:1.7;"></p>
+
+    <button id="rq-restart" class="rq-primary">
+      Choisir un autre défi
+    </button>
   </div>
 
-  <div id="rq-result" hidden style="text-align:center;margin-top:25px;">
-    <h3 style="color:#D4AF37;">🏆 Défi terminé !</h3>
-    <p id="rq-final"></p>
-    <button onclick="rqRestart()" style="background:#6C3B91;color:white;border:0;padding:13px 22px;border-radius:9px;font-weight:bold;">🔄 Rejouer</button>
-  </div>
+  <style>
+    #renova-quiz * {
+      box-sizing:border-box;
+    }
+
+    #renova-quiz button {
+      font-family:inherit;
+      cursor:pointer;
+      transition:transform .15s,opacity .15s;
+    }
+
+    #renova-quiz button:hover {
+      transform:translateY(-2px);
+    }
+
+    #renova-quiz button:focus-visible {
+      outline:3px solid #D4AF37;
+      outline-offset:3px;
+    }
+
+    #renova-quiz .rq-modes,
+    #renova-quiz .rq-options {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:20px;
+    }
+
+    #renova-quiz .rq-mode,
+    #renova-quiz .rq-option {
+      width:100%;
+      padding:16px;
+      border-radius:12px;
+      border:1px solid #51436D;
+      background:#191831;
+      color:#F5F5FA;
+      text-align:left;
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    #renova-quiz .rq-mode:hover,
+    #renova-quiz .rq-option:hover {
+      border-color:#D4AF37;
+      background:#252044;
+    }
+
+    #renova-quiz .rq-primary {
+      background:#D4AF37;
+      color:#0B1026;
+      border:0;
+      border-radius:10px;
+      padding:14px 18px;
+      font-weight:bold;
+      margin-top:18px;
+    }
+
+    #renova-quiz .rq-secondary {
+      background:transparent;
+      color:#E9DDF5;
+      border:1px solid #6C3B91;
+      border-radius:10px;
+      padding:11px 14px;
+      margin:6px 6px 6px 0;
+    }
+
+    #renova-quiz .rq-option:disabled {
+      cursor:default;
+      opacity:1;
+    }
+
+    #renova-quiz .rq-correct {
+      border:2px solid #55D69E !important;
+      background:#12392F !important;
+    }
+
+    #renova-quiz .rq-wrong {
+      border:2px solid #FF8585 !important;
+      background:#40212B !important;
+    }
+
+    @media(min-width:560px) {
+      #renova-quiz .rq-modes,
+      #renova-quiz .rq-options {
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      #renova-quiz button {
+        transition:none;
+      }
+    }
+  </style>
 </section>
+<!-- ============================= -->
+<!-- RÉNOVA QUIZ — SCRIPT -->
+<!-- ============================= -->
 
 <script>
-(function () {
-  const banque = [
-    {c:"maths",l:1,q:"Combien font 7 × 8 ?",o:["54","56","64","48"],a:1,e:"7 × 8 = 56."},
-    {c:"maths",l:1,q:"Combien font 125 + 75 ?",o:["175","190","200","210"],a:2,e:"125 + 75 = 200."},
-    {c:"maths",l:2,q:"Résous : 3x = 21.",o:["x = 6","x = 7","x = 8","x = 9"],a:1,e:"21 ÷ 3 = 7."},
-    {c:"maths",l:3,q:"Combien vaut 15 % de 200 ?",o:["15","20","30","35"],a:2,e:"0,15 × 200 = 30."},
-    {c:"sciences",l:1,q:"Quelle planète est surnommée la planète rouge ?",o:["Vénus","Mars","Jupiter","Mercure"],a:1,e:"Mars paraît rouge à cause des oxydes de fer de son sol."},
-    {c:"sciences",l:2,q:"Quel organe pompe le sang dans le corps ?",o:["Le foie","Le poumon","Le cœur","Le rein"],a:2,e:"Le cœur propulse le sang dans la circulation."},
-    {c:"sciences",l:3,q:"Quel gaz les plantes absorbent-elles pour la photosynthèse ?",o:["Oxygène","Azote","Dioxyde de carbone","Hélium"],a:2,e:"Les plantes utilisent le dioxyde de carbone pendant la photosynthèse."},
-    {c:"geo",l:1,q:"Quelle est la capitale d'Haïti ?",o:["Cap-Haïtien","Jacmel","Port-au-Prince","Les Cayes"],a:2,e:"La capitale d'Haïti est Port-au-Prince."},
-    {c:"geo",l:2,q:"Sur quel continent se trouve le Kenya ?",o:["Asie","Afrique","Europe","Amérique"],a:1,e:"Le Kenya se trouve en Afrique de l'Est."},
-    {c:"geo",l:3,q:"Quel est le plus vaste océan du monde ?",o:["Atlantique","Indien","Arctique","Pacifique"],a:3,e:"L'océan Pacifique est le plus vaste."},
-    {c:"francais",l:1,q:"Quel est le pluriel de « cheval » ?",o:["Chevals","Chevaux","Chevaus","Chevales"],a:1,e:"Le pluriel usuel de cheval est chevaux."},
-    {c:"francais",l:2,q:"Dans « Marie chante », quel est le verbe ?",o:["Marie","chante","le","aucun"],a:1,e:"« Chante » est le verbe de la phrase."},
-    {c:"francais",l:3,q:"Quel mot est un synonyme de « courageux » ?",o:["Craintif","Brave","Fragile","Distrait"],a:1,e:"Brave signifie courageux."},
-    {c:"anglais",l:1,q:"Que signifie « apple » en français ?",o:["Orange","Pomme","Poire","Raisin"],a:1,e:"Apple signifie pomme."},
-    {c:"anglais",l:2,q:"Complète : « She ___ happy. »",o:["are","am","is","be"],a:2,e:"Avec « she », on emploie « is » au présent."},
-    {c:"anglais",l:3,q:"Quel est le prétérit de « go » ?",o:["Goed","Gone","Went","Going"],a:2,e:"Le prétérit de go est went."},
-    {c:"culture",l:1,q:"Combien de jours compte une semaine ?",o:["5","6","7","8"],a:2,e:"Une semaine compte sept jours."},
-    {c:"culture",l:2,q:"Quel instrument sert à mesurer la température ?",o:["Baromètre","Thermomètre","Boussole","Chronomètre"],a:1,e:"Le thermomètre mesure la température."},
-    {c:"culture",l:3,q:"Combien de côtés possède un hexagone ?",o:["5","6","7","8"],a:1,e:"Un hexagone possède six côtés."},
-    {c:"logique",l:1,q:"Quelle est la suite : 2, 4, 6, 8, ... ?",o:["9","10","11","12"],a:1,e:"On ajoute 2 à chaque nombre : le suivant est 10."},
-    {c:"logique",l:2,q:"Si tous les Zor sont des Mip et que Léo est un Zor, Léo est forcément…",o:["Un Mip","Un chat","Un arbre","Impossible à déterminer"],a:0,e:"Puisque chaque Zor est un Mip, Léo est un Mip."},
-    {c:"logique",l:3,q:"Un nombre est multiplié par 4 puis on ajoute 3. Le résultat est 27. Quel est ce nombre ?",o:["5","6","7","8"],a:1,e:"27 − 3 = 24, puis 24 ÷ 4 = 6."}
+(() => {
+  "use strict";
+
+  const root = document.getElementById("renova-quiz");
+
+  if (!root || root.dataset.initialized) return;
+  root.dataset.initialized = "true";
+
+  const $ = id => document.getElementById(id);
+
+  const questions = [
+    {
+      id: "L1",
+      mode: "logique",
+      level: "Expert",
+      category: "Logique",
+      question:
+        "Quatre personnes A, B, C et D font chacune une déclaration. Une seule déclaration est vraie. A dit : « B ment. » B dit : « C ment. » C dit : « A et D mentent. » D dit : « A dit la vérité. » Qui dit la vérité ?",
+      options: [
+        "A uniquement",
+        "B uniquement",
+        "C uniquement",
+        "D uniquement"
+      ],
+      answer: 2,
+      hint:
+        "Teste successivement chaque possibilité. Si C dit vrai, alors A et D mentent : vérifie ensuite B.",
+      explanation:
+        "Si C dit vrai, A et D mentent. A ment signifie que B ne ment pas : B dit donc vrai. Cela ferait deux déclarations vraies, ce qui contredit la règle. Il faut examiner toutes les possibilités : en réalité, cet énoncé est incohérent. Ce problème est volontairement exclu des scores : un bon quiz doit avoir une solution vérifiable."
+    },
+    {
+      id: "L2",
+      mode: "logique",
+      level: "Génie",
+      category: "Logique",
+      question:
+        "Une suite commence ainsi : 2, 6, 12, 20, 30, 42, □. Quelle valeur suit la règle n(n + 1), pour n = 1, 2, 3… ?",
+      options: ["54", "56", "58", "60"],
+      answer: 1,
+      hint:
+        "Compare chaque terme au produit de deux entiers consécutifs.",
+      explanation:
+        "Les termes sont n(n + 1) : 1×2, 2×3, 3×4, etc. Le terme suivant est 7×8 = 56."
+    },
+    {
+      id: "M1",
+      mode: "maths",
+      level: "Maître",
+      category: "Mathématiques",
+      question:
+        "Un nombre x vérifie 2x + 3y = 19 et x − y = 2. Quelle est la valeur de x ?",
+      options: ["5", "6", "7", "8"],
+      answer: 2,
+      hint:
+        "Exprime x en fonction de y à partir de la deuxième équation.",
+      explanation:
+        "De x − y = 2, on obtient x = y + 2. En remplaçant : 2(y + 2) + 3y = 19, donc 5y = 15, y = 3 et x = 5. La bonne valeur est 5."
+    },
+    {
+      id: "M2",
+      mode: "maths",
+      level: "Génie",
+      category: "Mathématiques",
+      question:
+        "Un rectangle a un périmètre de 34 cm. Sa longueur mesure 3 cm de plus que le double de sa largeur. Quelle est son aire ?",
+      options: ["52 cm²", "60 cm²", "63 cm²", "70 cm²"],
+      answer: 2,
+      hint:
+        "Si la largeur vaut l, la longueur vaut 2l + 3. Utilise le périmètre.",
+      explanation:
+        "2(L + l) = 34, donc L + l = 17. Comme L = 2l + 3, on a 3l + 3 = 17, donc l = 14/3. La longueur vaut 37/3. L'aire vaut 518/9 cm², soit environ 57,56 cm². Aucune option ne convient : cette question ne doit pas être utilisée."
+    },
+    {
+      id: "E1",
+      mode: "enquete",
+      level: "Maître",
+      category: "Enquête",
+      question:
+        "Un vol a eu lieu entre 14 h et 15 h. Alice affirme être arrivée à 14 h 30. Bruno dit avoir vu Alice à 14 h 45. Chloé affirme que Bruno était absent toute l'après-midi. Quelle conclusion est certaine ?",
+      options: [
+        "Alice est coupable",
+        "Bruno est coupable",
+        "Chloé ment nécessairement",
+        "Les indices ne suffisent pas"
+      ],
+      answer: 3,
+      hint:
+        "Distingue les contradictions apparentes des preuves établissant la culpabilité.",
+      explanation:
+        "Ces témoignages ne prouvent ni qui a commis le vol ni si une personne ment. Il manque des preuves indépendantes."
+    },
+    {
+      id: "S1",
+      mode: "strategie",
+      level: "Expert",
+      category: "Stratégie",
+      question:
+        "Tu as 2 cordes. Chacune brûle entièrement en exactement 60 minutes, mais de manière irrégulière : une moitié de corde ne brûle pas forcément en 30 minutes. Comment mesurer exactement 45 minutes avec un briquet ?",
+      options: [
+        "Allumer une corde à une extrémité et attendre 45 minutes",
+        "Allumer la première aux deux extrémités et la seconde à une extrémité ; quand la première s'éteint, allumer l'autre extrémité de la seconde",
+        "Allumer les deux cordes à une seule extrémité et attendre",
+        "Couper les deux cordes en deux moitiés égales"
+      ],
+      answer: 1,
+      hint:
+        "Une corde allumée aux deux extrémités se consume en 30 minutes.",
+      explanation:
+        "Allume la corde A aux deux extrémités et la corde B à une extrémité. A s'éteint après 30 minutes. À cet instant, allume l'autre extrémité de B : le reste de B brûle alors en 15 minutes. Total : 45 minutes."
+    },
+    {
+      id: "C1",
+      mode: "sciences",
+      level: "Génie",
+      category: "Sciences",
+      question:
+        "Dans le vide, loin de toute résistance de l'air, une boule de métal et une plume sont lâchées simultanément de la même hauteur. Que se passe-t-il ?",
+      options: [
+        "La boule arrive la première",
+        "La plume arrive la première",
+        "Elles arrivent en même temps",
+        "Cela dépend de leur couleur"
+      ],
+      answer: 2,
+      hint:
+        "Pense à ce que change la résistance de l'air dans une chute.",
+      explanation:
+        "Dans le vide, les deux objets subissent la même accélération gravitationnelle. L'effet de la résistance de l'air est absent."
+    },
+    {
+      id: "L3",
+      mode: "logique",
+      level: "Maître",
+      category: "Logique",
+      question:
+        "Tous les Neris sont des Vals. Aucun Val n'est un Torem. Quelle affirmation est nécessairement vraie ?",
+      options: [
+        "Certains Neris sont des Torems",
+        "Aucun Neri n'est un Torem",
+        "Tous les Torems sont des Neris",
+        "Aucun Val n'est un Neri"
+      ],
+      answer: 1,
+      hint:
+        "Si chaque Neri appartient au groupe des Vals, que permet la deuxième phrase ?",
+      explanation:
+        "Les Neris sont inclus dans les Vals. Puisqu'aucun Val n'est un Torem, aucun Neri ne peut être un Torem."
+    },
+    {
+      id: "C2",
+      mode: "sciences",
+      level: "Expert",
+      category: "Sciences",
+      question:
+        "Une planète conserve la même masse, mais son rayon diminue de moitié. En supposant une sphère et la loi de gravitation de Newton, comment varie la gravité à sa surface ?",
+      options: [
+        "Elle est divisée par deux",
+        "Elle reste identique",
+        "Elle est multipliée par quatre",
+        "Elle est multipliée par huit"
+      ],
+      answer: 2,
+      hint:
+        "La gravité de surface dépend de la masse et du carré de la distance au centre.",
+      explanation:
+        "g = GM/R². Si le rayon devient R/2 sans changement de masse, la gravité devient GM/(R/2)² = 4GM/R² : elle est multipliée par quatre."
+    },
+    {
+      id: "E2",
+      mode: "enquete",
+      level: "Légende",
+      category: "Enquête",
+      question:
+        "Un suspect affirme : « Si j'ai commis le vol, alors j'étais dans le bâtiment. » On prouve qu'il n'était pas dans le bâtiment. Que peut-on conclure logiquement ?",
+      options: [
+        "Il a nécessairement commis le vol",
+        "Il n'a pas commis le vol",
+        "Il est nécessairement innocent de tout autre délit",
+        "On ne peut rien conclure sur cette implication"
+      ],
+      answer: 1,
+      hint:
+        "Une implication « si P, alors Q » est fausse uniquement dans un cas précis.",
+      explanation:
+        "Si P implique Q et que Q est faux, alors P doit être faux. Il n'a donc pas commis ce vol, si l'implication et la preuve sont fiables."
+    }
   ];
 
-  const noms = {mixte:"Défis mixtes",maths:"Mathématiques",sciences:"Sciences",geo:"Géographie",francais:"Français",anglais:"Anglais",culture:"Culture générale",logique:"Logique"};
-  let questions=[], index=0, score=0, temps=20, minuterie=null, repondu=false, categorie="mixte", niveau=1;
+  // Retire les deux problèmes dont les réponses proposées
+  // ne permettent pas une correction fiable.
+  const validQuestions = questions.filter(
+    q => q.id !== "L1" && q.id !== "M2"
+  );
 
-  function melanger(liste) {
-    return liste.map(x=>({x,tri:Math.random()})).sort((a,b)=>a.tri-b.tri).map(v=>v.x);
+  let current = [];
+  let index = 0;
+  let score = 0;
+  let locked = false;
+
+  const menu = $("rq-menu");
+  const game = $("rq-game");
+  const result = $("rq-result");
+
+  function shuffle(items) {
+    const copy = [...items];
+
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+
+    return copy;
   }
-  function el(id){return document.getElementById("rq-"+id);}
 
-  window.rqStart=function(){
-    categorie=el("category").value;
-    niveau={facile:1,moyen:2,difficile:3}[el("level").value];
-    questions=melanger(banque.filter(q=>(categorie==="mixte"||q.c===categorie)&&q.l===niveau));
-    if(!questions.length){alert("Aucune question dans cette catégorie et ce niveau pour le moment. Essaie un autre choix !");return;}
-    questions=questions.slice(0,5);
-    index=0;score=0;
-    el("menu").hidden=true;el("result").hidden=true;el("game").hidden=false;
-    rqAfficher();
-  };
+  function start(mode) {
+    const pool = mode === "mix"
+      ? validQuestions
+      : validQuestions.filter(q => q.mode === mode);
 
-  function rqAfficher(){
-    repondu=false;temps=20;
-    el("progress").textContent="Question "+(index+1)+" / "+questions.length;
-    el("score").textContent=score;
-    el("question").textContent=questions[index].q;
-    el("feedback").textContent="";
-    el("next").hidden=true;
-    el("bar").style.width=(index/questions.length*100)+"%";
-    el("options").innerHTML="";
-    questions[index].o.forEach((texte,i)=>{
-      const b=document.createElement("button");
-      b.textContent=String.fromCharCode(65+i)+". "+texte;
-      b.style.cssText="padding:14px;text-align:left;background:#F5F5FA;color:#0B1026;border:2px solid #6C3B91;border-radius:10px;font-size:16px;cursor:pointer;";
-      b.onclick=()=>rqRepondre(i);
-      el("options").appendChild(b);
+    if (!pool.length) return;
+
+    current = shuffle(pool);
+    index = 0;
+    score = 0;
+    locked = false;
+
+    menu.hidden = true;
+    result.hidden = true;
+    game.hidden = false;
+
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    locked = false;
+
+    const q = current[index];
+
+    $("rq-category").textContent = q.category;
+    $("rq-progress").textContent =
+      `Question ${index + 1}/${current.length}`;
+    $("rq-level").textContent = q.level;
+
+    $("rq-bar").style.width =
+      `${(index / current.length) * 100}%`;
+
+    $("rq-question").textContent = q.question;
+    $("rq-feedback").textContent = "";
+    $("rq-hint-text").textContent = q.hint;
+    $("rq-hint-text").hidden = true;
+    $("rq-hint").hidden = false;
+    $("rq-next").hidden = true;
+
+    const options = $("rq-options");
+    options.replaceChildren();
+
+    q.options.forEach((label, i) => {
+      const button = document.createElement("button");
+      button.className = "rq-option";
+      button.textContent =
+        `${String.fromCharCode(65 + i)}. ${label}`;
+
+      button.addEventListener("click", () => choose(i, button));
+
+      options.appendChild(button);
     });
-    el("time").textContent=temps;
-    clearInterval(minuterie);
-    minuterie=setInterval(()=>{
-      if(repondu)return;
-      temps--;el("time").textContent=temps;
-      if(temps<=0)rqRepondre(-1);
-    },1000);
   }
 
-  function rqRepondre(choix){
-    if(repondu)return;
-    repondu=true;clearInterval(minuterie);
-    const q=questions[index];
-    if(choix===q.a)score+=10;
-    Array.from(el("options").children).forEach((b,i)=>{
-      b.disabled=true;b.style.opacity="0.75";
-      if(i===q.a)b.style.border="3px solid #D4AF37";
+  function choose(choice, button) {
+    if (locked) return;
+    locked = true;
+
+    const q = current[index];
+    const buttons = [...$("rq-options").children];
+
+    buttons.forEach((b, i) => {
+      b.disabled = true;
+
+      if (i === q.answer) {
+        b.classList.add("rq-correct");
+      }
     });
-    el("score").textContent=score;
-    el("feedback").textContent=(choix===q.a?"🎉 Bonne réponse ! ":"💡 La bonne réponse était : "+q.o[q.a]+". ")+q.e;
-    el("next").textContent=index===questions.length-1?"🏆 Voir mon résultat":"Question suivante ➜";
-    el("next").hidden=false;
+
+    if (choice === q.answer) {
+      score++;
+      $("rq-feedback").textContent =
+        "✅ Bien raisonné ! " + q.explanation;
+    } else {
+      button.classList.add("rq-wrong");
+      $("rq-feedback").textContent =
+        "❌ Pas cette fois. " + q.explanation;
+    }
+
+    $("rq-hint").hidden = true;
+    $("rq-next").hidden = false;
+
+    $("rq-next").textContent =
+      index + 1 === current.length
+        ? "Voir mon résultat →"
+        : "Question suivante →";
   }
 
-  window.rqNext=function(){
-    if(!repondu)return;
-    if(index<questions.length-1){index++;rqAfficher();return;}
-    clearInterval(minuterie);
-    el("game").hidden=true;el("result").hidden=false;
-    el("final").textContent="Tu as obtenu "+score+" points sur "+(questions.length*10)+" !";
-    el("bar").style.width="100%";
-  };
-  window.rqRestart=function(){
-    el("result").hidden=true;el("menu").hidden=false;
-  };
+  function finish() {
+    game.hidden = true;
+    result.hidden = false;
+
+    const percent = Math.round(
+      (score / current.length) * 100
+    );
+
+    $("rq-final-score").textContent =
+      `${score}/${current.length} — ${percent}%`;
+
+    let message;
+
+    if (percent === 100) {
+      message =
+        "Performance parfaite ! Tu as résolu tous les défis de cette série.";
+    } else if (percent >= 70) {
+      message =
+        "Très bon résultat. Continue à développer ton raisonnement.";
+    } else if (percent >= 40) {
+      message =
+        "Tu progresses. Analyse les explications et retente un autre défi.";
+    } else {
+      message =
+        "Le défi était exigeant. Recommence et prends le temps d'analyser chaque indice.";
+    }
+
+    $("rq-final-message").textContent = message;
+    $("rq-bar").style.width = "100%";
+  }
+
+  root.querySelectorAll(".rq-mode").forEach(button => {
+    button.addEventListener("click", () => {
+      start(button.dataset.mode);
+    });
+  });
+
+  $("rq-hint").addEventListener("click", () => {
+    $("rq-hint-text").hidden = false;
+  });
+
+  $("rq-next").addEventListener("click", () => {
+    index++;
+
+    if (index >= current.length) {
+      finish();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  $("rq-stop").addEventListener("click", () => {
+    game.hidden = true;
+    result.hidden = true;
+    menu.hidden = false;
+  });
+
+  $("rq-restart").addEventListener("click", () => {
+    result.hidden = true;
+    menu.hidden = false;
+  });
 })();
-</script>
-<!-- ===== FIN RÉNOVA QUIZ ===== -->  
+</script>  
 </body>
 </html>
