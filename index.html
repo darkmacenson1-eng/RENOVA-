@@ -177,1267 +177,636 @@
         list.appendChild(card);
       });
     }
-  </script>
-<!-- ============================= -->
-<!-- RÉNOVA QUIZ — BODY -->
-<!-- ============================= -->
+  </script>  
+<!-- =====================================================
+     RÉNOVA QUIZ — VERSION COMPLÈTE
+     BODY + CSS + SCRIPT + JAVASCRIPT
+====================================================== -->
 
-<section id="renova-quiz" style="
-  background:#0B1026;
-  color:#F5F5FA;
-  padding:28px 16px;
-  border-radius:20px;
-  margin:25px auto;
-  max-width:850px;
-  font-family:Arial,sans-serif;
-">
-
-  <header style="text-align:center;margin-bottom:28px;">
-    <div style="color:#D4AF37;letter-spacing:4px;font-size:12px;">
-      RÉNOVA • DÉFI INTELLECTUEL
-    </div>
-
-    <h1 style="color:#E9DDF5;font-size:32px;margin:12px 0;">
-      RÉNOVA QUIZ
-    </h1>
-
-    <p style="line-height:1.7;color:#D6D6E5;">
-      Chaque avenir mérite une chance de commencer.
-      <br>
-      Ici, chaque réponse se mérite.
-    </p>
-  </header>
-
-  <div id="rq-menu">
-    <h2 style="color:#D4AF37;">Choisis ton défi</h2>
-
-    <p style="color:#D6D6E5;line-height:1.6;">
-      Réfléchis, analyse les indices et teste tes capacités.
-      Les réponses ne seront révélées qu'à la fin.
-    </p>
-
-    <div class="rq-modes">
-      <button class="rq-mode" data-mode="logique">
-        🧠 Logique extrême
-      </button>
-
-      <button class="rq-mode" data-mode="maths">
-        🧮 Mathématiques de génie
-      </button>
-
-      <button class="rq-mode" data-mode="enquete">
-        🔎 Enquêteur
-      </button>
-
-      <button class="rq-mode" data-mode="strategie">
-        ♟️ Stratégie
-      </button>
-
-      <button class="rq-mode" data-mode="sciences">
-        🌌 Sciences & univers
-      </button>
-
-      <button class="rq-mode" data-mode="mix">
-        🏆 Défi ultime
-      </button>
-    </div>
-
-    <p style="color:#BDBDD0;font-size:13px;margin-top:20px;">
-      Niveaux : Expert • Génie • Maître • Légende
-    </p>
-  </div>
-
-  <div id="rq-game" hidden>
-    <div style="
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      color:#D4AF37;
-      font-size:14px;
-      margin-bottom:18px;
-    ">
-      <span id="rq-category"></span>
-      <span id="rq-progress"></span>
-      <span id="rq-level"></span>
-    </div>
-
-    <div style="
-      height:6px;
-      background:#282742;
-      border-radius:10px;
-      overflow:hidden;
-      margin-bottom:24px;
-    ">
-      <div id="rq-bar" style="
-        height:100%;
-        width:0%;
-        background:#D4AF37;
-        transition:width .3s;
-      "></div>
-    </div>
-
-    <h2 id="rq-question" style="
-      color:#F5F5FA;
-      font-size:21px;
-      line-height:1.6;
-    "></h2>
-
-    <button id="rq-hint" class="rq-secondary">
-      💡 Voir un indice
-    </button>
-
-    <p id="rq-hint-text" hidden style="
-      color:#E9DDF5;
-      line-height:1.6;
-      padding:12px;
-      background:#201D3C;
-      border-radius:10px;
-    "></p>
-
-    <div id="rq-options" class="rq-options"></div>
-
-    <p id="rq-feedback" aria-live="polite" style="
-      line-height:1.7;
-      margin-top:18px;
-    "></p>
-
-    <button id="rq-next" class="rq-primary" hidden>
-      Question suivante →
-    </button>
-
-    <button id="rq-stop" class="rq-secondary">
-      Quitter le défi
-    </button>
-  </div>
-
-  <div id="rq-result" hidden style="text-align:center;">
-    <h2 style="color:#D4AF37;">Défi terminé !</h2>
-
-    <p id="rq-final-score" style="font-size:25px;"></p>
-
-    <p id="rq-final-message" style="line-height:1.7;"></p>
-
-    <button id="rq-restart" class="rq-primary">
-      Choisir un autre défi
-    </button>
-  </div>
-
+<section id="renova-quiz">
   <style>
+    #renova-quiz {
+      --rq-bg: #0b1020;
+      --rq-card: #151e33;
+      --rq-card2: #1c2942;
+      --rq-blue: #4f8cff;
+      --rq-cyan: #55e4ff;
+      --rq-gold: #ffcf70;
+      --rq-text: #f5f7ff;
+      --rq-muted: #aab7d0;
+      --rq-green: #39d98a;
+      --rq-red: #ff6577;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--rq-text);
+      background:
+        radial-gradient(circle at top right, #18396a 0, transparent 38%),
+        radial-gradient(circle at bottom left, #241b53 0, transparent 35%),
+        var(--rq-bg);
+      padding: 24px 14px;
+      border-radius: 22px;
+      box-sizing: border-box;
+      width: 100%;
+      overflow: hidden;
+    }
+
     #renova-quiz * {
-      box-sizing:border-box;
+      box-sizing: border-box;
     }
 
-    #renova-quiz button {
-      font-family:inherit;
-      cursor:pointer;
-      transition:transform .15s,opacity .15s;
+    #renova-quiz .rq-container {
+      max-width: 950px;
+      margin: 0 auto;
     }
 
-    #renova-quiz button:hover {
-      transform:translateY(-2px);
+    #renova-quiz .rq-header {
+      text-align: center;
+      padding: 12px 5px 25px;
     }
 
+    #renova-quiz .rq-logo {
+      display: inline-block;
+      padding: 7px 16px;
+      border: 1px solid rgba(85, 228, 255, .5);
+      border-radius: 30px;
+      color: var(--rq-cyan);
+      font-weight: 900;
+      letter-spacing: 3px;
+      font-size: 12px;
+    }
+
+    #renova-quiz .rq-header h2 {
+      margin: 15px 0 7px;
+      font-size: clamp(28px, 6vw, 45px);
+      font-weight: 950;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #fff, var(--rq-cyan), #9fbdff);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    #renova-quiz .rq-header p {
+      color: var(--rq-muted);
+      margin: 0;
+    }
+
+    #renova-quiz .rq-panel {
+      background: rgba(21, 30, 51, .94);
+      border: 1px solid rgba(150, 180, 255, .16);
+      border-radius: 20px;
+      padding: clamp(16px, 4vw, 28px);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, .22);
+      margin-bottom: 18px;
+    }
+
+    #renova-quiz .rq-hidden {
+      display: none !important;
+    }
+
+    #renova-quiz .rq-panel h3 {
+      margin-top: 0;
+    }
+
+    #renova-quiz .rq-description {
+      color: var(--rq-muted);
+      margin-top: -5px;
+      margin-bottom: 22px;
+    }
+
+    #renova-quiz .rq-modes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    #renova-quiz .rq-mode {
+      min-width: 0;
+      min-height: 130px;
+      padding: 16px 12px;
+      border-radius: 15px;
+      border: 1px solid rgba(145, 175, 230, .2);
+      background: linear-gradient(145deg, #1d2a45, #121b2e);
+      color: var(--rq-text);
+      text-align: left;
+      cursor: pointer;
+      transition: transform .18s, border-color .18s, background .18s;
+    }
+
+    #renova-quiz .rq-mode:hover {
+      transform: translateY(-3px);
+      border-color: var(--rq-cyan);
+      background: linear-gradient(145deg, #243c62, #17233b);
+    }
+
+    #renova-quiz .rq-mode:focus-visible,
     #renova-quiz button:focus-visible {
-      outline:3px solid #D4AF37;
-      outline-offset:3px;
+      outline: 3px solid var(--rq-cyan);
+      outline-offset: 3px;
     }
 
-    #renova-quiz .rq-modes,
-    #renova-quiz .rq-options {
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-      margin-top:20px;
+    #renova-quiz .rq-icon {
+      display: block;
+      font-size: 27px;
+      margin-bottom: 9px;
     }
 
-    #renova-quiz .rq-mode,
-    #renova-quiz .rq-option {
-      width:100%;
-      padding:16px;
-      border-radius:12px;
-      border:1px solid #51436D;
-      background:#191831;
-      color:#F5F5FA;
-      text-align:left;
-      font-size:15px;
-      line-height:1.6;
+    #renova-quiz .rq-mode strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
-    #renova-quiz .rq-mode:hover,
-    #renova-quiz .rq-option:hover {
-      border-color:#D4AF37;
-      background:#252044;
+    #renova-quiz .rq-mode small {
+      display: block;
+      margin-top: 5px;
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--rq-muted);
+    }
+
+    #renova-quiz .rq-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--rq-muted);
+    }
+
+    #renova-quiz .rq-badge {
+      display: inline-block;
+      background: rgba(79, 140, 255, .16);
+      color: #b7d0ff;
+      border: 1px solid rgba(79, 140, 255, .3);
+      padding: 7px 11px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    #renova-quiz .rq-progress-track {
+      height: 8px;
+      background: #29344b;
+      border-radius: 30px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    #renova-quiz #rq-bar {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--rq-blue), var(--rq-cyan));
+      transition: width .3s ease;
+    }
+
+    #renova-quiz .rq-question-card {
+      padding: 20px 16px;
+      margin: 12px 0 18px;
+      background: linear-gradient(140deg, #202e4a, #172239);
+      border: 1px solid rgba(150, 180, 255, .12);
+      border-radius: 16px;
+    }
+
+    #renova-quiz #rq-question {
+      font-size: clamp(19px, 4vw, 25px);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    #renova-quiz .rq-secondary,
+    #renova-quiz .rq-primary {
+      border: 0;
+      border-radius: 11px;
+      padding: 12px 16px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity .2s, transform .2s;
     }
 
     #renova-quiz .rq-primary {
-      background:#D4AF37;
-      color:#0B1026;
-      border:0;
-      border-radius:10px;
-      padding:14px 18px;
-      font-weight:bold;
-      margin-top:18px;
+      background: linear-gradient(100deg, var(--rq-blue), #6c78ff);
+      color: white;
     }
 
     #renova-quiz .rq-secondary {
-      background:transparent;
-      color:#E9DDF5;
-      border:1px solid #6C3B91;
-      border-radius:10px;
-      padding:11px 14px;
-      margin:6px 6px 6px 0;
+      background: #283650;
+      color: var(--rq-text);
+      border: 1px solid rgba(170, 190, 230, .15);
     }
 
-    #renova-quiz .rq-option:disabled {
-      cursor:default;
-      opacity:1;
+    #renova-quiz .rq-primary:not(:disabled):hover,
+    #renova-quiz .rq-secondary:hover {
+      transform: translateY(-1px);
     }
 
-    #renova-quiz .rq-correct {
-      border:2px solid #55D69E !important;
-      background:#12392F !important;
+    #renova-quiz button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
     }
 
-    #renova-quiz .rq-wrong {
-      border:2px solid #FF8585 !important;
-      background:#40212B !important;
+    #renova-quiz .rq-hint-text {
+      background: rgba(255, 207, 112, .1);
+      border: 1px solid rgba(255, 207, 112, .25);
+      color: #ffe1a3;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    @media(min-width:560px) {
-      #renova-quiz .rq-modes,
+    #renova-quiz .rq-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 17px 0;
+    }
+
+    #renova-quiz .rq-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 52px;
+      padding: 13px;
+      text-align: left;
+      border-radius: 12px;
+      background: #1c2941;
+      border: 1px solid #33415c;
+      color: var(--rq-text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    #renova-quiz .rq-option-letter {
+      display: inline-flex;
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #344460;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    #renova-quiz .rq-option:hover:not(:disabled) {
+      border-color: var(--rq-cyan);
+      background: #253956;
+    }
+
+    #renova-quiz .rq-option.rq-correct {
+      background: rgba(57, 217, 138, .13);
+      border-color: var(--rq-green);
+    }
+
+    #renova-quiz .rq-option.rq-wrong {
+      background: rgba(255, 101, 119, .12);
+      border-color: var(--rq-red);
+    }
+
+    #renova-quiz #rq-feedback {
+      min-height: 24px;
+      line-height: 1.6;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    #renova-quiz .rq-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    #renova-quiz .rq-actions button {
+      flex: 1 1 160px;
+    }
+
+    #renova-quiz .rq-result-icon {
+      font-size: 55px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #renova-quiz #rq-result {
+      text-align: center;
+    }
+
+    #renova-quiz .rq-final-score {
+      font-size: clamp(38px, 9vw, 60px);
+      font-weight: 950;
+      color: var(--rq-gold);
+      margin: 18px 0;
+    }
+
+    #renova-quiz #rq-final-details {
+      color: var(--rq-muted);
+      line-height: 1.8;
+    }
+
+    #renova-quiz .rq-footer {
+      text-align: center;
+      color: #8796b3;
+      font-size: 11px;
+      letter-spacing: .5px;
+      margin: 22px 0 4px;
+    }
+
+    #renova-quiz #rq-timer {
+      color: var(--rq-gold);
+      font-weight: 900;
+    }
+
+    @media (min-width: 650px) {
+      #renova-quiz .rq-modes {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
       #renova-quiz .rq-options {
-        grid-template-columns:1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #renova-quiz {
+        padding: 32px 22px;
       }
     }
 
-    @media(prefers-reduced-motion:reduce) {
-      #renova-quiz button {
-        transition:none;
+    @media (max-width: 360px) {
+      #renova-quiz .rq-modes {
+        grid-template-columns: 1fr;
+      }
+
+      #renova-quiz .rq-actions button {
+        flex-basis: 100%;
       }
     }
   </style>
-</section>
-<script>
-/* RÉNOVA QUIZ ” Banque de questions
-   7 categories — 50 questions = 350 questions.
-   Le quiz mixte pioche dans les autres categories sans recopier les questions.
-   Format source : [question, reponse].
-*/
-window.RENOVA_QUIZ_BANK = {
-  "maths": [
-    [
-      "Combien font 7 + 8 ?",
-      "15"
-    ],
-    [
-      "Combien font 12 âˆ’ 5 ?",
-      "7"
-    ],
-    [
-      "Combien font 6 Ã— 4 ?",
-      "24"
-    ],
-    [
-      "Combien font 36 Ã· 6 ?",
-      "6"
-    ],
-    [
-      "Quel est le double de 9 ?",
-      "18"
-    ],
-    [
-      "Quel est le triple de 7 ?",
-      "21"
-    ],
-    [
-      "Quelle est la moitiÃ© de 50 ?",
-      "25"
-    ],
-    [
-      "Combien font 9 Ã— 9 ?",
-      "81"
-    ],
-    [
-      "Combien font 100 âˆ’ 37 ?",
-      "63"
-    ],
-    [
-      "Combien font 15 + 28 ?",
-      "43"
-    ],
-    [
-      "Combien font 8 Ã— 7 ?",
-      "56"
-    ],
-    [
-      "Combien font 72 Ã· 8 ?",
-      "9"
-    ],
-    [
-      "Quel est le carrÃ© de 5 ?",
-      "25"
-    ],
-    [
-      "Quel est le cube de 3 ?",
-      "27"
-    ],
-    [
-      "Combien font 3/4 de 20 ?",
-      "15"
-    ],
-    [
-      "Combien font 2,5 + 1,5 ?",
-      "4"
-    ],
-    [
-      "Combien font 10 Ã— 0,5 ?",
-      "5"
-    ],
-    [
-      "Quel est le pÃ©rimÃ¨tre dâ€™un carrÃ© de cÃ´tÃ© 4 cm ?",
-      "16 cm"
-    ],
-    [
-      "Quelle est lâ€™aire dâ€™un carrÃ© de cÃ´tÃ© 5 cm ?",
-      "25 cmÂ²"
-    ],
-    [
-      "Combien de cÃ´tÃ©s a un hexagone ?",
-      "6"
-    ],
-    [
-      "Combien de degrÃ©s mesure un angle droit ?",
-      "90Â°"
-    ],
-    [
-      "Combien de degrÃ©s mesure un angle plat ?",
-      "180Â°"
-    ],
-    [
-      "Quel est le plus petit nombre premier ?",
-      "2"
-    ],
-    [
-      "Quel nombre vient aprÃ¨s 999 ?",
-      "1000"
-    ],
-    [
-      "Combien font 14 Ã— 3 ?",
-      "42"
-    ],
-    [
-      "Combien font 81 Ã· 9 ?",
-      "9"
-    ],
-    [
-      "Combien font 125 + 75 ?",
-      "200"
-    ],
-    [
-      "Combien font 400 âˆ’ 165 ?",
-      "235"
-    ],
-    [
-      "Quel est le quart de 64 ?",
-      "16"
-    ],
-    [
-      "Quel est le tiers de 27 ?",
-      "9"
-    ],
-    [
-      "Combien font 11 Ã— 11 ?",
-      "121"
-    ],
-    [
-      "Combien font 144 Ã· 12 ?",
-      "12"
-    ],
-    [
-      "Convertis 2 mÃ¨tres en centimÃ¨tres.",
-      "200 cm"
-    ],
-    [
-      "Combien de minutes y a-t-il dans 2 heures ?",
-      "120 minutes"
-    ],
-    [
-      "Combien de grammes font 1 kilogramme ?",
-      "1000 g"
-    ],
-    [
-      "Combien font 5Â² ?",
-      "25"
-    ],
-    [
-      "Combien font 2Â³ ?",
-      "8"
-    ],
-    [
-      "Quel est le rÃ©sultat de 0 Ã— 93 ?",
-      "0"
-    ],
-    [
-      "Quel est le rÃ©sultat de 48 + 52 ?",
-      "100"
-    ],
-    [
-      "Combien font 90 Ã· 10 ?",
-      "9"
-    ],
-    [
-      "Si tu as 3 paquets de 6 bonbons, combien en as-tu ?",
-      "18"
-    ],
-    [
-      "Un triangle a combien de sommets ?",
-      "3"
-    ],
-    [
-      "Combien de cÃ´tÃ©s a un pentagone ?",
-      "5"
-    ],
-    [
-      "Quelle est lâ€™aire dâ€™un rectangle de 4 cm sur 3 cm ?",
-      "12 cmÂ²"
-    ],
-    [
-      "Quel est le pÃ©rimÃ¨tre dâ€™un rectangle de 5 cm sur 2 cm ?",
-      "14 cm"
-    ],
-    [
-      "Combien font 20 % de 50 ?",
-      "10"
-    ],
-    [
-      "Ã‰cris 1/2 en nombre dÃ©cimal.",
-      "0,5"
-    ],
-    [
-      "Combien font 7 Ã— 12 ?",
-      "84"
-    ],
-    [
-      "Combien font 200 Ã· 5 ?",
-      "40"
-    ],
-    [
-      "Quel est le nombre pair entre 13, 15 et 18 ?",
-      "18"
-    ]
-  ],
-  "sciences": [
-    [
-      "Quelle planÃ¨te est surnommÃ©e la planÃ¨te rouge ?",
-      "Mars"
-    ],
-    [
-      "Quel organe pompe le sang ?",
-      "Le cÅ“ur"
-    ],
-    [
-      "Quel gaz les humains respirent-ils pour vivre ?",
-      "Le dioxygÃ¨ne"
-    ],
-    [
-      "Quelle Ã©toile Ã©claire la Terre le jour ?",
-      "Le Soleil"
-    ],
-    [
-      "Quel est lâ€™Ã©tat de lâ€™eau sous forme de glace ?",
-      "Solide"
-    ],
-    [
-      "Quel organe permet principalement de respirer ?",
-      "Les poumons"
-    ],
-    [
-      "Combien de pattes a une araignÃ©e ?",
-      "8"
-    ],
-    [
-      "Comment appelle-t-on les animaux qui mangent des plantes ?",
-      "Herbivores"
-    ],
-    [
-      "Quel est le satellite naturel de la Terre ?",
-      "La Lune"
-    ],
-    [
-      "Quelle force nous attire vers le sol ?",
-      "La gravitÃ©"
-    ],
-    [
-      "Quel organe permet de penser ?",
-      "Le cerveau"
-    ],
-    [
-      "Quelle partie de la plante absorbe lâ€™eau du sol ?",
-      "Les racines"
-    ],
-    [
-      "Quel gaz les plantes absorbent-elles pour la photosynthÃ¨se ?",
-      "Le dioxyde de carbone"
-    ],
-    [
-      "Ã€ quelle tempÃ©rature lâ€™eau gÃ¨le-t-elle en degrÃ©s Celsius ?",
-      "0 Â°C"
-    ],
-    [
-      "Ã€ quelle tempÃ©rature lâ€™eau bout-elle au niveau de la mer ?",
-      "100 Â°C"
-    ],
-    [
-      "Quel sens utilise-t-on avec les oreilles ?",
-      "Lâ€™ouÃ¯e"
-    ],
-    [
-      "Quel sens utilise-t-on avec les yeux ?",
-      "La vue"
-    ],
-    [
-      "Quel est le plus grand organe du corps humain ?",
-      "La peau"
-    ],
-    [
-      "Quel animal est un mammifÃ¨re marin : dauphin ou requin ?",
-      "Le dauphin"
-    ],
-    [
-      "Comment appelle-t-on un animal qui chasse dâ€™autres animaux ?",
-      "Un prÃ©dateur"
-    ],
-    [
-      "Quel organe filtre le sang et produit lâ€™urine ?",
-      "Les reins"
-    ],
-    [
-      "Quelle partie du corps protÃ¨ge le cerveau ?",
-      "Le crÃ¢ne"
-    ],
-    [
-      "Quel nutriment fournit principalement de lâ€™Ã©nergie rapide ?",
-      "Les glucides"
-    ],
-    [
-      "Comment appelle-t-on le passage du liquide au gaz ?",
-      "La vaporisation"
-    ],
-    [
-      "Comment appelle-t-on le passage du gaz au liquide ?",
-      "La condensation"
-    ],
-    [
-      "Quelle planÃ¨te est la plus proche du Soleil ?",
-      "Mercure"
-    ],
-    [
-      "Quelle planÃ¨te est la plus grande du systÃ¨me solaire ?",
-      "Jupiter"
-    ],
-    [
-      "Combien de planÃ¨tes compte le systÃ¨me solaire ?",
-      "8"
-    ],
-    [
-      "Quel mÃ©tal est attirÃ© par un aimant courant ?",
-      "Le fer"
-    ],
-    [
-      "Quel appareil mesure la tempÃ©rature ?",
-      "Le thermomÃ¨tre"
-    ],
-    [
-      "Quelle Ã©nergie vient du Soleil ?",
-      "Lâ€™Ã©nergie solaire"
-    ],
-    [
-      "Quel est le rÃ´le principal des feuilles ?",
-      "RÃ©aliser la photosynthÃ¨se"
-    ],
-    [
-      "Quel groupe dâ€™animaux nourrit ses petits avec du lait ?",
-      "Les mammifÃ¨res"
-    ],
-    [
-      "Quel animal amphibien peut vivre dans lâ€™eau et sur terre ?",
-      "La grenouille"
-    ],
-    [
-      "Comment appelle-t-on les animaux actifs surtout la nuit ?",
-      "Nocturnes"
-    ],
-    [
-      "Quel est le centre dâ€™un atome ?",
-      "Le noyau"
-    ],
-    [
-      "Quel organe permet de digÃ©rer les aliments avec des sucs digestifs ?",
-      "Lâ€™estomac"
-    ],
-    [
-      "Quel liquide transporte les cellules et nutriments dans le corps ?",
-      "Le sang"
-    ],
-    [
-      "Quel phÃ©nomÃ¨ne produit un Ã©clair pendant un orage ?",
-      "Une dÃ©charge Ã©lectrique"
-    ],
-    [
-      "Quelle partie de lâ€™Å“il rÃ¨gle la quantitÃ© de lumiÃ¨re qui entre ?",
-      "Lâ€™iris"
-    ],
-    [
-      "Quel est le nom du changement de solide Ã  liquide ?",
-      "La fusion"
-    ],
-    [
-      "Quel est le nom du changement de liquide Ã  solide ?",
-      "La solidification"
-    ],
-    [
-      "Quel astre est au centre du systÃ¨me solaire ?",
-      "Le Soleil"
-    ],
-    [
-      "Quel gaz compose la plus grande partie de lâ€™air ?",
-      "Lâ€™azote"
-    ],
-    [
-      "Quel animal pond des Å“ufs et possÃ¨de des plumes ?",
-      "Lâ€™oiseau"
-    ],
-    [
-      "Comment appelle-t-on lâ€™Ã©tude des Ãªtres vivants ?",
-      "La biologie"
-    ],
-    [
-      "Quel systÃ¨me du corps transporte le sang ?",
-      "Le systÃ¨me circulatoire"
-    ],
-    [
-      "Quelle vitamine le corps peut-il fabriquer grÃ¢ce au soleil ?",
-      "La vitamine D"
-    ],
-    [
-      "Quel type de roche provient du refroidissement du magma ?",
-      "Une roche magmatique"
-    ],
-    [
-      "Quel est le principal rÃ´le des os ?",
-      "Soutenir et protÃ©ger le corps"
-    ]
-  ],
-  "geographie": [
-    [
-      "Quelle est la capitale dâ€™HaÃ¯ti ?",
-      "Port-au-Prince"
-    ],
-    [
-      "Sur quel continent se trouve HaÃ¯ti ?",
-      "AmÃ©rique du Nord"
-    ],
-    [
-      "Quelle est la capitale de la France ?",
-      "Paris"
-    ],
-    [
-      "Quelle est la capitale du Canada ?",
-      "Ottawa"
-    ],
-    [
-      "Quelle est la capitale du Japon ?",
-      "Tokyo"
-    ],
-    [
-      "Quelle est la capitale du BrÃ©sil ?",
-      "BrasÃ­lia"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Espagne ?",
-      "Madrid"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Italie ?",
-      "Rome"
-    ],
-    [
-      "Quelle est la capitale du Royaume-Uni ?",
-      "Londres"
-    ],
-    [
-      "Quelle est la capitale du Mexique ?",
-      "Mexico"
-    ],
-    [
-      "Quel ocÃ©an se trouve entre lâ€™Afrique et lâ€™AmÃ©rique ?",
-      "Lâ€™ocÃ©an Atlantique"
-    ],
-    [
-      "Quel est le plus grand ocÃ©an ?",
-      "Lâ€™ocÃ©an Pacifique"
-    ],
-    [
-      "Quel fleuve traverse lâ€™Ã‰gypte ?",
-      "Le Nil"
-    ],
-    [
-      "Quel est le plus grand continent ?",
-      "Lâ€™Asie"
-    ],
-    [
-      "Quel continent est aussi un pays ?",
-      "Lâ€™Australie"
-    ],
-    [
-      "Quelle est la capitale de la RÃ©publique dominicaine ?",
-      "Saint-Domingue"
-    ],
-    [
-      "Quelle est la capitale de Cuba ?",
-      "La Havane"
-    ],
-    [
-      "Quelle est la capitale de la JamaÃ¯que ?",
-      "Kingston"
-    ],
-    [
-      "Quelle est la capitale des Ã‰tats-Unis ?",
-      "Washington, D.C."
-    ],
-    [
-      "Quelle est la capitale de la Chine ?",
-      "PÃ©kin"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Inde ?",
-      "New Delhi"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Allemagne ?",
-      "Berlin"
-    ],
-    [
-      "Quelle est la capitale du Portugal ?",
-      "Lisbonne"
-    ],
-    [
-      "Quelle est la capitale de la Belgique ?",
-      "Bruxelles"
-    ],
-    [
-      "Quelle est la capitale de la Suisse ?",
-      "Berne"
-    ],
-    [
-      "Quelle est la capitale de la Russie ?",
-      "Moscou"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Ã‰gypte ?",
-      "Le Caire"
-    ],
-    [
-      "Quelle est la capitale du SÃ©nÃ©gal ?",
-      "Dakar"
-    ],
-    [
-      "Quelle est la capitale du Kenya ?",
-      "Nairobi"
-    ],
-    [
-      "Quelle est la capitale du Nigeria ?",
-      "Abuja"
-    ],
-    [
-      "Quelle est la capitale du Maroc ?",
-      "Rabat"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Argentine ?",
-      "Buenos Aires"
-    ],
-    [
-      "Quelle est la capitale du PÃ©rou ?",
-      "Lima"
-    ],
-    [
-      "Quelle est la capitale du Chili ?",
-      "Santiago"
-    ],
-    [
-      "Quelle est la capitale de la Colombie ?",
-      "BogotÃ¡"
-    ],
-    [
-      "Quel pays partage lâ€™Ã®le dâ€™Hispaniola avec HaÃ¯ti ?",
-      "La RÃ©publique dominicaine"
-    ],
-    [
-      "Quelle chaÃ®ne de montagnes se trouve en AmÃ©rique du Sud ?",
-      "Les Andes"
-    ],
-    [
-      "Quel dÃ©sert est le plus vaste dÃ©sert chaud ?",
-      "Le Sahara"
-    ],
-    [
-      "Sur quel continent se trouve le Kenya ?",
-      "Lâ€™Afrique"
-    ],
-    [
-      "Sur quel continent se trouve lâ€™Inde ?",
-      "Lâ€™Asie"
-    ],
-    [
-      "Quelle est la capitale de la CorÃ©e du Sud ?",
-      "SÃ©oul"
-    ],
-    [
-      "Quelle est la capitale de la ThaÃ¯lande ?",
-      "Bangkok"
-    ],
-    [
-      "Quelle est la capitale de lâ€™Australie ?",
-      "Canberra"
-    ],
-    [
-      "Quelle est la capitale de la Nouvelle-ZÃ©lande ?",
-      "Wellington"
-    ],
-    [
-      "Quelle est la capitale de la NorvÃ¨ge ?",
-      "Oslo"
-    ],
-    [
-      "Quelle est la capitale de la SuÃ¨de ?",
-      "Stockholm"
-    ],
-    [
-      "Quelle est la capitale de la GrÃ¨ce ?",
-      "AthÃ¨nes"
-    ],
-    [
-      "Quelle est la capitale de la Turquie ?",
-      "Ankara"
-    ],
-    [
-      "Quel ocÃ©an borde lâ€™est de lâ€™Afrique ?",
-      "Lâ€™ocÃ©an Indien"
-    ],
-    [
-      "Comment appelle-t-on une reprÃ©sentation plane de la Terre ?",
-      "Une carte"
-    ]
-  ],
-  "francais": [
-    [
-      "Quel est le pluriel de Â« cheval Â» ?",
-      "Chevaux"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« acteur Â» ?",
-      "Actrice"
-    ],
-    [
-      "Dans Â« Les enfants jouent Â», quel est le verbe ?",
-      "jouent"
-    ],
-    [
-      "Quel est le contraire de Â« courageux Â» ?",
-      "LÃ¢che"
-    ],
-    [
-      "Quel est un synonyme de Â« heureux Â» ?",
-      "Joyeux"
-    ],
-    [
-      "Quel est le pluriel de Â« journal Â» ?",
-      "Journaux"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« gentil Â» ?",
-      "Gentille"
-    ],
-    [
-      "Dans Â« Marie chante Â», quel est le sujet ?",
-      "Marie"
-    ],
-    [
-      "Quel type de mot est Â« rapidement Â» ?",
-      "Un adverbe"
-    ],
-    [
-      "Quel est lâ€™infinitif de Â« nous finissons Â» ?",
-      "Finir"
-    ],
-    [
-      "Conjugue Â« Ãªtre Â» avec Â« je Â» au prÃ©sent.",
-      "Je suis"
-    ],
-    [
-      "Conjugue Â« avoir Â» avec Â« tu Â» au prÃ©sent.",
-      "Tu as"
-    ],
-    [
-      "Conjugue Â« aller Â» avec Â« nous Â» au prÃ©sent.",
-      "Nous allons"
-    ],
-    [
-      "Quel est le participe passÃ© de Â« prendre Â» ?",
-      "Pris"
-    ],
-    [
-      "Quel est le pluriel de Â« bateau Â» ?",
-      "Bateaux"
-    ],
-    [
-      "Quel est le contraire de Â« ancien Â» ?",
-      "Nouveau"
-    ],
-    [
-      "Quel est un synonyme de Â« commencer Â» ?",
-      "DÃ©buter"
-    ],
-    [
-      "Dans Â« une jolie fleur Â», quel mot est lâ€™adjectif ?",
-      "jolie"
-    ],
-    [
-      "Quel signe termine gÃ©nÃ©ralement une question ?",
-      "Le point dâ€™interrogation"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« heureux Â» ?",
-      "Heureuse"
-    ],
-    [
-      "Quel est le pluriel de Â« nez Â» ?",
-      "Nez"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« blanc Â» ?",
-      "Blanche"
-    ],
-    [
-      "Quel est lâ€™infinitif de Â« ils prennent Â» ?",
-      "Prendre"
-    ],
-    [
-      "Quel est le sujet dans Â« Le chien aboie Â» ?",
-      "Le chien"
-    ],
-    [
-      "Quel temps est Â« je mangeais Â» ?",
-      "Lâ€™imparfait"
-    ],
-    [
-      "Quel temps est Â« nous avons parlÃ© Â» ?",
-      "Le passÃ© composÃ©"
-    ],
-    [
-      "Quel est le contraire de Â« lÃ©ger Â» ?",
-      "Lourd"
-    ],
-    [
-      "Quel est un synonyme de Â« maison Â» ?",
-      "Demeure"
-    ],
-    [
-      "Quel type de phrase donne un ordre ?",
-      "Une phrase impÃ©rative"
-    ],
-    [
-      "Combien de syllabes entend-on dans Â« papillon Â» ?",
-      "3"
-    ],
-    [
-      "Quel est le pluriel de Â« travail Â» ?",
-      "Travaux"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« sportif Â» ?",
-      "Sportive"
-    ],
-    [
-      "Quel mot est un nom dans Â« Le chat dort Â» ?",
-      "chat"
-    ],
-    [
-      "Quel est le pronom personnel sujet de Â« Paul et moi Â» ?",
-      "Nous"
-    ],
-    [
-      "Quel est lâ€™infinitif de Â« vous faites Â» ?",
-      "Faire"
-    ],
-    [
-      "Quel est le participe passÃ© de Â« voir Â» ?",
-      "Vu"
-    ],
-    [
-      "Quel est le contraire de Â« rarement Â» ?",
-      "Souvent"
-    ],
-    [
-      "Quel est un synonyme de Â« rapide Â» ?",
-      "VÃ©loce"
-    ],
-    [
-      "Quel dÃ©terminant trouve-t-on dans Â« cette maison Â» ?",
-      "cette"
-    ],
-    [
-      "Quel est le pluriel de Â« Å“il Â» ?",
-      "Yeux"
-    ],
-    [
-      "Quel temps exprime une action future dans Â« je partirai Â» ?",
-      "Le futur simple"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« directeur Â» ?",
-      "Directrice"
-    ],
-    [
-      "Dans Â« trÃ¨s grand Â», quel mot est lâ€™adverbe ?",
-      "trÃ¨s"
-    ],
-    [
-      "Quel est le contraire de Â« silencieux Â» ?",
-      "Bruyant"
-    ],
-    [
-      "Quel est le participe passÃ© de Â« Ã©crire Â» ?",
-      "Ã‰crit"
-    ],
-    [
-      "Quel est le pluriel de Â« animal Â» ?",
-      "Animaux"
-    ],
-    [
-      "Quelle est la nature de Â« mais Â» ?",
-      "Une conjonction de coordination"
-    ],
-    [
-      "Quel est le sujet dans Â« Nous apprenons le franÃ§ais Â» ?",
-      "Nous"
-    ],
-    [
-      "Quel est le fÃ©minin de Â« beau Â» devant Â« fille Â» ?",
-      "Belle"
-    ],
-    [
-      "Quel signe marque une exclamation ?",
-      "Le point dâ€™exclamation"
-    ]
-  ],
-  "anglais": [
-    [
-      "Comment dit-on Â« bonjour Â» en anglais ?",
-      "Hello"
-    ],
-    [
-      "Comment dit-on Â« merci Â» en anglais ?",
-      "Thank you"
-    ],
-    [
-      "Que signifie Â« book Â» en franÃ§ais ?",
-      "Livre"
-    ],
-    [
-      "Que signifie Â« water Â» en franÃ§ais ?",
-      "Eau"
-    ],
-    [
-      "Quel est le pluriel de Â« child Â» ?",
-      "Children"
-    ],
-    [
-      "Comment dit-on Â« chien Â» en anglais ?",
-      "Dog"
-    ],
-    [
-      "Comment dit-on Â« chat Â» en anglais ?",
-      "Cat"
-    ],
-    [
-      "Que signifie Â« school Â» ?",
-      "Ã‰cole"
-    ],
-    [
-      "Comment dit-on Â« rouge Â» en anglais ?",
-      "Red"
-    ],
-    [
-      "Comment dit-on Â« bleu Â» en anglais ?",
-      "Blue"
-    ],
-    [
-      "ComplÃ¨te : I ___ a student.",
-      "am"
-    ],
-    [
-      "ComplÃ¨te : She ___ happy.",
-      "is"
-    ],
-    [
-      "ComplÃ¨te : They ___ friends.",
-      "are"
-    ],
-    [
-      "Quel est le passÃ© de Â« go Â» ?",
-      "Went"
-    ],
-    [
-      "Quel est le pluriel de Â« mouse Â» ?",
-      "Mice"
-    ],
-    [
-      "Que signifie Â« family Â» ?",
-      "Famille"
-    ],
-    [
-      "Que signifie Â« beautiful Â» ?",
-      "Beau ou belle"
-    ],
-    [
-      "Comment dit-on Â« lundi Â» ?",
-      "Monday"
-    ],
-    [
-      "Comment dit-on Â« dimanche Â» ?",
-      "Sunday"
-    ],
-    [
-      "Quel est le contraire de Â« hot Â» ?",
-      "Cold"
-    ],
-    [
-      "Que signifie Â« apple Â» ?",
-      "Pomme"
-    ],
-    [
-      "Comment dit-on Â« livre Â» ?",
-      "Book"
-    ],
-    [
-      "Comment dit-on Â« Ã©cole Â» ?",
-      "School"
-    ],
-    [
-      "Que signifie Â« friend Â» ?",
-      "Ami ou amie"
-    ],
-    [
-      "Quel est le passÃ© de Â« eat Â» ?",
-      "Ate"
-    ],
-    [
-      "ComplÃ¨te : He ___ football.",
-      "plays"
-    ],
-    [
-      "Quel pronom signifie Â« nous Â» ?",
-      "We"
-    ],
-    [
-      "Quel pronom signifie Â« ils/elles Â» ?",
-      "They"
-    ],
-    [
-      "Comment dit-on Â« merci beaucoup Â» ?",
-      "Thank you very much"
-    ],
-    [
-      "Que signifie Â« good night Â» ?",
-      "Bonne nuit"
-    ],
-    [
-      "Quel est le contraire de Â« big Â» ?",
-      "Small"
-    ],
-    [
-      "Quel est le contraire de Â« fast Â» ?",
-      "Slow"
-    ],
-    [
-      "Comment dit-on Â« livreur Â» ?",
-      "Delivery person"
-    ],
-    [
-      "Comment dit-on Â« mÃ¨re Â» ?",
-      "Mother"
-    ],
-    [
-      "Comment dit-on Â« pÃ¨re Â» ?",
-      "Father"
-    ],
-    [
-      "Que signifie Â« window Â» ?",
-      "FenÃªtre"
-    ],
-    [
-      "Que signifie Â« chair Â» ?",
-      "Chaise"
-    ],
-    [
-      "Comment dit-on Â« rouge Â» ?",
-      "Red"
-    ],
-    [
-      "Comment dit-on Â« vert Â» ?",
-      "Green"
-    ],
-    [
-      "Quel est le pluriel de Â« foot Â» ?",
-      "Feet"
-    ],
-    [
-      "Quel est le passÃ© de Â« see Â» ?",
-      "Saw"
-    ],
-    [
-      "Quel est le passÃ© de Â« have Â» ?",
-      "Had"
-    ],
-    [
-      "Que signifie Â« tomorrow Â» ?",
-      "Demain"
-    ],
-    [
-      "Que signifie Â« yesterday Â» ?",
-      "Hier"
-    ],
-    [
-      "Comment dit-on Â« sâ€™il vous plaÃ®t Â» ?",
-      "Please"
-    ],
-    [
-      "Comment dit-on Â« excusez-moi Â» ?",
-      "Excuse me"
-    ],
-    [
-      "Quel est le contraire de Â« happy Â» ?",
-      "Sad"
-    ],
-    [
-      "Que signifie Â« breakfast Â» ?",
-      "Petit-dÃ©jeuner"
-    ],
-    [
-      "Comment dit-on Â« huit Â» ?",
-      "Eight"
-    ],
-    [
-      "Que signifie Â« evening Â» ?",
-      "Soir"
-    ]
-  ],
-  "culture": [
-    [
-      "Combien de jours y a-t-il dans une semaine
-  
+
+  <!-- ================= BODY ================= -->
+
+  <div class="rq-container">
+
+    <header class="rq-header">
+      <span class="rq-logo">RÉNOVA</span>
+      <h2>RÉNOVA QUIZ</h2>
+      <p>Teste tes connaissances. Relève le défi.</p>
+    </header>
+
+    <div id="rq-menu" class="rq-panel">
+      <h3>Choisis ta catégorie</h3>
+
+      <p class="rq-description">
+        10 questions par matière. Chaque réponse compte !
+      </p>
+
+      <div class="rq-modes">
+
+        <button class="rq-mode" data-mode="maths" type="button">
+          <span class="rq-icon">🧮</span>
+          <strong>Mathématiques</strong>
+          <small>Calculs et problèmes</small>
+        </button>
+
+        <button class="rq-mode" data-mode="sciences" type="button">
+          <span class="rq-icon">🔬</span>
+          <strong>Sciences</strong>
+          <small>Découvre le monde</small>
+        </button>
+
+        <button class="rq-mode" data-mode="geographie" type="button">
+          <span class="rq-icon">🌍</span>
+          <strong>Géographie</strong>
+          <small>Pays et capitales</small>
+        </button>
+
+        <button class="rq-mode" data-mode="francais" type="button">
+          <span class="rq-icon">📚</span>
+          <strong>Français</strong>
+          <small>Grammaire et vocabulaire</small>
+        </button>
+
+        <button class="rq-mode" data-mode="anglais" type="button">
+          <span class="rq-icon">🇬🇧</span>
+          <strong>Anglais</strong>
+          <small>Words and grammar</small>
+        </button>
+
+        <button class="rq-mode" data-mode="culture" type="button">
+          <span class="rq-icon">💡</span>
+          <strong>Culture générale</strong>
+          <small>Connaissances variées</small>
+        </button>
+
+        <button class="rq-mode" data-mode="logique" type="button">
+          <span class="rq-icon">🧠</span>
+          <strong>Logique</strong>
+          <small>Énigmes et réflexion</small>
+        </button>
+
+        <button class="rq-mode" data-mode="mixte" type="button">
+          <span class="rq-icon">🏆</span>
+          <strong>Quiz mixte</strong>
+          <small>Un mélange de matières</small>
+        </button>
+
+      </div>
+    </div>
+
+    <div id="rq-game" class="rq-panel rq-hidden">
+
+      <div class="rq-topline">
+        <span id="rq-category" class="rq-badge">Catégorie</span>
+        <span id="rq-progress">Question 1/10</span>
+      </div>
+
+      <div class="rq-progress-track">
+        <div id="rq-bar"></div>
+      </div>
+
+      <div class="rq-topline">
+        <span id="rq-level" class="rq-badge">Niveau 1</span>
+        <span id="rq-score-live">Score : 0</span>
+        <span id="rq-timer">⏱ 30 s</span>
+      </div>
+
+      <div class="rq-question-card">
+        <h3 id="rq-question">La question apparaîtra ici.</h3>
+      </div>
+
+      <button id="rq-hint" class="rq-secondary" type="button">
+        💡 Obtenir un indice
+      </button>
+
+      <p id="rq-hint-text" class="rq-hint-text rq-hidden"></p>
+
+      <div id="rq-options" class="rq-options"></div>
+
+      <p id="rq-feedback" aria-live="polite"></p>
+
+      <div class="rq-actions">
+        <button id="rq-next" class="rq-primary" type="button" disabled>
+          Question suivante →
+        </button>
+
+        <button id="rq-stop" class="rq-secondary" type="button">
+          Quitter le quiz
+        </button>
+      </div>
+
+    </div>
+
+    <div id="rq-result" class="rq-panel rq-hidden">
+
+      <div class="rq-result-icon">🏆</div>
+
+      <h3>Défi terminé !</h3>
+
+      <p id="rq-final-message"></p>
+
+      <div id="rq-final-score" class="rq-final-score">0/10</div>
+
+      <p id="rq-final-details"></p>
+
+      <div class="rq-actions">
+        <button id="rq-restart" class="rq-primary" type="button">
+          Rejouer
+        </button>
+
+        <button id="rq-home" class="rq-secondary" type="button">
+          Choisir une autre catégorie
+        </button>
+      </div>
+
+    </div>
+
+    <p class="rq-footer">
+      RÉNOVA QUIZ · Apprendre, réfléchir, progresser.
+    </p>
+
+  </div>
+
+  <!-- ============ SCRIPT RÉNOVA QUIZ INTÉGRÉ ============ -->
+
+  <script>
+  (() => {
+    "use strict";
+
+    const root = document.getElementById("renova-quiz");
+
+    if (!root || root.dataset.quizInitialized === "true") return;
+
+    root.dataset.quizInitialized = "true";
+
+    const $ = id => root.querySelector("#" + id);
+
+    const menu = $("rq-menu");
+    const game = $("rq-game");
+    const result = $("rq-result");
+    const modeBox = root.querySelector(".rq-modes");
+
+    const categoryNames = {
+      maths: "Mathématiques",
+      sciences: "Sciences",
+      geographie: "Géographie",
+      francais: "Français",
+      anglais: "Anglais",
+      culture: "Culture générale",
+      logique: "Logique",
+      mixte: "Quiz mixte"
+    };
+
+    /*
+      BANQUE DE QUESTIONS RÉNOVA QUIZ
+
+      Format :
+      question, réponse correcte, indice
+
+      Cette banque est intégrée directement au quiz.
+      Chaque partie utilise 10 questions tirées au hasard.
+    */
+
+    const QUESTION_BANK = {
+      maths: [
+        ["Combien font 7 + 8 ?", "15", "Additionne les deux nombres."],
+        ["Combien font 12 − 5 ?", "7", "Compte cinq unités en arrière."],
+        ["Combien font 6 × 4 ?", "24", "Additionne quatre fois le nombre 6."],
+        ["Combien font 36 ÷ 6 ?", "6", "Quel nombre multiplié par 6 donne 36 ?"],
+        ["Quel est le double de 9 ?", "18", "Multiplie 9 par 2."],
+        ["Quel est le triple de 7 ?", "21", "Multiplie 7 par 3."],
+        ["Quelle est la moitié de 50 ?", "25", "Divise 50 par 2."],
+        ["Combien font 9 × 9 ?", "81", "C'est le carré de 9."],
+        ["Combien font 100 − 37 ?", "63", "Soustrais d'abord 30, puis 7."],
+        ["Combien font 15 + 28 ?", "43", "Additionne les unités et les dizaines."],
+        ["Combien font 8 × 7 ?", "56", "C'est une multiplication de la table de 8."],
+        ["Combien font 72 ÷ 8 ?", "9", "Quel nombre multiplié par 8 donne 72 ?"],
+        ["Quel est le carré de 5 ?", "25", "Multiplie 5 par lui-même."],
+        ["Quel est le cube de 3 ?", "27", "Calcule 3 × 3 × 3."],
+        ["Combien font 3/4 de 20 ?", "15", "Divise 20 par 4, puis multiplie par 3."],
+        ["Combien font 2,5 + 1,5 ?", "4", "Additionne les parties décimales."],
+        ["Combien font 10 × 0,5 ?", "5", "Multiplier par 0,5 revient à prendre la moitié."],
+        ["Quel est le périmètre d'un carré de côté 4 cm ?", "16 cm", "Additionne ses quatre côtés."],
+        ["Quelle est l'aire d'un carré de côté 5 cm ?", "25 cm²", "Multiplie le côté par lui-même."],
+        ["Combien de côtés a un hexagone ?", "6", "Le préfixe « hexa » signifie six."],
+        ["Combien de degrés mesure un angle droit ?", "90°", "C'est la moitié d'un angle plat."],
+        ["Combien de degrés mesure un angle plat ?", "180°", "Il forme une ligne droite."],
+        ["Quel est le plus petit nombre premier ?", "2", "C'est le seul nombre premier pair."],
+        ["Quel nombre vient après 999 ?", "1000", "Ajoute une unité."],
+        ["Combien font 14 × 3 ?", "42", "Additionne 14 trois fois."],
+        ["Combien font 81 ÷ 9 ?", "9", "C'est le carré de 9 inversé."],
+        ["Combien font 125 + 75 ?", "200", "75 complète 125 jusqu'à 200."],
+        ["Combien font 400 − 165 ?", "235", "Soustrais 100, puis 65."],
+        ["Quel est le quart de 64 ?", "16", "Divise 64 par 4."],
+        ["Quel est le tiers de 27 ?", "9", "Divise 27 par 3."]
+      ],
+
+      sciences: [
+        ["Quelle planète est surnommée la planète rouge ?", "Mars", "Sa surface contient beaucoup d'oxyde de fer."],
+        ["Quel organe pompe le sang ?", "Le cœur", "Il bat continuellement."],
+        ["Quel gaz les humains utilisent-ils pour respirer ?", "Le dioxygène", "Sa formule chimique est O₂."],
+        ["Quelle étoile éclaire la Terre le jour ?", "Le Soleil", "C'est l'étoile de notre système solaire."],
+        ["Quel est l'état de l'eau sous forme de glace ?", "Solide", "La glace conserve sa forme."],
+        ["Quel organe permet principalement de respirer ?", "Les poumons", "Ils se trouvent dans la poitrine."],
+        ["Combien de pattes a une araignée ?", "8", "Elle en possède quatre paires."],
+        ["Comment appelle-t-on les animaux qui mangent des plantes ?", "Herbivores", "Leur nourriture vient principalement des végétaux."],
+        ["Quel est le satellite naturel de la Terre ?", "La Lune", "On peut souvent l'observer la nuit."],
+        ["Quelle force nous attire vers le sol ?", "La gravité", "Elle attire les objets vers la Terre."],
+        ["Quel organe permet de penser ?", "Le cerveau", "Il appartient au système nerveux."],
+        ["Quelle partie de la plante absorbe l'eau du sol ?", "Les racines", "Elles se trouvent généralement sous la terre."],
+        ["Quel gaz les plantes absorbent-elles pour la photosynthèse ?", "Le dioxyde de carbone", "Sa formule est CO₂."],
+        ["À quelle température l'eau gèle-t-elle ?", "0 °C", "C'est le point de congélation habituel de l'eau."],
+        ["À quelle température l'eau bout-elle au niveau de la mer ?", "100 °C", "C'est le point d'ébullition habituel."],
+        ["Quel sens utilise-t-on avec les oreilles ?", "L'ouïe", "Il permet de percevoir les sons."],
+        ["Quel sens utilise-t-on avec les yeux ?", "La vue", "Il permet de voir."],
+        ["Quel est le plus grand organe du corps humain ?", "La peau", "Elle recouvre tout le corps."],
+        ["Quel animal est un mammifère marin : dauphin ou requin ?", "Le dauphin", "Il respire de l'air et nourrit ses petits avec du lait."],
+        ["Comment appelle-t-on un animal qui chasse d'autres animaux ?", "Un prédateur", "Il capture des proies."],
+        ["Quel organe filtre le sang et produit l'urine ?", "Les reins", "Ils font partie du système urinaire."],
+        ["Quelle planète est la plus proche du Soleil ?", "Mercure", "Elle est la première planète du système solaire."],
+        ["Quelle planète est la plus grande du système solaire ?", "Jupiter", "C'est une géante gazeuse."],
+        ["Combien de planètes compte le système solaire ?", "8", "Pluton est classée comme planète naine."],
+        ["Quel métal est attiré par un aimant courant ?", "Le fer", "On le trouve dans de nombreux objets métalliques."],
+        ["Quel appareil mesure la température ?", "Le thermomètre", "Il peut mesurer la température du corps ou de l'air."],
+        ["Quelle énergie vient du Soleil ?", "L'énergie solaire", "Elle provient du rayonnement solaire."],
+        ["Quel groupe d'animaux nourrit ses petits avec du lait ?", "Les mammifères", "Les humains appartiennent à ce groupe."],
+        ["Quel animal amphibien peut vivre dans l'eau et sur terre ?", "La grenouille", "Elle passe une partie de sa vie dans l'eau."],
+        ["Comment appelle-t-on l'étude des êtres vivants ?", "La biologie", "Cette science étudie les organismes vivants."]
+      ],
+
+      geographie: [
+        ["Quelle est la capitale d'Haïti ?", "Port-au-Prince", "C'est la principale ville politique du pays."],
+        ["Sur quel continent se trouve Haïti ?", "Amérique du Nord", "Haïti se trouve dans la région des Caraïbes."],
+        ["Quelle est la capitale de la France ?", "Paris", "La tour Eiffel se trouve dans cette ville."],
+        ["Quelle est la capitale du Canada ?", "Ottawa", "Ce n'est ni Toronto ni Montréal."],
+        ["Quelle est la capitale du Japon ?", "Tokyo", "C'est une immense métropole asiatique."],
+        ["Quelle est la capitale du Brésil ?"
 </body>
 </html>
