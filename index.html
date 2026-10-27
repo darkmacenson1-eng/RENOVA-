@@ -298,8 +298,7 @@
       <div id="liste"></div>
     </section>
 <!-- ===== RÉNOVA QUIZ ===== -->
-<section id="renova-quiz" class="quiz-section">
-
+<section id="renova-quiz" class="quiz-section hidden">
     <div class="quiz-header">
         <h2>RÉNOVA QUIZ</h2>
         <p>
@@ -396,13 +395,28 @@
   </footer>
 
   <script>
-    function showPage(id) {
-      document.querySelectorAll('main section').forEach(section => {
+         function showPage(id) {
+      document.querySelectorAll('main > section').forEach(section => {
         section.classList.add('hidden');
       });
-      document.getElementById(id).classList.remove('hidden');
+
+      const page = document.getElementById(id);
+
+      if (page) {
+        page.classList.remove('hidden');
+      }
+
       window.scrollTo(0, 0);
-      if (id === 'projets') showIdeas();
+
+      if (id === 'projets') {
+        showIdeas();
+      }
+
+      if (id === 'renova-quiz') {
+        renovaRenderHistory();
+        renovaUpdateBankStatus();
+      }
+         
     }
 
     const challenges = [
@@ -457,6 +471,6 @@
         list.appendChild(card);
       });
     }
-   </script>
+  </script>
 </body>
 </html>
