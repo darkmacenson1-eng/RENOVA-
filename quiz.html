@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1026">
+<title>RÉNOVA QUIZ</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#0b1026;
+  --panel:#171d3a;
+  --purple:#8955b5;
+  --gold:#d4af37;
+  --text:#f5f5fa;
+  --muted:#b8bfd8;
+}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  padding:24px 16px;
+  text-align:center;
+  border-bottom:1px solid #49335f;
+}
+.logo{
+  color:var(--gold);
+  letter-spacing:4px;
+  font-size:30px;
+  margin:0;
+}
+.subtitle{color:var(--muted)}
+main{max-width:850px;margin:auto;padding:18px}
+.panel{
+  background:var(--panel);
+  padding:22px;
+  border-radius:16px;
+  margin:16px 0;
+  border:1px solid #343c61;
+}
+h2,h3{color:var(--gold)}
+button,select{
+  padding:13px;
+  border:0;
+  border-radius:9px;
+  font-size:15px;
+}
+button{
+  background:var(--purple);
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+button:hover{filter:brightness(1.15)}
+button:disabled{opacity:.5}
+select{
+  background:var(--bg);
+  color:white;
+  width:100%;
+  margin:8px 0 15px;
+  border:1px solid var(--purple);
+}
+.primary{width:100%;margin-top:12px}
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.category{
+  background:#222a4c;
+  border:1px solid #454d73;
+  padding:16px 8px;
+  text-align:center;
+}
+.category.selected{
+  border:2px solid var(--gold);
+  background:#35304c;
+}
+.hidden{display:none!important}
+.topline{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  color:var(--muted);
+}
+#question{font-size:20px;line-height:1.5}
+.answers{display:grid;gap:10px;margin-top:20px}
+.answers button{
+  text-align:left;
+  background:#252d50;
+  border:1px solid #454d73;
+}
+.answers button.correct{background:#176b4a}
+.answers button.wrong{background:#8b303b}
+#feedback{line-height:1.6;margin-top:15px}
+.progress{
+  background:#303752;
+  height:8px;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0;
+}
+#progressBar{
+  height:100%;
+  width:0;
+  background:var(--gold);
+  transition:width .2s;
+}
+.stat{
+  display:inline-block;
+  padding:12px;
+  margin:4px;
+  background:#222a4c;
+  border-radius:10px;
+}
+footer{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+}
+.small{font-size:13px;color:var(--muted);line-height:1.5}
+</style>
+</head>
+
+<body>
+<header>
+  <h1 class="logo">RÉNOVA</h1>
+  <p class="subtitle">QUIZ — Développe ton potentiel.</p>
+</header>
+
+<main>
+
+<section id="home" class="panel">
+  <h2>Bienvenue dans RÉNOVA QUIZ</h2>
+  <p>Teste tes connaissances, entraîne ta logique et découvre jusqu'où tu peux progresser.</p>
+
+  <h3>1. Choisis une catégorie</h3>
+
+  <div class="category-grid" id="categories">
+    <button class="category selected" data-cat="all">🌍 Mélange général</button>
+    <button class="category" data-cat="math">➗ Mathématiques</button>
+    <button class="category" data-cat="science">🔬 Sciences</button>
+    <button class="category" data-cat="geo">🗺️ Géographie</button>
+    <button class="category" data-cat="french">📚 Français</button>
+    <button class="category" data-cat="culture">💡 Culture générale</button>
+    <button class="category" data-cat="logic">🧩 Logique</button>
+    <button class="category" data-cat="tech">💻 Informatique</button>
+    <button class="category" data-cat="history">🏛️ Histoire</button>
+  </div>
+
+  <h3>2. Choisis la durée</h3>
+  <select id="length">
+    <option value="10">10 questions</option>
+    <option value="20">20 questions</option>
+    <option value="30">30 questions</option>
+  </select>
+
+  <h3>3. Choisis ton niveau</h3>
+  <select id="difficulty">
+    <option value="easy">Débutant</option>
+    <option value="medium" selected>Intermédiaire</option>
+    <option value="hard">Difficile</option>
+  </select>
+
+  <button class="primary" id="start">Commencer le défi</button>
+  <p class="small">
+    Cette première version utilise un ensemble limité de questions intégrées.
+    Les comptes, le classement mondial et la génération de questions par IA
+    ne sont pas encore connectés.
+  </p>
+</section>
+
+<section id="game" class="panel hidden">
+  <div class="topline">
+    <span id="counter">Question 1</span>
+    <span>⏱️ <strong id="timer">30</strong> s</span>
+    <span>⭐ <strong id="score">0</strong></span>
+  </div>
+
+  <div class="progress"><div id="progressBar"></div></div>
+
+  <p id="categoryLabel" class="small"></p>
+  <h2 id="question">Question</h2>
+  <div id="answers" class="answers"></div>
+  <p id="feedback" aria-live="polite"></p>
+  <button id="next" class="primary hidden">Question suivante</button>
+</section>
+
+<section id="result" class="panel hidden">
+  <h2>Défi terminé !</h2>
+  <p id="resultMessage"></p>
+  <div>
+    <span class="stat">Score : <strong id="finalScore"></strong></span>
+    <span class="stat">Rang indicatif : <strong id="rank"></strong></span>
+  </div>
+  <p id="advice"></p>
+  <button id="again" class="primary">Rejouer</button>
+  <button id="back" class="primary">Retour à l'accueil</button>
+  <p class="small">
+    Les rangs affichés sont provisoires. Ils ne constituent pas encore un
+    classement officiel et ne sont pas synchronisés entre plusieurs appareils.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <p>RÉNOVA QUIZ © 2026</p>
+  <p>Chaque avenir mérite une chance de commencer.</p>
+</footer>
+
+<script>
+"use strict";
+
+const bank = [
+  {c:"math",d:"easy",q:"Combien font 7 × 8 ?",a:["54","56","64","48"],ok:1,e:"7 × 8 = 56."},
+  {c:"math",d:"easy",q:"Combien font 125 + 275 ?",a:["300","350","400","425"],ok:2,e:"125 + 275 = 400."},
+  {c:"math",d:"medium",q:"Résous : 3x + 5 = 20.",a:["x = 3","x = 5","x = 7","x = 15"],ok:1,e:"3x = 15, donc x = 5."},
+  {c:"math",d:"hard",q:"Combien vaut 15 % de 240 ?",a:["24","30","36","40"],ok:2,e:"0,15 × 240 = 36."},
+
+  {c:"science",d:"easy",q:"Quelle planète est surnommée la planète rouge ?",a:["Vénus","Mars","Jupiter","Mercure"],ok:1,e:"La couleur rouge de Mars est liée aux oxydes de fer présents à sa surface."},
+  {c:"science",d:"medium",q:"Quel organe pompe le sang dans le corps humain ?",a:["Le foie","Le poumon","Le cœur","Le rein"],ok:2,e:"Le cœur propulse le sang dans le système circulatoire."},
+  {c:"science",d:"hard",q:"Quel gaz les plantes absorbent-elles principalement pour la photosynthèse ?",a:["Oxygène","Azote","Dioxyde de carbone","Hydrogène"],ok:2,e:"Les plantes utilisent le dioxyde de carbone, l'eau et l'énergie lumineuse."},
+
+  {c:"geo",d:"easy",q:"Quelle est la capitale d'Haïti ?",a:["Cap-Haïtien","Les Cayes","Port-au-Prince","Jacmel"],ok:2,e:"Port-au-Prince est la capitale d'Haïti."},
+  {c:"geo",d:"medium",q:"Sur quel continent se trouve le Japon ?",a:["Europe","Asie","Afrique","Amérique du Sud"],ok:1,e:"Le Japon est un pays d'Asie orientale."},
+  {c:"geo",d:"hard",q:"Quel est le plus vaste océan de la Terre ?",a:["Atlantique","Indien","Arctique","Pacifique"],ok:3,e:"L'océan Pacifique est le plus vaste."},
+
+  {c:"french",d:"easy",q:"Quel est le pluriel de « cheval » ?",a:["Chevals","Chevaux","Chevaus","Chevales"],ok:1,e:"Le pluriel standard de cheval est chevaux."},
+  {c:"french",d:"medium",q:"Dans « Les enfants jouent », quel est le sujet ?",a:["Jouent","Les enfants","Les","Enfants jouent"],ok:1,e:"Le groupe nominal « Les enfants » réalise l'action."},
+  {c:"french",d:"hard",q:"Quelle figure de style trouve-t-on dans « Cet homme est un lion » ?",a:["Une comparaison","Une métaphore","Une hyperbole uniquement","Une personnification"],ok:1,e:"La métaphore assimile directement l'homme à un lion."},
+
+  {c:"culture",d:"easy",q:"Combien de jours y a-t-il dans une semaine ?",a:["5","6","7","8"],ok:2,e:"Une semaine compte sept jours."},
+  {c:"culture",d:"medium",q:"Quel instrument mesure la température ?",a:["Baromètre","Thermomètre","Anémomètre","Boussole"],ok:1,e:"Le thermomètre mesure la température."},
+  {c:"culture",d:"hard",q:"Quel est le symbole chimique de l'or ?",a:["Ag","Au","Fe","Or"],ok:1,e:"Au vient du nom latin aurum."},
+
+  {c:"logic",d:"easy",q:"Complète la suite : 2, 4, 6, 8, ...",a:["9","10","11","12"],ok:1,e:"La suite augmente de 2 à chaque étape."},
+  {c:"logic",d:"medium",q:"Un père a 40 ans et son fils 10 ans. Dans combien d'années le père aura-t-il deux fois l'âge du fils ?",a:["10 ans","15 ans","20 ans","30 ans"],ok:2,e:"40 + 20 = 60 et 10 + 20 = 30. Soixante est le double de trente."},
+  {c:"logic",d:"hard",q:"Tous les Zor sont des Mir. Aucun Mir n'est un Pel. Un Zor peut-il être un Pel ?",a:["Oui, nécessairement","Non","Seulement parfois","On ne peut rien conclure"],ok:1,e:"Tout Zor est un Mir et aucun Mir n'est un Pel : aucun Zor ne peut être un Pel."},
+
+  {c:"tech",d:"easy",q:"Que signifie généralement « CPU » ?",a:["Central Processing Unit","Computer Personal User","Control Program Utility","Central Power Usage"],ok:0,e:"CPU signifie Central Processing Unit, ou unité centrale de traitement."},
+  {c:"tech",d:"medium",q:"Quel langage structure le contenu d'une page web ?",a:["HTML","SQL","Python uniquement","CSS"],ok:0,e:"HTML structure le contenu ; CSS gère principalement sa présentation."},
+  {c:"tech",d:"hard",q:"Quel est le rôle principal d'une fonction de hachage cryptographique ?",a:["Chiffrer réversiblement un message","Produire une empreinte de données","Augmenter la vitesse du processeur","Créer automatiquement un mot de passe"],ok:1,e:"Une fonction de hachage produit une empreinte ; elle ne sert pas à déchiffrer le contenu original."},
+
+  {c:"history",d:"easy",q:"En quelle année la Déclaration d'indépendance d'Haïti a-t-elle été proclamée ?",a:["1776","1804","1844","1915"],ok:1,e:"L'indépendance d'Haïti a été proclamée le 1er janvier 1804."},
+  {c:"history",d:"medium",q:"La Révolution française commence généralement en quelle année ?",a:["1666","1789","1815","1848"],ok:1,e:"L'année 1789 marque le début de la Révolution française."},
+  {c:"history",d:"hard",q:"Quel événement est associé à la prise de la Bastille ?",a:["14 juillet 1789","4 juillet 1776","1er janvier 1804","11 novembre 1918"],ok:0,e:"La Bastille est prise le 14 juillet 1789."}
+];
+
+const names = {
+  all:"Mélange général",
+  math:"Mathématiques",
+  science:"Sciences",
+  geo:"Géographie",
+  french:"Français",
+  culture:"Culture générale",
+  logic:"Logique",
+  tech:"Informatique",
+  history:"Histoire"
+};
+
+let selectedCategory = "all";
+let questions = [];
+let index = 0;
+let points = 0;
+let remaining = 30;
+let clock = null;
+let locked = false;
+let answered = 0;
+
+const $ = id => document.getElementById(id);
+
+document.querySelectorAll(".category").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".category").forEach(b => b.classList.remove("selected"));
+    button.classList.add("selected");
+    selectedCategory = button.dataset.cat;
+  });
+});
+
+$("start").addEventListener("click", startGame);
+$("next").addEventListener("click", nextQuestion);
+$("again").addEventListener("click", startGame);
+$("back").addEventListener("click", () => show("home"));
+
+function show(id) {
+  ["home","game","result"].forEach(section => $(section).classList.add("hidden"));
+  $(id).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+function startGame() {
+  clearInterval(clock);
+
+  const difficulty = $("difficulty").value;
+  const requested = Number($("length").value);
+
+  let pool = bank.filter(q =>
+    (selectedCategory === "all" || q.c === selectedCategory) &&
+    (q.d === difficulty || difficulty === "easy")
+  );
+
+  // Une petite banque ne peut pas fournir 10, 20 ou 30 questions distinctes.
+  // Pour cette première version, on utilise toutes les questions disponibles.
+  if (pool.length < requested) {
+    pool = bank.filter(q =>
+      selectedCategory === "all" || q.c === selectedCategory
+    );
+  }
+
+  if (!pool.length) {
+    alert("Aucune question disponible pour ce choix.");
+    return;
+  }
+
+  questions = shuffle(pool).slice(0,Math.min(requested,pool.length));
+  index = 0;
+  points = 0;
+  answered = 0;
+
+  $("score").textContent = "0";
+  show("game");
+  renderQuestion();
+}
+
+function shuffle(array) {
+  const copy = [...array];
+  for(let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]] = [copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function renderQuestion() {
+  clearInterval(clock);
+  locked = false;
+  remaining = 30;
+
+  const q = questions[index];
+  $("counter").textContent = `Question ${index+1}/${questions.length}`;
+  $("timer").textContent = remaining;
+  $("question").textContent = q.q;
+  $("categoryLabel").textContent = names[q.c] + " • Niveau " + q.d;
+  $("feedback").textContent = "";
+  $("next").classList.add("hidden");
+  $("progressBar").style.width = (index/questions.length*100) + "%";
+
+  const answers = $("answers");
+  answers.replaceChildren();
+
+  q.a.forEach((answer,i) => {
+    const button = document.createElement("button");
+    button.textContent = answer;
+    button.addEventListener("click", () => chooseAnswer(i));
+    answers.appendChild(button);
+  });
+
+  clock = setInterval(() => {
+    remaining--;
+    $("timer").textContent = remaining;
+    if(remaining <= 0) {
+      clearInterval(clock);
+      chooseAnswer(-1);
+    }
+  },1000);
+}
+
+function chooseAnswer(choice) {
+  if(locked) return;
+  locked = true;
+  clearInterval(clock);
+  answered++;
+
+  const q = questions[index];
+  const buttons = [...$("answers").children];
+
+  buttons.forEach((button,i) => {
+    button.disabled = true;
+    if(i === q.ok) button.classList.add("correct");
+    else if(i === choice) button.classList.add("wrong");
+  });
+
+  if(choice === q.ok) {
+    points++;
+    $("feedback").textContent = "Bien joué ! " + q.e;
+  } else if(choice === -1) {
+    $("feedback").textContent = "Temps écoulé ! " + q.e;
+  } else {
+    $("feedback").textContent = "Pas cette fois. " + q.e;
+  }
+
+  $("score").textContent = points;
+  $("progressBar").style.width = ((index+1)/questions.length*100) + "%";
+  $("next").textContent = index === questions.length-1 ? "Voir mes résultats" : "Question suivante";
+  $("next").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  if(!locked) return;
+  index++;
+  if(index >= questions.length) finishGame();
+  else renderQuestion();
+}
+
+function finishGame() {
+  clearInterval(clock);
+  show("result");
+
+  const percent = Math.round(points/questions.length*100);
+  $("finalScore").textContent = `${points}/${questions.length} (${percent} %)`;
+  $("resultMessage").textContent =
+    percent >= 80 ? "Excellent travail ! Continue à développer tes capacités."
+    : percent >= 50 ? "Tu progresses. Analyse les corrections et continue."
+    : "Chaque erreur est une occasion d'apprendre. Réessaie et progresse à ton rythme.";
+
+  let rank = "Débutant";
+  if(percent >= 95) rank = "Génie";
+  else if(percent >= 85) rank = "Maître";
+  else if(percent >= 75) rank = "Mage";
+  else if(percent >= 65) rank = "Grand Mage";
+  else if(percent >= 50) rank = "Roi";
+
+  $("rank").textContent = rank;
+  $("advice").textContent =
+    `Tu as répondu à ${answered} question(s). Relis les explications des questions manquées et tente un nouveau défi.`;
+}
+
+window.addEventListener("beforeunload", () => clearInterval(clock));
+</script>
+</body>
+  </html>
