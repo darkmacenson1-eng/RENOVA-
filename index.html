@@ -65,6 +65,193 @@
       padding: 25px;
       color: #E9DDF5;
     }
+/* ===== RÉNOVA QUIZ ===== */
+
+.quiz-section {
+    padding: 25px 16px;
+    max-width: 1000px;
+    margin: auto;
+    color: #f5f3ff;
+}
+
+.quiz-header {
+    text-align: center;
+    padding: 25px 12px;
+}
+
+.quiz-header h2 {
+    font-size: clamp(28px, 6vw, 44px);
+    color: #f2c879;
+    margin-bottom: 10px;
+}
+
+.quiz-header p {
+    color: #c8c6df;
+    line-height: 1.7;
+}
+
+.quiz-panel {
+    background: #17162d;
+    border: 1px solid #393454;
+    border-radius: 18px;
+    padding: 22px;
+    margin: 18px 0;
+}
+
+.quiz-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.quiz-category {
+    padding: 17px 10px;
+    border-radius: 12px;
+    border: 1px solid #494263;
+    background: #22203d;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.quiz-category:hover,
+.quiz-category.selected {
+    border-color: #f2c879;
+    background: #35304f;
+    transform: translateY(-2px);
+}
+
+.quiz-button {
+    background: #f2c879;
+    color: #171327;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 19px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.quiz-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.quiz-secondary {
+    background: #34304e;
+    color: #fff;
+    border: 1px solid #575071;
+}
+
+.quiz-question {
+    font-size: 20px;
+    line-height: 1.6;
+    margin: 22px 0;
+}
+
+.quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #494263;
+    background: #22203d;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.quiz-option:hover:not(:disabled) {
+    border-color: #f2c879;
+}
+
+.quiz-option.correct {
+    border-color: #48d597;
+    background: #153c32;
+}
+
+.quiz-option.incorrect {
+    border-color: #ff8585;
+    background: #48252e;
+}
+
+.quiz-feedback {
+    line-height: 1.7;
+    padding: 14px;
+    border-radius: 10px;
+    background: #22203d;
+    margin: 15px 0;
+}
+
+.quiz-progress {
+    height: 8px;
+    background: #34304e;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.quiz-progress-bar {
+    height: 100%;
+    width: 0;
+    background: #f2c879;
+    transition: width 0.25s;
+}
+
+.quiz-muted {
+    color: #b9b5d1;
+    font-size: 14px;
+}
+
+.quiz-hidden {
+    display: none !important;
+}
+
+.quiz-result {
+    text-align: center;
+    padding: 20px 5px;
+}
+
+.quiz-result-score {
+    color: #f2c879;
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.quiz-session-lengths {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.quiz-length {
+    padding: 11px 17px;
+    border-radius: 9px;
+    border: 1px solid #494263;
+    color: #fff;
+    background: #22203d;
+    cursor: pointer;
+}
+
+.quiz-length.selected {
+    border-color: #f2c879;
+    color: #f2c879;
+}
+
+@media (max-width: 500px) {
+    .quiz-panel {
+        padding: 15px;
+    }
+
+    .quiz-question {
+        font-size: 18px;
+    }
+}
   </style>
 </head>
 <body>
@@ -73,12 +260,13 @@
     <p>Chaque avenir mérite une chance de commencer.</p>
   </header>
 
-  <nav>
+    <nav>
     <button onclick="showPage('accueil')">Accueil</button>
     <button onclick="showPage('decouverte')">Découverte</button>
     <button onclick="showPage('idees')">Laboratoire d'idées</button>
     <button onclick="showPage('projets')">Mes projets</button>
-  </nav>
+    <button onclick="showPage('renova-quiz')">RÉNOVA QUIZ</button>
+    </nav>
 
   <main>
     <section id="accueil">
@@ -109,6 +297,98 @@
       <p>Retrouve ici les idées enregistrées sur cet appareil.</p>
       <div id="liste"></div>
     </section>
+<!-- ===== RÉNOVA QUIZ ===== -->
+<section id="renova-quiz" class="quiz-section">
+
+    <div class="quiz-header">
+        <h2>RÉNOVA QUIZ</h2>
+        <p>
+            Tes connaissances ouvrent des portes.
+            Ta logique révèle ton potentiel.
+            Chaque question est une occasion de progresser.
+        </p>
+    </div>
+
+    <div class="quiz-panel" id="quiz-home">
+
+        <h3>Choisis ton domaine</h3>
+        <p class="quiz-muted">
+            Sélectionne une catégorie et la longueur de ta session.
+        </p>
+
+        <div class="quiz-categories" id="quiz-categories">
+            <button class="quiz-category" data-category="maths">Mathématiques</button>
+            <button class="quiz-category" data-category="sciences">Sciences</button>
+            <button class="quiz-category" data-category="geo">Géographie</button>
+            <button class="quiz-category" data-category="francais">Français</button>
+            <button class="quiz-category" data-category="culture">Culture générale</button>
+            <button class="quiz-category" data-category="logique">Logique</button>
+            <button class="quiz-category" data-category="informatique">Informatique</button>
+            <button class="quiz-category" data-category="histoire">Histoire</button>
+        </div>
+
+        <h3>Longueur de la session</h3>
+
+        <div class="quiz-session-lengths">
+            <button class="quiz-length selected" data-length="10">10 questions</button>
+            <button class="quiz-length" data-length="20">20 questions</button>
+            <button class="quiz-length" data-length="30">30 questions</button>
+        </div>
+
+        <p class="quiz-muted" id="quiz-bank-status" aria-live="polite"></p>
+
+        <button class="quiz-button" id="quiz-start" disabled>
+            Commencer
+        </button>
+    </div>
+
+    <div class="quiz-panel quiz-hidden" id="quiz-play" aria-live="polite">
+
+        <div>
+            <span id="quiz-category-name"></span>
+            <span style="float:right" id="quiz-counter"></span>
+        </div>
+
+        <div class="quiz-progress">
+            <div class="quiz-progress-bar" id="quiz-progress-bar"></div>
+        </div>
+
+        <p class="quiz-muted" id="quiz-score-live"></p>
+
+        <h3 class="quiz-question" id="quiz-question"></h3>
+
+        <div id="quiz-options"></div>
+
+        <div class="quiz-feedback quiz-hidden" id="quiz-feedback"></div>
+
+        <button class="quiz-button quiz-hidden" id="quiz-next">
+            Question suivante
+        </button>
+
+        <button class="quiz-button quiz-secondary" id="quiz-stop">
+            Quitter la session
+        </button>
+    </div>
+
+    <div class="quiz-panel quiz-hidden" id="quiz-results">
+        <div class="quiz-result">
+            <h3>Session terminée</h3>
+            <p class="quiz-result-score" id="quiz-final-score"></p>
+            <p id="quiz-result-message"></p>
+            <p id="quiz-result-details"></p>
+            <button class="quiz-button" id="quiz-retry">Nouvelle session</button>
+        </div>
+    </div>
+
+    <div class="quiz-panel">
+        <h3>Mon parcours</h3>
+        <p id="quiz-history-summary">
+            Tes résultats apparaîtront ici après ta première session.
+        </p>
+        <div id="quiz-history"></div>
+    </div>
+
+</section> 
   </main>
 
   <footer>
