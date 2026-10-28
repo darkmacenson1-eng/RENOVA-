@@ -471,6 +471,512 @@
         list.appendChild(card);
       });
     }
+ 
   </script>
+/* =================================
+   MOTEUR RÉNOVA QUIZ
+   ================================= */
+
+const renovaCategories = {
+  maths: {
+    name: "Mathématiques",
+    questions: [
+      {
+        question: "Combien font 12 × 8 ?",
+        options: ["86", "96", "108", "92"],
+        answer: 1,
+        explanation: "12 × 8 = 96."
+      },
+      {
+        question: "Quelle est la valeur de x si x + 7 = 15 ?",
+        options: ["6", "7", "8", "9"],
+        answer: 2,
+        explanation: "x = 15 − 7 = 8."
+      }
+    ]
+  },
+
+  sciences: {
+    name: "Sciences",
+    questions: [
+      {
+        question: "Quelle planète est surnommée la planète rouge ?",
+        options: ["Vénus", "Mars", "Jupiter", "Mercure"],
+        answer: 1,
+        explanation: "Mars paraît rouge à cause des oxydes de fer présents à sa surface."
+      },
+      {
+        question: "Quel organe pompe le sang dans le corps humain ?",
+        options: ["Le foie", "Le cerveau", "Le cœur", "Le poumon"],
+        answer: 2,
+        explanation: "Le cœur propulse le sang dans le système circulatoire."
+      }
+    ]
+  },
+
+  geo: {
+    name: "Géographie",
+    questions: [
+      {
+        question: "Quelle est la capitale d'Haïti ?",
+        options: ["Cap-Haïtien", "Jacmel", "Port-au-Prince", "Les Cayes"],
+        answer: 2,
+        explanation: "Port-au-Prince est la capitale d'Haïti."
+      },
+      {
+        question: "Quel est le plus grand océan du monde ?",
+        options: ["Atlantique", "Indien", "Arctique", "Pacifique"],
+        answer: 3,
+        explanation: "L'océan Pacifique est le plus vaste de la planète."
+      }
+    ]
+  },
+
+  francais: {
+    name: "Français",
+    questions: [
+      {
+        question: "Quel est le féminin du mot « héros » ?",
+        options: ["Hérose", "Héroïne", "Hérosse", "Héronne"],
+        answer: 1,
+        explanation: "Le féminin de héros est héroïne."
+      },
+      {
+        question: "Quel est le pluriel de « cheval » ?",
+        options: ["Chevals", "Chevaux", "Chevaus", "Chevales"],
+        answer: 1,
+        explanation: "Le pluriel de cheval est chevaux."
+      }
+    ]
+  },
+
+  culture: {
+    name: "Culture générale",
+    questions: [
+      {
+        question: "Combien de jours compte une année bissextile ?",
+        options: ["364", "365", "366", "367"],
+        answer: 2,
+        explanation: "Une année bissextile compte 366 jours."
+      },
+      {
+        question: "Combien de côtés possède un hexagone ?",
+        options: ["5", "6", "7", "8"],
+        answer: 1,
+        explanation: "Un hexagone possède six côtés."
+      }
+    ]
+  },
+
+  logique: {
+    name: "Logique",
+    questions: [
+      {
+        question: "Complète la suite : 2, 4, 6, 8, ...",
+        options: ["9", "10", "11", "12"],
+        answer: 1,
+        explanation: "La suite augmente de 2 à chaque étape."
+      },
+      {
+        question: "Tous les chats sont des animaux. Minou est un chat. Que peut-on conclure ?",
+        options: [
+          "Minou est un animal",
+          "Minou est un oiseau",
+          "Minou est un poisson",
+          "Minou n'est pas un animal"
+        ],
+        answer: 0,
+        explanation: "Puisque Minou est un chat et que tous les chats sont des animaux, Minou est un animal."
+      }
+    ]
+  },
+
+  informatique: {
+    name: "Informatique",
+    questions: [
+      {
+        question: "Que signifie généralement HTML ?",
+        options: [
+          "HyperText Markup Language",
+          "HighText Machine Language",
+          "Hyper Transfer Main Link",
+          "Home Tool Markup Level"
+        ],
+        answer: 0,
+        explanation: "HTML signifie HyperText Markup Language."
+      },
+      {
+        question: "Quel appareil permet principalement de déplacer le pointeur sur un ordinateur ?",
+        options: ["L'imprimante", "La souris", "Le haut-parleur", "Le scanner"],
+        answer: 1,
+        explanation: "La souris sert notamment à déplacer le pointeur et à sélectionner des éléments."
+      }
+    ]
+  },
+
+  histoire: {
+    name: "Histoire",
+    questions: [
+      {
+        question: "En quelle année Haïti a-t-elle proclamé son indépendance ?",
+        options: ["1791", "1804", "1806", "1825"],
+        answer: 1,
+        explanation: "Haïti a proclamé son indépendance le 1er janvier 1804."
+      },
+      {
+        question: "Quel événement a commencé en France en 1789 ?",
+        options: [
+          "La Révolution française",
+          "La Première Guerre mondiale",
+          "La Renaissance",
+          "La guerre froide"
+        ],
+        answer: 0,
+        explanation: "La Révolution française a commencé en 1789."
+      }
+    ]
+  }
+};
+
+/* VARIABLES DU QUIZ */
+
+let renovaCategory = "maths";
+let renovaQuestions = [];
+let renovaIndex = 0;
+let renovaScore = 0;
+let renovaFinished = false;
+
+/* MÉLANGER LES QUESTIONS */
+
+function renovaShuffle(array) {
+  const result = [...array];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
+/* SÉLECTIONNER UNE CATÉGORIE */
+
+function renovaSelectCategory(category) {
+  if (!renovaCategories[category]) return;
+
+  renovaCategory = category;
+
+  document.querySelectorAll("[data-category]").forEach(button => {
+    button.classList.toggle(
+      "selected",
+      button.dataset.category === category
+    );
+  });
+
+  renovaUpdateBankStatus();
+}
+
+/* AFFICHER LE NOMBRE DE QUESTIONS */
+
+function renovaUpdateBankStatus() {
+  const status = document.getElementById("quiz-bank-status");
+  const startButton = document.getElementById("quiz-start");
+
+  const bank = renovaCategories[renovaCategory];
+
+  if (status) {
+    status.textContent =
+      bank.name + " : " + bank.questions.length +
+      " questions disponibles pour le moment.";
+  }
+
+  if (startButton) {
+    startButton.disabled = bank.questions.length === 0;
+  }
+}
+
+/* CHOISIR LE NOMBRE DE QUESTIONS */
+
+function renovaChooseLength(length) {
+  const available = renovaCategories[renovaCategory].questions.length;
+
+  document.querySelectorAll("[data-length]").forEach(button => {
+    button.classList.toggle(
+      "selected",
+      Number(button.dataset.length) === Number(length)
+    );
+  });
+
+  const startButton = document.getElementById("quiz-start");
+
+  if (startButton) {
+    startButton.dataset.length = Math.min(Number(length), available);
+  }
+}
+
+/* LANCER LE QUIZ */
+
+function renovaStart() {
+  const bank = renovaCategories[renovaCategory];
+
+  if (!bank || bank.questions.length === 0) {
+    alert("Aucune question disponible dans cette catégorie.");
+    return;
+  }
+
+  const startButton = document.getElementById("quiz-start");
+  const requestedLength = Number(startButton?.dataset.length) || 2;
+
+  renovaQuestions = renovaShuffle(bank.questions).slice(
+    0,
+    Math.min(requestedLength, bank.questions.length)
+  );
+
+  renovaIndex = 0;
+  renovaScore = 0;
+  renovaFinished = false;
+
+  document.getElementById("quiz-home")?.classList.add("hidden");
+  document.getElementById("quiz-results")?.classList.add("hidden");
+  document.getElementById("quiz-play")?.classList.remove("hidden");
+
+  renovaRenderQuestion();
+}
+
+/* AFFICHER UNE QUESTION */
+
+function renovaRenderQuestion() {
+  const question = renovaQuestions[renovaIndex];
+
+  if (!question) {
+    renovaFinish();
+    return;
+  }
+
+  document.getElementById("quiz-question").textContent =
+    question.question;
+
+  const options = document.getElementById("quiz-options");
+  options.replaceChildren();
+
+  const feedback = document.getElementById("quiz-feedback");
+  feedback.textContent = "";
+  feedback.classList.add("quiz-hidden");
+
+  const nextButton = document.getElementById("quiz-next");
+  nextButton.classList.add("quiz-hidden");
+
+  const progress = document.getElementById("quiz-progress");
+
+  if (progress) {
+    progress.textContent =
+      "Question " + (renovaIndex + 1) +
+      " sur " + renovaQuestions.length;
+  }
+
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "quiz-option";
+    button.textContent = option;
+
+    button.addEventListener("click", () => {
+      renovaAnswer(index, button);
+    });
+
+    options.appendChild(button);
+  });
+}
+
+/* VÉRIFIER LA RÉPONSE */
+
+function renovaAnswer(selectedIndex, selectedButton) {
+  if (renovaFinished) return;
+
+  const question = renovaQuestions[renovaIndex];
+  const buttons = document.querySelectorAll(".quiz-option");
+  const feedback = document.getElementById("quiz-feedback");
+
+  buttons.forEach(button => {
+    button.disabled = true;
+  });
+
+  if (selectedIndex === question.answer) {
+    renovaScore++;
+    selectedButton.classList.add("correct");
+
+    feedback.textContent =
+      "Bonne réponse ! " + question.explanation;
+  } else {
+    selectedButton.classList.add("incorrect");
+
+    buttons[question.answer].classList.add("correct");
+
+    feedback.textContent =
+      "Pas tout à fait. " + question.explanation;
+  }
+
+  feedback.classList.remove("quiz-hidden");
+
+  const nextButton = document.getElementById("quiz-next");
+  nextButton.textContent =
+    renovaIndex === renovaQuestions.length - 1
+      ? "Voir mes résultats"
+      : "Question suivante";
+
+  nextButton.classList.remove("quiz-hidden");
+}
+
+/* QUESTION SUIVANTE */
+
+function renovaNext() {
+  if (renovaFinished) return;
+
+  renovaIndex++;
+
+  if (renovaIndex >= renovaQuestions.length) {
+    renovaFinish();
+  } else {
+    renovaRenderQuestion();
+  }
+}
+
+/* TERMINER LE QUIZ */
+
+function renovaFinish() {
+  renovaFinished = true;
+
+  document.getElementById("quiz-play")?.classList.add("hidden");
+  document.getElementById("quiz-results")?.classList.remove("hidden");
+
+  const percentage = renovaQuestions.length
+    ? Math.round((renovaScore / renovaQuestions.length) * 100)
+    : 0;
+
+  const result = document.getElementById("quiz-score");
+
+  if (result) {
+    result.textContent =
+      renovaScore + " / " + renovaQuestions.length +
+      " — " + percentage + " %";
+  }
+
+  const message = document.getElementById("quiz-result-message");
+
+  if (message) {
+    if (percentage === 100) {
+      message.textContent = "Excellent ! Tu as tout réussi !";
+    } else if (percentage >= 60) {
+      message.textContent = "Bravo ! Continue à progresser.";
+    } else {
+      message.textContent =
+        "Chaque erreur est une occasion d'apprendre. Réessaie !";
+    }
+  }
+
+  renovaSaveHistory(percentage);
+}
+
+/* ENREGISTRER L'HISTORIQUE */
+
+function renovaSaveHistory(percentage) {
+  const history = JSON.parse(
+    localStorage.getItem("renovaQuizHistory") || "[]"
+  );
+
+  history.unshift({
+    category: renovaCategories[renovaCategory].name,
+    score: renovaScore,
+    total: renovaQuestions.length,
+    percentage: percentage,
+    date: new Date().toLocaleDateString("fr-FR")
+  });
+
+  localStorage.setItem(
+    "renovaQuizHistory",
+    JSON.stringify(history.slice(0, 20))
+  );
+
+  renovaRenderHistory();
+}
+
+/* AFFICHER L'HISTORIQUE */
+
+function renovaRenderHistory() {
+  const historyList = document.getElementById("quiz-history");
+
+  if (!historyList) return;
+
+  const history = JSON.parse(
+    localStorage.getItem("renovaQuizHistory") || "[]"
+  );
+
+  historyList.replaceChildren();
+
+  if (history.length === 0) {
+    historyList.textContent = "Aucun quiz terminé pour le moment.";
+    return;
+  }
+
+  history.forEach(item => {
+    const entry = document.createElement("p");
+
+    entry.textContent =
+      item.date + " — " + item.category + " : " +
+      item.score + "/" + item.total + " (" +
+      item.percentage + " %)";
+
+    historyList.appendChild(entry);
+  });
+}
+
+/* QUITTER LE QUIZ */
+
+function renovaStop() {
+  renovaFinished = true;
+
+  document.getElementById("quiz-play")?.classList.add("hidden");
+  document.getElementById("quiz-home")?.classList.remove("hidden");
+}
+
+/* RECOMMENCER */
+
+function renovaRetry() {
+  renovaStart();
+}
+
+/* INITIALISATION */
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-category]").forEach(button => {
+    button.addEventListener("click", () => {
+      renovaSelectCategory(button.dataset.category);
+    });
+  });
+
+  document.querySelectorAll("[data-length]").forEach(button => {
+    button.addEventListener("click", () => {
+      renovaChooseLength(button.dataset.length);
+    });
+  });
+
+  document.getElementById("quiz-start")
+    ?.addEventListener("click", renovaStart);
+
+  document.getElementById("quiz-next")
+    ?.addEventListener("click", renovaNext);
+
+  document.getElementById("quiz-stop")
+    ?.addEventListener("click", renovaStop);
+
+  document.getElementById("quiz-retry")
+    ?.addEventListener("click", renovaRetry);
+
+  renovaUpdateBankStatus();
+  renovaRenderHistory();
+});
+</script>
+  
 </body>
 </html>
