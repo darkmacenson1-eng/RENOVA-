@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#2457E6">
+  <meta name="description"
+        content="RÉNOVA : un espace pour révéler tes idées, oser créer et construire ton avenir.">
+
+  <title>RÉNOVA — Tes idées méritent de vivre</title>
+
+  <style>
+    /* ========================================
+       RÉNOVA — IDENTITÉ VISUELLE
+       Palette choisie par le Fondateur
+    ======================================== */
+
+    :root {
+      --menthe: #A8F0D0;
+      --jade: #00A878;
+      --aqua: #00D5D2;
+      --saphir: #2457E6;
+      --corail: #FF6F61;
+
+      --blanc: #FFFFFF;
+      --fond: #F5FFFB;
+      --texte: #16364B;
+      --texte-doux: #557080;
+
+      --police-titres: Georgia, "Times New Roman", serif;
+      --police-texte: "Trebuchet MS", Arial, sans-serif;
+
+      --ombre: 0 18px 50px rgba(22, 54, 75, 0.09);
+    }
+
+    /* BASE */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--texte);
+      background: var(--fond);
+      font-family: var(--police-texte);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .conteneur {
+      width: min(1160px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    /* FOND LUMINEUX */
+
+    .fond-lumineux {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 720px;
+      z-index: -1;
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at 8% 15%,
+          rgba(168, 240, 208, 0.75),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 95% 12%,
+          rgba(0, 213, 210, 0.19),
+          transparent 28%
+        ),
+        linear-gradient(
+          180deg,
+          #ECFFF7,
+          var(--fond)
+        );
+    }
+
+    /* EN-TÊTE */
+
+    .entete {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .identite {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .symbole {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px 15px 15px 5px;
+
+      color: var(--blanc);
+      background: linear-gradient(
+        135deg,
+        var(--jade),
+        var(--saphir)
+      );
+
+      font-size: 22px;
+      font-weight: 900;
+
+      box-shadow: 0 8px 20px rgba(0, 168, 120, 0.2);
+    }
+
+    .nom-marque {
+      display: block;
+      color: var(--texte);
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: 0.17em;
+    }
+
+    .signature-marque {
+      display: block;
+      margin-top: -4px;
+      color: var(--texte-doux);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+    }
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .navigation a:not(.bouton):hover {
+      color: var(--jade);
+    }
+
+    /* BOUTONS */
+
+    .bouton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      padding: 14px 21px;
+      border-radius: 13px;
+
+      font-size: 13px;
+      font-weight: 900;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .bouton:hover {
+      transform: translateY(-3px);
+    }
+
+    .bouton-principal {
+      color: var(--blanc);
+      background: var(--saphir);
+      box-shadow: 0 10px 24px rgba(36, 87, 230, 0.2);
+    }
+
+    .bouton-principal:hover {
+      box-shadow: 0 14px 30px rgba(36, 87, 230, 0.3);
+    }
+
+    .bouton-secondaire {
+      color: var(--texte);
+      background: var(--blanc);
+      border: 1px solid rgba(22, 54, 75, 0.12);
+    }
+
+    /* ACCUEIL */
+
+    .accueil {
+      min-height: 610px;
+
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 50px;
+
+      padding: 60px 0 85px;
+    }
+
+    .etiquette {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      padding: 8px 14px;
+      border-radius: 999px;
+
+      color: #007B59;
+      background: rgba(168, 240, 208, 0.5);
+      border: 1px solid rgba(0, 168, 120, 0.15);
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .point {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--corail);
+      box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.13);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+
+    .titre-principal {
+      margin: 27px 0 0;
+
+      color: var(--texte);
+      font-family: var(--police-titres);
+      font-size: clamp(58px, 7vw, 88px);
+      font-weight: 700;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+    }
+
+    .titre-principal span {
+      color: var(--jade);
+      font-style: italic;
+    }
+
+    .description-principale {
+      max-width: 530px;
+      margin-top: 25px;
+
+      color: var(--texte-doux);
+      font-size: 15px;
+    }
+
+    .description-principale strong {
+      color: var(--texte);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    /* ILLUSTRATION DÉCORATIVE */
+
+    .illustration {
+      min-height: 430px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .orbite {
+      position: absolute;
+      width: min(400px, 95%);
+      aspect-ratio: 1;
+
+      border: 1px solid rgba(36, 87, 230, 0.15);
+      border-radius: 50%;
+    }
+
+    .orbite::before,
+    .orbite::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(0, 168, 120, 0.18);
+      border-radius: 50%;
+    }
+
+    .orbite::before {
+      inset: 30px;
+    }
+
+    .orbite::after {
+      inset: 62px;
+    }
+
+    .carte-idee {
+      position: relative;
+      z-index: 1;
+
+      width: min(330px, 82%);
+      min-height: 345px;
+
+      padding: 34px 25px;
+      overflow: hidden;
+
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 32px;
+
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.98),
+        rgba(232, 255, 246, 0.94)
+      );
+
+      box-shadow: var(--ombre);
+      transform: rotate(2deg);
+    }
+
+    .carte-idee::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      top: -75px;
+      right: -65px;
+
+      border-radius: 50%;
+      background: var(--menthe);
+      opacity: 0.8;
+    }
+
+    .icone-idee {
+      position: relative;
+      z-index: 1;
+
+      width: 90px;
+      height: 90px;
+      display: grid;
+      place-items: center;
+
+      margin: 8px auto 24px;
+      border-radius: 28px 28px 28px 7px;
+
+      color: var(--blanc);
+      background: linear-gradient(
+        145deg,
+        var(--jade),
+        var(--saphir)
+      );
+
+      font-size: 43px;
+      box-shadow: 0 14px 28px rgba(0, 168, 120, 0.22);
+    }
+
+    .carte-idee h2 {
+      position: relative;
+      z-index: 1;
+
+      color: var(--texte);
+      font-family: var(--police-titres);
+      font-size: 38px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .carte-idee p {
+      position: relative;
+      z-index: 1;
+
+      max-width: 240px;
+      margin: 15px auto 0;
+
+      color: var(--texte-doux);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .etiquette-flottante {
+      position: absolute;
+      z-index: 2;
+
+      padding: 11px 15px;
+      border-radius: 13px;
+
+      color: var(--texte);
+      background: var(--blanc);
+      box-shadow: var(--ombre);
+
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .etiquette-haut {
+      top: 45px;
+      right: 0;
+      transform: rotate(4deg);
+    }
+
+    .etiquette-bas {
+      bottom: 45px;
+      left: 0;
+      transform: rotate(-4deg);
+    }
+
+    .etiquette-haut span {
+      color: var(--corail);
+    }
+
+    .etiquette-bas span {
+      color: var(--jade);
+    }
+
+    /* SECTIONS */
+
+    .section {
+      padding: 75px 0;
+    }
+
+    .entete-section {
+      max-width: 660px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .surtitre {
+      color: var(--jade);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .titre-section {
+      margin: 12px 0 0;
+
+      color: var(--texte);
+      font-family: var(--police-titres);
+      font-size: clamp(39px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.04;
+    }
+
+    .texte-section {
+      max-width: 570px;
+      margin: 16px auto 0;
+
+      color: var(--texte-doux);
+      font-size: 14px;
+    }
+
+    /* CARTES */
+
+    .grille-cartes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .carte {
+      padding: 27px;
+      border: 1px solid rgba(22, 54, 75, 0.09);
+      border-radius: 22px;
+      background: var(--blanc);
+      box-shadow: 0 10px 30px rgba(22, 54, 75, 0.045);
+    }
+
+    .icone-carte {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+      background: rgba(168, 240, 208, 0.55);
+
+      font-size: 22px;
+    }
+
+    .carte:nth-child(2) .icone-carte {
+      background: rgba(0, 213, 210, 0.16);
+    }
+
+    .carte:nth-child(3) .icone-carte {
+      background: rgba(255, 111, 97, 0.14);
+    }
+
+    .carte h3 {
+      margin: 18px 0 8px;
+
+      color: var(--texte);
+      font-family: var(--police-titres);
+      font-size: 27px;
+      line-height: 1.1;
+    }
+
+    .carte p {
+      margin: 0;
+      color: var(--texte-doux);
+      font-size: 13px;
+    }
+
+    /* MESSAGE CENTRAL */
+
+    .banniere {
+      position: relative;
+      overflow: hidden;
+
+      padding: 55px 35px;
+      border-radius: 29px;
+
+      color: var(--blanc);
+      text-align: center;
+
+      background: linear-gradient(
+        115deg,
+        #123B68,
+        var(--saphir) 60%,
+        var(--jade) 125%
+      );
+
+      box-shadow: 0 20px 45px rgba(36, 87, 230, 0.16);
+    }
+
+    .banniere .surtitre {
+      position: relative;
+      z-index: 1;
+      color: var(--menthe);
+    }
+
+    .banniere h2 {
+      position: relative;
+      z-index: 1;
+
+      max-width: 750px;
+      margin: 14px auto 0;
+
+      color: var(--blanc);
+      font-family: var(--police-titres);
+      font-size: clamp(36px, 5vw, 53px);
+      line-height: 1.05;
+    }
+
+    .banniere p {
+      position: relative;
+      z-index: 1;
+
+      max-width: 570px;
+      margin: 17px auto 0;
+
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
+    }
+
+    /* PIED DE PAGE */
+
+    .pied-page {
+      margin-top: 45px;
+      padding: 30px 0 35px;
+      border-top: 1px solid rgba(22, 54, 75, 0.1);
+    }
+
+    .contenu-pied {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .mention {
+      color: var(--texte-doux);
+      font-size: 11px;
+    }
+
+    .signature {
+      color: var(--jade);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    /* ADAPTATION AUX ÉCRANS */
+
+    @media (max-width: 800px) {
+      .navigation {
+        gap: 14px;
+      }
+
+      .navigation a:not(.bouton) {
+        display: none;
+      }
+
+      .accueil {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding-top: 50px;
+      }
+
+      .illustration {
+        min-height: 410px;
+      }
+
+      .grille-cartes {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 55px 0;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .conteneur {
+        width: calc(100% - 30px);
+      }
+
+      .entete {
+        min-height: 78px;
+      }
+
+      .nom-marque {
+        font-size: 17px;
+      }
+
+      .bouton {
+        padding: 13px 16px;
+      }
+
+      .navigation .bouton {
+        font-size: 11px;
+      }
+
+      .accueil {
+        padding: 42px 0 50px;
+      }
+
+      .titre-principal {
+        font-size: 61px;
+      }
+
+      .actions {
+        display: grid;
+      }
+
+      .illustration {
+        min-height: 370px;
+      }
+
+      .carte-idee {
+        min-height: 315px;
+      }
+
+      .etiquette-haut {
+        top: 20px;
+      }
+
+      .etiquette-bas {
+        bottom: 20px;
+      }
+
+      .banniere {
+        padding: 42px 22px;
+      }
+
+      .contenu-pied {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="fond-lumineux"></div>
+
+  <div class="conteneur">
+
+    <!-- EN-TÊTE -->
+    <header class="entete">
+      <a class="identite" href="#accueil" aria-label="RÉNOVA, accueil">
+        <span class="symbole">R</span>
+
+        <span>
+          <span class="nom-marque">RÉNOVA</span>
+          <span class="signature-marque">OSE · CRÉE · ÉVOLUE</span>
+        </span>
+      </a>
+
+      <nav class="navigation" aria-label="Navigation principale">
+        <a href="#vision">Notre vision</a>
+        <a href="#possibilites">Possibilités</a>
+
+        <a class="bouton bouton-principal" href="#commencer">
+          Explorer RÉNOVA ↗
+        </a>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- ACCUEIL -->
+      <section class="accueil" id="accueil">
+        <div>
+          <div class="etiquette">
+            <span class="point"></span>
+            Le début de quelque chose de grand
+          </div>
+
+          <h1 class="titre-principal">
+            Tes idées<br>
+            méritent de<br>
+            <span>vivre.</span>
+          </h1>
+
+          <p class="description-principale">
+            Tu n'as pas besoin d'avoir toutes les ressources pour commencer.
+            Une idée peut être le premier pas vers un projet qui compte.
+            <strong>RÉNOVA t'encourage à lui donner vie.</strong>
+          </p>
+
+          <div class="actions">
+            <a class="bouton bouton-principal" href="#possibilites">
+              Découvrir RÉNOVA ↗
+            </a>
+
+            <a class="bouton bouton-secondaire" href="#vision">
+              Comprendre notre vision
+            </a>
+          </div>
+        </div>
+
+        <!-- Illustration décorative, sans image externe -->
+        <div class="illustration" aria-label="Illustration décorative">
+          <div class="orbite"></div>
+
+          <div class="carte-idee">
+            <div class="icone-idee">✦</div>
+
+            <h2>
+              Tout commence<br>
+              par une idée.
+            </h2>
+
+            <p>
+              Une seule décision peut ouvrir un nouveau chemin.
+            </p>
+          </div>
+
+          <div class="etiquette-flottante etiquette-haut">
+            <span>✦</span> Imagine plus grand
+          </div>
+
+          <div class="etiquette-flottante etiquette-bas">
+            <span>✓</span> Avance à ton rythme
+          </div>
+        </div>
+      </section>
+
+      <!-- VISION -->
+      <section class="section" id="vision">
+        <div class="entete-section">
+          <div class="surtitre">Notre vision</div>
+
+          <h2 class="titre-section">
+            Tu peux commencer<br>
+            là où tu es.
+          </h2>
+
+          <p class="texte-section">
+            Le manque de moyens ne devrait pas être la fin d'une ambition.
+            Chaque parcours commence quelque part, et le tien mérite aussi
+            sa chance.
+          </p>
+        </div>
+
+        <div class="grille-cartes">
+          <article class="carte">
+            <div class="icone-carte">✧</div>
+
+            <h3>Révéler</h3>
+
+            <p>
+              Prendre ses idées au sérieux et découvrir ce qu'elles
+              peuvent devenir.
+            </p>
+          </article>
+
+          <article class="carte">
+            <div class="icone-carte">↗</div>
+
+            <h3>Oser</h3>
+
+            <p>
+              Retrouver le courage de faire un premier pas, même petit.
+            </p>
+          </article>
+
+          <article class="carte">
+            <div class="icone-carte">◇</div>
+
+            <h3>Construire</h3>
+
+            <p>
+              Transformer progressivement une envie en quelque chose
+              de concret.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- MESSAGE INSPIRANT -->
+      <section class="section" id="possibilites">
+        <div class="banniere">
+          <div class="surtitre">Une nouvelle impulsion</div>
+
+          <h2>
+            Ton point de départ ne définit pas ta destination.
+          </h2>
+
+          <p>
+            Tu as le droit d'apprendre, d'essayer, de recommencer
+            et de voir plus grand.
+          </p>
+        </div>
+      </section>
+
+      <!-- CONCLUSION VISUELLE -->
+      <section class="section" id="commencer">
+        <div class="entete-section">
+          <div class="surtitre">À toi de jouer</div>
+
+          <h2 class="titre-section">
+            L'avenir n'attend<br>
+            pas la perfection.
+          </h2>
+
+          <p class="texte-section">
+            Une idée. Un premier pas. Puis un autre.
+            C'est ainsi que les projets prennent forme.
+          </p>
+
+          <div class="actions" style="justify-content: center;">
+            <a class="bouton bouton-principal" href="#accueil">
+              Revenir au début ↑
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- PIED DE PAGE -->
+    <footer class="pied-page">
+      <div class="contenu-pied">
+
+        <a class="identite" href="#accueil" aria-label="RÉNOVA, accueil">
+          <span class="symbole">R</span>
+          <span class="nom-marque">RÉNOVA</span>
+        </a>
+
+        <div class="mention">
+          Un espace pour les idées qui veulent devenir possibles.
+        </div>
+
+        <div class="signature">
+          OSE · CRÉE · ÉVOLUE
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+</body>
+  </html>
