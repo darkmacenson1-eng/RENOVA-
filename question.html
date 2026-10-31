@@ -353,8 +353,10 @@
         });
 
         if (!resultat.ok) {
-          throw new Error("Le serveur n'est pas encore disponible.");
+  const erreur = await resultat.json();
+  throw new Error(erreur.message || "Erreur du serveur.");
         }
+        
 
         const donnees = await resultat.json();
 
@@ -375,9 +377,10 @@
 
         document.getElementById("reponse").value = "";
 
-      } catch (erreur) {
-        document.getElementById("question").textContent =
-          "La connexion au service de questions n'est pas encore prête. Nous allons la configurer dans le prochain fichier.";
+    } catch (erreur) {
+  document.getElementById("question").textContent =
+    "Erreur : " + erreur.message;
+      }
       }
 
       chargement.style.display = "none";
