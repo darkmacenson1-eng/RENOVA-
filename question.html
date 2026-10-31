@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5fbf8">
+
+  <title>RÉNOVA — Un moment pour toi</title>
+
+  <style>
+    :root {
+      --menthe: #A8F0D0;
+      --jade: #00A878;
+      --aqua: #00D5D2;
+      --saphir: #2457E6;
+      --corail: #FF6F61;
+      --fond: #f5fbf8;
+      --texte: #20352e;
+      --blanc: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--fond);
+      color: var(--texte);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--jade);
+    }
+
+    .retour {
+      color: var(--jade);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    main {
+      width: 100%;
+      max-width: 850px;
+      margin: 45px auto;
+      padding: 20px;
+    }
+
+    .carte {
+      background: var(--blanc);
+      border-radius: 25px;
+      padding: 45px 35px;
+      box-shadow: 0 12px 40px rgba(0, 80, 55, 0.07);
+      text-align: center;
+    }
+
+    .symbole {
+      font-size: 45px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin-bottom: 15px;
+      color: #176b50;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #64766e;
+      max-width: 570px;
+      margin: 0 auto 30px;
+    }
+
+    .boutons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 13px;
+      padding: 15px 28px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .oui {
+      background: var(--jade);
+      color: white;
+    }
+
+    .non {
+      background: #edf4f0;
+      color: #426457;
+    }
+
+    .message {
+      margin-top: 25px;
+      color: #638174;
+      line-height: 1.7;
+    }
+
+    .zone-question {
+      display: none;
+      text-align: left;
+    }
+
+    .etiquette {
+      display: inline-block;
+      background: #e4f8ef;
+      color: #16845e;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 22px;
+    }
+
+    .bulle {
+      background: #f0faf5;
+      border-radius: 18px;
+      padding: 22px;
+      margin: 15px 0 22px;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 17px;
+      border: 1px solid #dcebe3;
+      border-radius: 15px;
+      resize: vertical;
+      font: inherit;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--jade);
+    }
+
+    .envoyer {
+      margin-top: 15px;
+      background: var(--jade);
+      color: white;
+      width: 100%;
+    }
+
+    .chargement {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      color: var(--jade);
+    }
+
+    .petit-texte {
+      font-size: 12px;
+      color: #84958d;
+      line-height: 1.6;
+      margin-top: 22px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #8a9b93;
+      font-size: 12px;
+    }
+
+    @media (max-width: 550px) {
+      .carte {
+        padding: 35px 22px;
+      }
+
+      main {
+        margin: 20px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">RÉNOVA</div>
+    <a href="index.html" class="retour">← Accueil</a>
+  </header>
+
+  <main>
+
+    <!-- ACCUEIL DU PARCOURS -->
+    <section class="carte" id="accueil">
+
+      <div class="symbole">🌱</div>
+
+      <h1>Un moment pour toi.</h1>
+
+      <p class="description">
+        Parfois, prendre un moment pour réfléchir à sa vie
+        permet de découvrir des choses que l'on n'avait
+        jamais remarquées.
+        <br><br>
+        Ici, tu peux répondre librement, à ton rythme.
+        Il n'y a pas de bonne ou de mauvaise réponse.
+      </p>
+
+      <div class="boutons">
+        <button class="oui" onclick="commencer()">
+          OUI, commençons
+        </button>
+
+        <button class="non" onclick="revenir()">
+          NON, plus tard
+        </button>
+      </div>
+
+      <p class="petit-texte">
+        Ta participation est volontaire. Tu peux arrêter
+        le parcours quand tu le souhaites.
+        Tes réponses servent à proposer des pistes de soutien,
+        pas à établir un diagnostic.
+      </p>
+
+    </section>
+
+    <!-- MESSAGE SI LA PERSONNE REFUSE -->
+    <section class="carte" id="plus-tard" style="display:none;">
+
+      <div class="symbole">🌷</div>
+
+      <h1>Nous serons là.</h1>
+
+      <p class="description">
+        Ne t'inquiète pas. Tu pourras revenir quand tu le
+        souhaiteras.
+        <br><br>
+        Nous t'attendrons. ☺️👌🏽
+      </p>
+
+      <button class="oui" onclick="retourAccueil()">
+        Retour
+      </button>
+
+    </section>
+
+    <!-- ESPACE DE QUESTIONS -->
+    <section class="carte zone-question" id="espace-question">
+
+      <span class="etiquette">TON PARCOURS RÉNOVA</span>
+
+      <h1>Parlons un peu.</h1>
+
+      <div class="bulle" id="question">
+        Préparation du parcours...
+      </div>
+
+      <textarea
+        id="reponse"
+        placeholder="Écris librement ta réponse..."
+      ></textarea>
+
+      <button class="envoyer" onclick="envoyerReponse()">
+        Envoyer ma réponse
+      </button>
+
+      <p class="chargement" id="chargement">
+        Préparation de la suite...
+      </p>
+
+      <p class="petit-texte">
+        Tu peux prendre ton temps. Tu n'es pas obligé
+        de répondre à une question qui te met mal à l'aise.
+      </p>
+
+    </section>
+
+  </main>
+
+  <footer>
+    RÉNOVA · Un espace pour réfléchir, comprendre et avancer.
+  </footer>
+
+  <script>
+    let parcoursId = null;
+    let envoiEnCours = false;
+
+    function commencer() {
+      document.getElementById("accueil").style.display = "none";
+      document.getElementById("espace-question").style.display = "block";
+
+      demanderQuestion("commencer");
+    }
+
+    function revenir() {
+      document.getElementById("accueil").style.display = "none";
+      document.getElementById("plus-tard").style.display = "block";
+    }
+
+    function retourAccueil() {
+      document.getElementById("plus-tard").style.display = "none";
+      document.getElementById("accueil").style.display = "block";
+    }
+
+    async function demanderQuestion(action, reponse = "") {
+      if (envoiEnCours) return;
+
+      envoiEnCours = true;
+
+      const chargement = document.getElementById("chargement");
+      const bouton = document.querySelector(".envoyer");
+
+      chargement.style.display = "block";
+
+      if (bouton) bouton.disabled = true;
+
+      try {
+        const resultat = await fetch("/api/question", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: action,
+            parcoursId: parcoursId,
+            reponse: reponse
+          })
+        });
+
+        if (!resultat.ok) {
+          throw new Error("Le serveur n'est pas encore disponible.");
+        }
+
+        const donnees = await resultat.json();
+
+        if (donnees.parcoursId) {
+          parcoursId = donnees.parcoursId;
+        }
+
+        if (donnees.termine) {
+          document.getElementById("question").textContent =
+            donnees.message || "Ton parcours est terminé.";
+
+          document.getElementById("reponse").style.display = "none";
+          bouton.style.display = "none";
+        } else {
+          document.getElementById("question").textContent =
+            donnees.question;
+        }
+
+        document.getElementById("reponse").value = "";
+
+      } catch (erreur) {
+        document.getElementById("question").textContent =
+          "La connexion au service de questions n'est pas encore prête. Nous allons la configurer dans le prochain fichier.";
+      }
+
+      chargement.style.display = "none";
+      if (bouton) bouton.disabled = false;
+
+      envoiEnCours = false;
+    }
+
+    function envoyerReponse() {
+      const champ = document.getElementById("reponse");
+      const reponse = champ.value.trim();
+
+      if (!reponse) {
+        alert("Écris ta réponse avant de continuer.");
+        return;
+      }
+
+      demanderQuestion("repondre", reponse);
+    }
+  </script>
+
+</body>
+        </html>
