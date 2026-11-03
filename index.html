@@ -3,38 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="theme-color" content="#2457E6">
-  <meta name="description"
-        content="RÉNOVA : un espace pour révéler tes idées, oser créer et construire ton avenir.">
-
+  <meta name="description" content="RÉNOVA : un espace pour révéler tes idées, oser créer et construire ton avenir.">
   <title>RÉNOVA — Tes idées méritent de vivre</title>
 
   <style>
-    /* ========================================
-       RÉNOVA — IDENTITÉ VISUELLE
-       Palette choisie par le Fondateur
-    ======================================== */
-
     :root {
       --menthe: #A8F0D0;
       --jade: #00A878;
       --aqua: #00D5D2;
       --saphir: #2457E6;
       --corail: #FF6F61;
-
       --blanc: #FFFFFF;
       --fond: #F5FFFB;
       --texte: #16364B;
       --texte-doux: #557080;
-
       --police-titres: Georgia, "Times New Roman", serif;
       --police-texte: "Trebuchet MS", Arial, sans-serif;
-
       --ombre: 0 18px 50px rgba(22, 54, 75, 0.09);
     }
-
-    /* BASE */
 
     * {
       box-sizing: border-box;
@@ -66,34 +53,17 @@
       margin-inline: auto;
     }
 
-    /* FOND LUMINEUX */
-
     .fond-lumineux {
       position: absolute;
       inset: 0 0 auto;
       height: 720px;
       z-index: -1;
       pointer-events: none;
-
       background:
-        radial-gradient(
-          circle at 8% 15%,
-          rgba(168, 240, 208, 0.75),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 95% 12%,
-          rgba(0, 213, 210, 0.19),
-          transparent 28%
-        ),
-        linear-gradient(
-          180deg,
-          #ECFFF7,
-          var(--fond)
-        );
+        radial-gradient(circle at 8% 15%, rgba(168, 240, 208, 0.75), transparent 30%),
+        radial-gradient(circle at 95% 12%, rgba(0, 213, 210, 0.19), transparent 28%),
+        linear-gradient(180deg, #ECFFF7, var(--fond));
     }
-
-    /* EN-TÊTE */
 
     .entete {
       min-height: 92px;
@@ -114,19 +84,11 @@
       height: 45px;
       display: grid;
       place-items: center;
-
       border-radius: 15px 15px 15px 5px;
-
       color: var(--blanc);
-      background: linear-gradient(
-        135deg,
-        var(--jade),
-        var(--saphir)
-      );
-
+      background: linear-gradient(135deg, var(--jade), var(--saphir));
       font-size: 22px;
       font-weight: 900;
-
       box-shadow: 0 8px 20px rgba(0, 168, 120, 0.2);
     }
 
@@ -159,23 +121,16 @@
       color: var(--jade);
     }
 
-    /* BOUTONS */
-
     .bouton {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 9px;
-
       padding: 14px 21px;
       border-radius: 13px;
-
       font-size: 13px;
       font-weight: 900;
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .bouton:hover {
@@ -198,16 +153,12 @@
       border: 1px solid rgba(22, 54, 75, 0.12);
     }
 
-    /* ACCUEIL */
-
     .accueil {
       min-height: 610px;
-
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
       align-items: center;
       gap: 50px;
-
       padding: 60px 0 85px;
     }
 
@@ -215,14 +166,11 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-
       padding: 8px 14px;
       border-radius: 999px;
-
       color: #007B59;
       background: rgba(168, 240, 208, 0.5);
       border: 1px solid rgba(0, 168, 120, 0.15);
-
       font-size: 10px;
       font-weight: 900;
       letter-spacing: 0.1em;
@@ -237,15 +185,12 @@
       box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.13);
     }
 
-    h1,
-    h2,
-    h3 {
+    h1, h2, h3 {
       margin-top: 0;
     }
 
     .titre-principal {
       margin: 27px 0 0;
-
       color: var(--texte);
       font-family: var(--police-titres);
       font-size: clamp(58px, 7vw, 88px);
@@ -262,7 +207,6 @@
     .description-principale {
       max-width: 530px;
       margin-top: 25px;
-
       color: var(--texte-doux);
       font-size: 15px;
     }
@@ -278,8 +222,6 @@
       margin-top: 30px;
     }
 
-    /* ILLUSTRATION DÉCORATIVE */
-
     .illustration {
       min-height: 430px;
       display: grid;
@@ -291,7 +233,6 @@
       position: absolute;
       width: min(400px, 95%);
       aspect-ratio: 1;
-
       border: 1px solid rgba(36, 87, 230, 0.15);
       border-radius: 50%;
     }
@@ -315,22 +256,13 @@
     .carte-idee {
       position: relative;
       z-index: 1;
-
       width: min(330px, 82%);
       min-height: 345px;
-
       padding: 34px 25px;
       overflow: hidden;
-
       border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 32px;
-
-      background: linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.98),
-        rgba(232, 255, 246, 0.94)
-      );
-
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(232, 255, 246, 0.94));
       box-shadow: var(--ombre);
       transform: rotate(2deg);
     }
@@ -342,7 +274,6 @@
       height: 180px;
       top: -75px;
       right: -65px;
-
       border-radius: 50%;
       background: var(--menthe);
       opacity: 0.8;
@@ -351,22 +282,14 @@
     .icone-idee {
       position: relative;
       z-index: 1;
-
       width: 90px;
       height: 90px;
       display: grid;
       place-items: center;
-
       margin: 8px auto 24px;
       border-radius: 28px 28px 28px 7px;
-
       color: var(--blanc);
-      background: linear-gradient(
-        145deg,
-        var(--jade),
-        var(--saphir)
-      );
-
+      background: linear-gradient(145deg, var(--jade), var(--saphir));
       font-size: 43px;
       box-shadow: 0 14px 28px rgba(0, 168, 120, 0.22);
     }
@@ -374,7 +297,6 @@
     .carte-idee h2 {
       position: relative;
       z-index: 1;
-
       color: var(--texte);
       font-family: var(--police-titres);
       font-size: 38px;
@@ -385,10 +307,8 @@
     .carte-idee p {
       position: relative;
       z-index: 1;
-
       max-width: 240px;
       margin: 15px auto 0;
-
       color: var(--texte-doux);
       font-size: 12px;
       text-align: center;
@@ -397,14 +317,11 @@
     .etiquette-flottante {
       position: absolute;
       z-index: 2;
-
       padding: 11px 15px;
       border-radius: 13px;
-
       color: var(--texte);
       background: var(--blanc);
       box-shadow: var(--ombre);
-
       font-size: 11px;
       font-weight: 900;
     }
@@ -429,8 +346,6 @@
       color: var(--jade);
     }
 
-    /* SECTIONS */
-
     .section {
       padding: 75px 0;
     }
@@ -451,7 +366,6 @@
 
     .titre-section {
       margin: 12px 0 0;
-
       color: var(--texte);
       font-family: var(--police-titres);
       font-size: clamp(39px, 5vw, 56px);
@@ -462,12 +376,9 @@
     .texte-section {
       max-width: 570px;
       margin: 16px auto 0;
-
       color: var(--texte-doux);
       font-size: 14px;
     }
-
-    /* CARTES */
 
     .grille-cartes {
       display: grid;
@@ -488,10 +399,8 @@
       height: 48px;
       display: grid;
       place-items: center;
-
       border-radius: 15px;
       background: rgba(168, 240, 208, 0.55);
-
       font-size: 22px;
     }
 
@@ -505,7 +414,6 @@
 
     .carte h3 {
       margin: 18px 0 8px;
-
       color: var(--texte);
       font-family: var(--police-titres);
       font-size: 27px;
@@ -518,25 +426,14 @@
       font-size: 13px;
     }
 
-    /* MESSAGE CENTRAL */
-
     .banniere {
       position: relative;
       overflow: hidden;
-
       padding: 55px 35px;
       border-radius: 29px;
-
       color: var(--blanc);
       text-align: center;
-
-      background: linear-gradient(
-        115deg,
-        #123B68,
-        var(--saphir) 60%,
-        var(--jade) 125%
-      );
-
+      background: linear-gradient(115deg, #123B68, var(--saphir) 60%, var(--jade) 125%);
       box-shadow: 0 20px 45px rgba(36, 87, 230, 0.16);
     }
 
@@ -549,10 +446,8 @@
     .banniere h2 {
       position: relative;
       z-index: 1;
-
       max-width: 750px;
       margin: 14px auto 0;
-
       color: var(--blanc);
       font-family: var(--police-titres);
       font-size: clamp(36px, 5vw, 53px);
@@ -562,15 +457,11 @@
     .banniere p {
       position: relative;
       z-index: 1;
-
       max-width: 570px;
       margin: 17px auto 0;
-
       color: rgba(255, 255, 255, 0.85);
       font-size: 14px;
     }
-
-    /* PIED DE PAGE */
 
     .pied-page {
       margin-top: 45px;
@@ -596,8 +487,6 @@
       font-weight: 900;
       letter-spacing: 0.1em;
     }
-
-    /* ADAPTATION AUX ÉCRANS */
 
     @media (max-width: 800px) {
       .navigation {
@@ -704,12 +593,9 @@
   <div class="fond-lumineux"></div>
 
   <div class="conteneur">
-
-    <!-- EN-TÊTE -->
     <header class="entete">
       <a class="identite" href="#accueil" aria-label="RÉNOVA, accueil">
         <span class="symbole">R</span>
-
         <span>
           <span class="nom-marque">RÉNOVA</span>
           <span class="signature-marque">OSE · CRÉE · ÉVOLUE</span>
@@ -719,7 +605,6 @@
       <nav class="navigation" aria-label="Navigation principale">
         <a href="#vision">Notre vision</a>
         <a href="#possibilites">Possibilités</a>
-
         <a class="bouton bouton-principal" href="#commencer">
           Explorer RÉNOVA ↗
         </a>
@@ -727,8 +612,6 @@
     </header>
 
     <main>
-
-      <!-- ACCUEIL -->
       <section class="accueil" id="accueil">
         <div>
           <div class="etiquette">
@@ -752,25 +635,21 @@
             <a class="bouton bouton-principal" href="#possibilites">
               Découvrir RÉNOVA ↗
             </a>
-
             <a class="bouton bouton-secondaire" href="#vision">
               Comprendre notre vision
             </a>
           </div>
         </div>
 
-        <!-- Illustration décorative, sans image externe -->
         <div class="illustration" aria-label="Illustration décorative">
           <div class="orbite"></div>
 
           <div class="carte-idee">
             <div class="icone-idee">✦</div>
-
             <h2>
               Tout commence<br>
               par une idée.
             </h2>
-
             <p>
               Une seule décision peut ouvrir un nouveau chemin.
             </p>
@@ -786,7 +665,6 @@
         </div>
       </section>
 
-      <!-- VISION -->
       <section class="section" id="vision">
         <div class="entete-section">
           <div class="surtitre">Notre vision</div>
@@ -806,9 +684,7 @@
         <div class="grille-cartes">
           <article class="carte">
             <div class="icone-carte">✧</div>
-
             <h3>Révéler</h3>
-
             <p>
               Prendre ses idées au sérieux et découvrir ce qu'elles
               peuvent devenir.
@@ -817,9 +693,7 @@
 
           <article class="carte">
             <div class="icone-carte">↗</div>
-
             <h3>Oser</h3>
-
             <p>
               Retrouver le courage de faire un premier pas, même petit.
             </p>
@@ -827,9 +701,7 @@
 
           <article class="carte">
             <div class="icone-carte">◇</div>
-
             <h3>Construire</h3>
-
             <p>
               Transformer progressivement une envie en quelque chose
               de concret.
@@ -838,7 +710,6 @@
         </div>
       </section>
 
-      <!-- MESSAGE INSPIRANT -->
       <section class="section" id="possibilites">
         <div class="banniere">
           <div class="surtitre">Une nouvelle impulsion</div>
@@ -853,32 +724,7 @@
           </p>
         </div>
       </section>
-            <!-- RÉNOVA QUESTION -->
-      <section class="section" id="renova-question">
-        <div class="entete-section">
-          <div class="surtitre">Un espace pour toi</div>
 
-          <h2 class="titre-section">
-            Et si tu prenais<br>
-            un instant pour toi ?
-          </h2>
-
-          <p class="texte-section">
-            Parfois, quelques questions peuvent nous aider à réfléchir,
-            à mieux exprimer nos pensées et à découvrir de nouvelles
-            façons d'avancer. Prends ton temps : tu restes libre
-            de répondre ou d'arrêter quand tu le souhaites.
-          </p>
-
-          <div class="actions" style="justify-content: center;">
-            <a class="bouton bouton-principal" href="question.html">
-              Découvrir RÉNOVA Question ↗
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONCLUSION VISUELLE -->
       <section class="section" id="commencer">
         <div class="entete-section">
           <div class="surtitre">À toi de jouer</div>
@@ -900,13 +746,10 @@
           </div>
         </div>
       </section>
-
     </main>
 
-    <!-- PIED DE PAGE -->
     <footer class="pied-page">
       <div class="contenu-pied">
-
         <a class="identite" href="#accueil" aria-label="RÉNOVA, accueil">
           <span class="symbole">R</span>
           <span class="nom-marque">RÉNOVA</span>
@@ -919,10 +762,8 @@
         <div class="signature">
           OSE · CRÉE · ÉVOLUE
         </div>
-
       </div>
     </footer>
-
   </div>
 </body>
-  </html>
+        </html>
