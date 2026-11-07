@@ -23,13 +23,9 @@
       --ombre: 0 18px 50px rgba(22, 54, 75, 0.09);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -39,14 +35,8 @@
       line-height: 1.7;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
 
     .conteneur {
       width: min(1160px, calc(100% - 40px));
@@ -117,9 +107,7 @@
       font-weight: 800;
     }
 
-    .navigation a:not(.bouton):hover {
-      color: var(--jade);
-    }
+    .navigation a:not(.bouton):hover { color: var(--jade); }
 
     .bouton {
       display: inline-flex;
@@ -133,9 +121,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .bouton:hover {
-      transform: translateY(-3px);
-    }
+    .bouton:hover { transform: translateY(-3px); }
 
     .bouton-principal {
       color: var(--blanc);
@@ -185,9 +171,7 @@
       box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.13);
     }
 
-    h1, h2, h3 {
-      margin-top: 0;
-    }
+    h1, h2, h3 { margin-top: 0; }
 
     .titre-principal {
       margin: 27px 0 0;
@@ -211,9 +195,7 @@
       font-size: 15px;
     }
 
-    .description-principale strong {
-      color: var(--texte);
-    }
+    .description-principale strong { color: var(--texte); }
 
     .actions {
       display: flex;
@@ -237,21 +219,15 @@
       border-radius: 50%;
     }
 
-    .orbite::before,
-    .orbite::after {
+    .orbite::before, .orbite::after {
       content: "";
       position: absolute;
       border: 1px solid rgba(0, 168, 120, 0.18);
       border-radius: 50%;
     }
 
-    .orbite::before {
-      inset: 30px;
-    }
-
-    .orbite::after {
-      inset: 62px;
-    }
+    .orbite::before { inset: 30px; }
+    .orbite::after { inset: 62px; }
 
     .carte-idee {
       position: relative;
@@ -338,17 +314,10 @@
       transform: rotate(-4deg);
     }
 
-    .etiquette-haut span {
-      color: var(--corail);
-    }
+    .etiquette-haut span { color: var(--corail); }
+    .etiquette-bas span { color: var(--jade); }
 
-    .etiquette-bas span {
-      color: var(--jade);
-    }
-
-    .section {
-      padding: 75px 0;
-    }
+    .section { padding: 75px 0; }
 
     .entete-section {
       max-width: 660px;
@@ -404,13 +373,8 @@
       font-size: 22px;
     }
 
-    .carte:nth-child(2) .icone-carte {
-      background: rgba(0, 213, 210, 0.16);
-    }
-
-    .carte:nth-child(3) .icone-carte {
-      background: rgba(255, 111, 97, 0.14);
-    }
+    .carte:nth-child(2) .icone-carte { background: rgba(0, 213, 210, 0.16); }
+    .carte:nth-child(3) .icone-carte { background: rgba(255, 111, 97, 0.14); }
 
     .carte h3 {
       margin: 18px 0 8px;
@@ -489,86 +453,32 @@
     }
 
     @media (max-width: 800px) {
-      .navigation {
-        gap: 14px;
-      }
-
-      .navigation a:not(.bouton) {
-        display: none;
-      }
-
+      .navigation { gap: 14px; }
+      .navigation a:not(.bouton) { display: none; }
       .accueil {
         grid-template-columns: 1fr;
         gap: 15px;
         padding-top: 50px;
       }
-
-      .illustration {
-        min-height: 410px;
-      }
-
-      .grille-cartes {
-        grid-template-columns: 1fr;
-      }
-
-      .section {
-        padding: 55px 0;
-      }
+      .illustration { min-height: 410px; }
+      .grille-cartes { grid-template-columns: 1fr; }
+      .section { padding: 55px 0; }
     }
 
     @media (max-width: 460px) {
-      .conteneur {
-        width: calc(100% - 30px);
-      }
-
-      .entete {
-        min-height: 78px;
-      }
-
-      .nom-marque {
-        font-size: 17px;
-      }
-
-      .bouton {
-        padding: 13px 16px;
-      }
-
-      .navigation .bouton {
-        font-size: 11px;
-      }
-
-      .accueil {
-        padding: 42px 0 50px;
-      }
-
-      .titre-principal {
-        font-size: 61px;
-      }
-
-      .actions {
-        display: grid;
-      }
-
-      .illustration {
-        min-height: 370px;
-      }
-
-      .carte-idee {
-        min-height: 315px;
-      }
-
-      .etiquette-haut {
-        top: 20px;
-      }
-
-      .etiquette-bas {
-        bottom: 20px;
-      }
-
-      .banniere {
-        padding: 42px 22px;
-      }
-
+      .conteneur { width: calc(100% - 30px); }
+      .entete { min-height: 78px; }
+      .nom-marque { font-size: 17px; }
+      .bouton { padding: 13px 16px; }
+      .navigation .bouton { font-size: 11px; }
+      .accueil { padding: 42px 0 50px; }
+      .titre-principal { font-size: 61px; }
+      .actions { display: grid; }
+      .illustration { min-height: 370px; }
+      .carte-idee { min-height: 315px; }
+      .etiquette-haut { top: 20px; }
+      .etiquette-bas { bottom: 20px; }
+      .banniere { padding: 42px 22px; }
       .contenu-pied {
         align-items: flex-start;
         flex-direction: column;
@@ -576,15 +486,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-      }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
     }
   </style>
 </head>
@@ -605,9 +508,7 @@
       <nav class="navigation" aria-label="Navigation principale">
         <a href="#vision">Notre vision</a>
         <a href="#possibilites">Possibilités</a>
-        <a class="bouton bouton-principal" href="#commencer">
-          Explorer RÉNOVA ↗
-        </a>
+        <a class="bouton bouton-principal" href="#commencer">Explorer RÉNOVA ↗</a>
       </nav>
     </header>
 
@@ -632,33 +533,21 @@
           </p>
 
           <div class="actions">
-            <a class="bouton bouton-principal" href="#possibilites">
-              Découvrir RÉNOVA ↗
-            </a>
-            <a class="bouton bouton-secondaire" href="#vision">
-              Comprendre notre vision
-            </a>
+            <a class="bouton bouton-principal" href="#possibilites">Découvrir RÉNOVA ↗</a>
+            <a class="bouton bouton-secondaire" href="#vision">Comprendre notre vision</a>
           </div>
         </div>
 
         <div class="illustration" aria-label="Illustration décorative">
           <div class="orbite"></div>
-
           <div class="carte-idee">
             <div class="icone-idee">✦</div>
-            <h2>
-              Tout commence<br>
-              par une idée.
-            </h2>
-            <p>
-              Une seule décision peut ouvrir un nouveau chemin.
-            </p>
+            <h2>Tout commence<br>par une idée.</h2>
+            <p>Une seule décision peut ouvrir un nouveau chemin.</p>
           </div>
-
           <div class="etiquette-flottante etiquette-haut">
             <span>✦</span> Imagine plus grand
           </div>
-
           <div class="etiquette-flottante etiquette-bas">
             <span>✓</span> Avance à ton rythme
           </div>
@@ -668,12 +557,7 @@
       <section class="section" id="vision">
         <div class="entete-section">
           <div class="surtitre">Notre vision</div>
-
-          <h2 class="titre-section">
-            Tu peux commencer<br>
-            là où tu es.
-          </h2>
-
+          <h2 class="titre-section">Tu peux commencer<br>là où tu es.</h2>
           <p class="texte-section">
             Le manque de moyens ne devrait pas être la fin d'une ambition.
             Chaque parcours commence quelque part, et le tien mérite aussi
@@ -685,27 +569,19 @@
           <article class="carte">
             <div class="icone-carte">✧</div>
             <h3>Révéler</h3>
-            <p>
-              Prendre ses idées au sérieux et découvrir ce qu'elles
-              peuvent devenir.
-            </p>
+            <p>Prendre ses idées au sérieux et découvrir ce qu'elles peuvent devenir.</p>
           </article>
 
           <article class="carte">
             <div class="icone-carte">↗</div>
             <h3>Oser</h3>
-            <p>
-              Retrouver le courage de faire un premier pas, même petit.
-            </p>
+            <p>Retrouver le courage de faire un premier pas, même petit.</p>
           </article>
 
           <article class="carte">
             <div class="icone-carte">◇</div>
             <h3>Construire</h3>
-            <p>
-              Transformer progressivement une envie en quelque chose
-              de concret.
-            </p>
+            <p>Transformer progressivement une envie en quelque chose de concret.</p>
           </article>
         </div>
       </section>
@@ -713,11 +589,7 @@
       <section class="section" id="possibilites">
         <div class="banniere">
           <div class="surtitre">Une nouvelle impulsion</div>
-
-          <h2>
-            Ton point de départ ne définit pas ta destination.
-          </h2>
-
+          <h2>Ton point de départ ne définit pas ta destination.</h2>
           <p>
             Tu as le droit d'apprendre, d'essayer, de recommencer
             et de voir plus grand.
@@ -728,21 +600,13 @@
       <section class="section" id="commencer">
         <div class="entete-section">
           <div class="surtitre">À toi de jouer</div>
-
-          <h2 class="titre-section">
-            L'avenir n'attend<br>
-            pas la perfection.
-          </h2>
-
+          <h2 class="titre-section">L'avenir n'attend<br>pas la perfection.</h2>
           <p class="texte-section">
             Une idée. Un premier pas. Puis un autre.
             C'est ainsi que les projets prennent forme.
           </p>
-
           <div class="actions" style="justify-content: center;">
-            <a class="bouton bouton-principal" href="#accueil">
-              Revenir au début ↑
-            </a>
+            <a class="bouton bouton-principal" href="#accueil">Revenir au début ↑</a>
           </div>
         </div>
       </section>
@@ -754,300 +618,11 @@
           <span class="symbole">R</span>
           <span class="nom-marque">RÉNOVA</span>
         </a>
-
-        <div class="mention">
-          Un espace pour les idées qui veulent devenir possibles.
-        </div>
-
-        <div class="signature">
-          OSE · CRÉE · ÉVOLUE
-        </div>
+        <div class="mention">Un espace pour les idées qui veulent devenir possibles.</div>
+        <div class="signature">OSE · CRÉE · ÉVOLUE</div>
       </div>
     </footer>
   </div>
-  <!-- ============================= -->
-<!--       RÉNOVA DÉTECTIVE         -->
-<!-- ============================= -->
-
-<section id="renova-detective">
-  <div class="detective-container">
-
-    <div class="detective-header">
-      <span class="detective-label">RÉNOVA · UNIVERS ENQUÊTE</span>
-      <h1>RÉNOVA Détective</h1>
-      <p>Chaque indice compte. Chaque détail peut tout changer.</p>
-      <button id="detective-start">Ouvrir RÉNOVA Enquête</button>
-    </div>
-
-    <div id="detective-game" hidden>
-
-      <div class="detective-card">
-        <span class="detective-label">DOSSIER CONFIDENTIEL</span>
-        <h2 id="case-title">Chargement de l'affaire...</h2>
-        <p id="case-description"></p>
-      </div>
-
-      <div class="detective-menu">
-        <button data-action="investigate">🔎 Enquêter</button>
-        <button data-action="research">📚 Recherche</button>
-        <button data-action="interrogate">🗣️ Interroger</button>
-      </div>
-
-      <div class="detective-card">
-        <h3>Journal de l'enquête</h3>
-        <div id="detective-output">
-          Tes découvertes apparaîtront ici.
-        </div>
-      </div>
-
-      <div class="detective-card">
-        <h3>Ta prochaine décision</h3>
-        <div id="detective-choices"></div>
-      </div>
-
-      <div class="detective-card">
-        <h3>Accusation finale</h3>
-        <p>Lorsque tu penses avoir compris l'affaire, choisis la personne que tu souhaites accuser.</p>
-        <div id="detective-suspects"></div>
-        <button id="detective-accuse" disabled>
-          Présenter mon accusation
-        </button>
-      </div>
-
-      <div id="detective-tribunal" class="detective-card" hidden>
-        <span class="detective-label">TRIBUNAL RÉNOVA</span>
-        <h2>Le moment de vérité...</h2>
-        <p id="detective-verdict"></p>
-        <p class="detective-secret">
-          Le véritable coupable ne sera jamais révélé.
-        </p>
-        <button id="detective-new-case">Nouvelle enquête</button>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<style>
-#renova-detective {
-  padding: 55px 18px;
-  background: linear-gradient(145deg, #e8f8f2, #eaf1ff);
-  color: #173d43;
-  font-family: Arial, sans-serif;
-}
-
-.detective-container {
-  max-width: 850px;
-  margin: auto;
-}
-
-.detective-header,
-.detective-card {
-  background: rgba(255,255,255,.9);
-  border: 1px solid #c8e7df;
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 25px rgba(31,90,87,.08);
-}
-
-.detective-header {
-  text-align: center;
-  padding: 45px 20px;
-}
-
-.detective-label {
-  color: #238b78;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
-.detective-header h1 {
-  color: #176c65;
-  font-size: clamp(30px, 7vw, 48px);
-  margin: 15px 0;
-}
-
-.detective-menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-#renova-detective button {
-  background: #197c70;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 14px 18px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#renova-detective button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-#renova-detective button:hover {
-  background: #105d55;
-}
-
-#detective-choices,
-#detective-suspects {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-#detective-output {
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-
-.detective-secret {
-  color: #238b78;
-  font-weight: bold;
-  margin-top: 20px;
-}
-</style>
-
-<script>
-(() => {
-  const startButton = document.getElementById("detective-start");
-  const game = document.getElementById("detective-game");
-  const output = document.getElementById("detective-output");
-  const choices = document.getElementById("detective-choices");
-  const suspectsBox = document.getElementById("detective-suspects");
-  const accuseButton = document.getElementById("detective-accuse");
-  const tribunal = document.getElementById("detective-tribunal");
-
-  let caseId = null;
-  let selectedSuspect = null;
-
-  async function detectiveRequest(action, data = {}) {
-    output.textContent = "L'enquête avance...";
-
-    try {
-      const response = await fetch("/api/detective", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, caseId, ...data })
-      });
-
-      if (!response.ok) {
-        throw new Error("Service temporairement indisponible.");
-      }
-
-      const result = await response.json();
-
-      if (result.caseId) caseId = result.caseId;
-
-      return result;
-    } catch (error) {
-      output.textContent =
-        "RÉNOVA Détective n'est pas encore connecté à son moteur d'enquête. " +
-        "La prochaine étape sera de configurer le serveur.";
-      return null;
-    }
-  }
-
-  function showText(element, text) {
-    element.textContent = text || "";
-  }
-
-  function createChoice(label, callback) {
-    const button = document.createElement("button");
-    button.textContent = label;
-    button.addEventListener("click", callback);
-    return button;
-  }
-
-  async function startCase() {
-    game.hidden = false;
-    tribunal.hidden = true;
-    choices.replaceChildren();
-    suspectsBox.replaceChildren();
-    accuseButton.disabled = true;
-    selectedSuspect = null;
-
-    const result = await detectiveRequest("start");
-
-    if (!result) return;
-
-    showText(document.getElementById("case-title"), result.title);
-    showText(document.getElementById("case-description"), result.description);
-    showText(output, result.introduction);
-
-    (result.actions || []).forEach(item => {
-      choices.appendChild(createChoice(item.label, () => {
-        detectiveRequest("choose", { choiceId: item.id }).then(showResult);
-      }));
-    });
-
-    (result.suspects || []).forEach(suspect => {
-      suspectsBox.appendChild(createChoice(suspect.name, () => {
-        selectedSuspect = suspect.id;
-        accuseButton.disabled = false;
-        showText(output, "Tu as sélectionné : " + suspect.name);
-      }));
-    });
-  }
-
-  function showResult(result) {
-    if (!result) return;
-
-    showText(output, result.message);
-
-    if (result.actions) {
-      choices.replaceChildren();
-
-      result.actions.forEach(item => {
-        choices.appendChild(createChoice(item.label, () => {
-          detectiveRequest("choose", { choiceId: item.id }).then(showResult);
-        }));
-      });
-    }
-  }
-
-  startButton.addEventListener("click", startCase);
-
-  document.querySelectorAll(
-    "#renova-detective [data-action]"
-  ).forEach(button => {
-    button.addEventListener("click", async () => {
-      const result = await detectiveRequest(button.dataset.action);
-      showResult(result);
-    });
-  });
-
-  accuseButton.addEventListener("click", async () => {
-    if (!selectedSuspect) return;
-
-    const result = await detectiveRequest("accuse", {
-      suspectId: selectedSuspect
-    });
-
-    if (!result) return;
-
-    tribunal.hidden = false;
-    showText(
-      document.getElementById("detective-verdict"),
-      result.verdict
-    );
-
-    choices.replaceChildren();
-    accuseButton.disabled = true;
-  });
-
-  document.getElementById("detective-new-case")
-    .addEventListener("click", startCase);
-})();
-</script>
-
-<!-- FIN RÉNOVA DÉTECTIVE -->
 </body>
-        </html>
+  </html>
+  
