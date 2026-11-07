@@ -427,6 +427,64 @@
       font-size: 14px;
     }
 
+    /* RÉNOVA INSPIRATION — première version simple, sans API */
+    .inspiration-zone {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .inspiration-carte {
+      padding: 27px;
+      border: 1px solid rgba(22, 54, 75, 0.09);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(22, 54, 75, 0.045);
+    }
+
+    .inspiration-carte.large { grid-column: 1 / -1; }
+    .inspiration-carte .mini-titre {
+      color: var(--jade);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .inspiration-carte h3 {
+      margin: 12px 0 8px;
+      font-family: var(--police-titres);
+      font-size: 27px;
+      line-height: 1.15;
+    }
+    .inspiration-carte p { color: var(--texte-doux); font-size: 14px; }
+    .petit-bouton {
+      border: 0;
+      border-radius: 11px;
+      padding: 11px 15px;
+      color: #fff;
+      background: var(--saphir);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .petit-bouton:focus-visible, a:focus-visible {
+      outline: 3px solid var(--corail);
+      outline-offset: 3px;
+    }
+    .mission-etat {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--jade);
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .note-bas {
+      margin-top: 20px;
+      color: var(--texte-doux);
+      font-size: 11px;
+      text-align: center;
+    }
+
     .pied-page {
       margin-top: 45px;
       padding: 30px 0 35px;
@@ -462,6 +520,8 @@
       }
       .illustration { min-height: 410px; }
       .grille-cartes { grid-template-columns: 1fr; }
+      .inspiration-zone { grid-template-columns: 1fr; }
+      .inspiration-carte.large { grid-column: auto; }
       .section { padding: 55px 0; }
     }
 
@@ -507,8 +567,9 @@
 
       <nav class="navigation" aria-label="Navigation principale">
         <a href="#vision">Notre vision</a>
-        <a href="#possibilites">Possibilités</a>
-        <a class="bouton bouton-principal" href="#commencer">Explorer RÉNOVA ↗</a>
+        <a href="#vision">Notre vision</a>
+        <a href="#inspiration">Inspiration</a>
+        <a class="bouton bouton-principal" href="#inspiration">Explorer RÉNOVA ↗</a>
       </nav>
     </header>
 
@@ -533,7 +594,7 @@
           </p>
 
           <div class="actions">
-            <a class="bouton bouton-principal" href="#possibilites">Découvrir RÉNOVA ↗</a>
+            <a class="bouton bouton-principal" href="#inspiration">Découvrir RÉNOVA ↗</a>
             <a class="bouton bouton-secondaire" href="#vision">Comprendre notre vision</a>
           </div>
         </div>
@@ -586,6 +647,48 @@
         </div>
       </section>
 
+      <section class="section" id="inspiration">
+        <div class="entete-section">
+          <div class="surtitre">RÉNOVA INSPIRATION · VERSION 1</div>
+          <h2 class="titre-section">Une petite étincelle<br>peut tout commencer.</h2>
+          <p class="texte-section">
+            Prends un instant pour découvrir une pensée, explorer une idée
+            et réaliser une mission à ton rythme.
+          </p>
+        </div>
+
+        <div class="inspiration-zone">
+          <article class="inspiration-carte large">
+            <div class="mini-titre">✦ Inspiration du moment</div>
+            <h3 id="message-inspiration">Tu n'as pas besoin de tout savoir pour faire ton premier pas.</h3>
+            <p id="detail-inspiration">Commence avec ce que tu as. Tu apprendras en avançant.</p>
+            <button class="petit-bouton" id="nouvelle-inspiration" type="button">Une autre inspiration ↻</button>
+          </article>
+
+          <article class="inspiration-carte">
+            <div class="mini-titre">💡 Une idée à explorer</div>
+            <h3 id="idee-titre">Imagine ton propre club créatif</h3>
+            <p id="idee-texte">Un petit espace où chacun peut partager une idée, apprendre quelque chose et présenter ses créations.</p>
+            <button class="petit-bouton" id="autre-idee" type="button">Découvrir une autre idée ↗</button>
+          </article>
+
+          <article class="inspiration-carte">
+            <div class="mini-titre">🎯 Mission du jour</div>
+            <h3 id="mission-titre">Écris une idée qui te tient à cœur.</h3>
+            <p id="mission-texte">Note-la quelque part, puis ajoute une première petite action qui pourrait t'aider à commencer.</p>
+            <button class="petit-bouton" id="mission-faite" type="button">Mission accomplie ✓</button>
+            <div class="mission-etat" id="mission-etat" aria-live="polite"></div>
+          </article>
+
+          <article class="inspiration-carte large">
+            <div class="mini-titre">🔥 Un conseil pour avancer</div>
+            <h3>Fais simple. Fais un pas. Puis recommence.</h3>
+            <p>Un projet n'a pas besoin d'être parfait dès le début. Découpe-le en petites étapes réalistes, demande conseil quand tu en as besoin et donne-toi le droit d'apprendre.</p>
+          </article>
+        </div>
+        <p class="note-bas">Les inspirations, idées et missions de cette première version sont intégrées au site : aucune connexion ni clé API n'est nécessaire.</p>
+      </section>
+
       <section class="section" id="possibilites">
         <div class="banniere">
           <div class="surtitre">Une nouvelle impulsion</div>
@@ -615,14 +718,130 @@
     <footer class="pied-page">
       <div class="contenu-pied">
         <a class="identite" href="#accueil" aria-label="RÉNOVA, accueil">
-          <span class="symbole">R</span>
-          <span class="nom-marque">RÉNOVA</span>
+          <span class="
+            symbole">R</span>
+          <span>
+            <span class="nom-marque">RÉNOVA</span>
+            <span class="signature-marque">OSE · CRÉE · ÉVOLUE</span>
+          </span>
         </a>
-        <div class="mention">Un espace pour les idées qui veulent devenir possibles.</div>
-        <div class="signature">OSE · CRÉE · ÉVOLUE</div>
+
+        <div class="mention">
+          Un espace pour imaginer, apprendre et avancer.
+        </div>
+
+        <div class="signature">
+          RÉNOVA © 2026 — Tous droits réservés.
+        </div>
       </div>
     </footer>
   </div>
+
+  <script>
+    // INSPIRATIONS
+    const inspirations = [
+      {
+        titre: "Tu n'as pas besoin de tout savoir pour commencer.",
+        detail: "Fais un premier pas avec ce que tu possèdes déjà."
+      },
+      {
+        titre: "Tes idées ont de la valeur.",
+        detail: "Ne laisse pas la peur de l'échec décider à ta place."
+      },
+      {
+        titre: "Chaque grande réalisation commence quelque part.",
+        detail: "Même les projets les plus ambitieux ont commencé par une petite idée."
+      },
+      {
+        titre: "Tu as le droit de recommencer.",
+        detail: "Un détour n'est pas forcément une défaite."
+      },
+      {
+        titre: "N'attends pas le moment parfait.",
+        detail: "Apprends, progresse et construis à ton rythme."
+      }
+    ];
+
+    const idees = [
+      {
+        titre: "Crée un club créatif",
+        texte: "Imagine un espace où les jeunes peuvent partager leurs idées et présenter leurs créations."
+      },
+      {
+        titre: "Invente un magazine",
+        texte: "Imagine un petit magazine consacré aux talents, aux découvertes et aux histoires des jeunes."
+      },
+      {
+        titre: "Lance un projet écologique",
+        texte: "Trouve une petite manière de rendre ton quartier ou ton école plus agréable."
+      },
+      {
+        titre: "Imagine une application",
+        texte: "Dessine une application qui pourrait résoudre un problème de la vie quotidienne."
+      },
+      {
+        titre: "Organise un défi artistique",
+        texte: "Propose un défi de dessin, d'écriture ou de création accessible à tous."
+      }
+    ];
+
+    const missions = [
+      {
+        titre: "Écris une idée qui te tient à cœur.",
+        texte: "Note-la quelque part et réfléchis à une première petite action."
+      },
+      {
+        titre: "Découvre quelque chose de nouveau.",
+        texte: "Apprends une information intéressante et explique-la avec tes propres mots."
+      },
+      {
+        titre: "Imagine ton projet idéal.",
+        texte: "Donne-lui un nom et décris ce que tu aimerais réaliser."
+      },
+      {
+        titre: "Fais preuve de créativité.",
+        texte: "Invente quelque chose avec les objets ou les ressources dont tu disposes."
+      },
+      {
+        titre: "Partage une pensée positive.",
+        texte: "Écris un encouragement que quelqu'un pourrait avoir besoin de lire."
+      }
+    ];
+
+    function choisirAleatoire(liste) {
+      return liste[Math.floor(Math.random() * liste.length)];
+    }
+
+    document.getElementById("nouvelle-inspiration").addEventListener("click", function() {
+      const choix = choisirAleatoire(inspirations);
+
+      document.getElementById("message-inspiration").textContent = choix.titre;
+      document.getElementById("detail-inspiration").textContent = choix.detail;
+    });
+
+    document.getElementById("autre-idee").addEventListener("click", function() {
+      const choix = choisirAleatoire(idees);
+
+      document.getElementById("idee-titre").textContent = choix.titre;
+      document.getElementById("idee-texte").textContent = choix.texte;
+    });
+
+    const boutonMission = document.getElementById("mission-faite");
+    const etatMission = document.getElementById("mission-etat");
+
+    boutonMission.addEventListener("click", function() {
+      const accomplie = boutonMission.dataset.accomplie === "oui";
+
+      if (accomplie) {
+        boutonMission.dataset.accomplie = "non";
+        boutonMission.textContent = "Mission accomplie ✓";
+        etatMission.textContent = "";
+      } else {
+        boutonMission.dataset.accomplie = "oui";
+        boutonMission.textContent = "Annuler";
+        etatMission.textContent = "Bravo ! Tu as fait un pas en avant. ✨";
+      }
+    });
+  </script>
 </body>
-  </html>
-  
+</html>
